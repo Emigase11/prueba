@@ -128,10 +128,12 @@ export function Pricing() {
           ))}
         </div>
 
-        {/* ÚNICA fecha de entrega de la página. Mientras deliveryDate sea
-            null se muestra el texto neutro. */}
+        {/* Fecha de entrega. Sale del MISMO campo que el último hito de la
+            timeline, así nunca pueden contradecirse. */}
         <p className="mt-6 text-center text-body-sm text-muted-foreground">
-          {content.deliveryDate ?? content.deliveryDateFallback}
+          {content.deliveryDate
+            ? `${content.deliveryShipsLabel} ${content.deliveryDate}`
+            : content.deliveryDateFallback}
         </p>
       </div>
     </section>

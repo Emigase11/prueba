@@ -3,6 +3,7 @@ import { Hero } from "@/components/sections/hero";
 import { Steps } from "@/components/sections/steps";
 import { VideoShowcase } from "@/components/sections/video-showcase";
 import { Pricing } from "@/components/sections/pricing";
+import { Timeline } from "@/components/sections/timeline";
 import { UseCases } from "@/components/sections/use-cases";
 import { Tech } from "@/components/sections/tech";
 import { Included } from "@/components/sections/included";
@@ -24,6 +25,7 @@ export default function Home() {
         <Steps />
         <VideoShowcase />
         <Pricing />
+        <Timeline />
         <UseCases />
         <Tech />
         <Included />

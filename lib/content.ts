@@ -65,6 +65,27 @@ export interface FaqItem {
   answer: string;
 }
 
+export interface TimelineItem {
+  /** null en el marcador "estás acá". */
+  date: string | null;
+  title: string;
+  description?: string;
+  status: "done" | "now" | "upcoming";
+}
+
+/**
+ * ÚNICA fecha de entrega de la página.
+ *
+ * Tomada de la timeline del sitio actual de Cmax (cmaxsystem.com/cmax-air-x2),
+ * que publica "SEPTEMBER 2026 — Delivery Worldwide". PENDIENTE DE CONFIRMAR
+ * con el cliente.
+ *
+ * La usan dos lugares —la línea bajo los planes y el último hito de la
+ * timeline— y ambos leen de acá, así que nunca pueden contradecirse.
+ * Poner null para volver al texto neutro.
+ */
+const DELIVERY_DATE: string | null = "September 2026";
+
 export interface SiteContent {
   brand: {
     name: string;
@@ -74,6 +95,13 @@ export interface SiteContent {
   /** Única fecha de entrega de la página. null = aún sin confirmar. */
   deliveryDate: string | null;
   deliveryDateFallback: string;
+  /** Prefijo de la línea de entrega bajo los planes. */
+  deliveryShipsLabel: string;
+  timeline: {
+    heading: string;
+    subheading: string;
+    items: TimelineItem[];
+  };
   /** Enlaces de la barra fija superior (desktop). */
   nav: { label: string; href: string }[];
   hero: {
@@ -173,13 +201,52 @@ export const content: SiteContent = {
     },
   },
 
-  deliveryDate: null, // ← poner acá la fecha única cuando el cliente la confirme
+  deliveryDate: DELIVERY_DATE,
   deliveryDateFallback: "Delivery date to be announced",
+  deliveryShipsLabel: "Ships",
+
+  timeline: {
+    heading: "Where we are",
+    subheading:
+      "From the first prototype to your door. Two milestones done, two to go.",
+    items: [
+      {
+        date: "May 2025",
+        title: "Prototypes designed and built",
+        description: "Designed in the jungles of Bali. Engineered for the world.",
+        status: "done",
+      },
+      {
+        date: "September 2025",
+        title: "Tested in extreme conditions",
+        description:
+          "Frozen lakes, ocean water, jungle humidity, heavy rain, desert heat, sand and rock — pushing insulation, durability and weather resistance to the limit.",
+        status: "done",
+      },
+      {
+        date: null,
+        title: "You are here",
+        status: "now",
+      },
+      {
+        date: "August 2026",
+        title: "Mass production begins",
+        description: "The first production batch is limited.",
+        status: "upcoming",
+      },
+      {
+        date: DELIVERY_DATE,
+        title: "Delivery worldwide",
+        status: "upcoming",
+      },
+    ],
+  },
 
   nav: [
     { label: "How it works", href: "#how-it-works" },
     { label: "Video", href: "#video" },
     { label: "Pricing", href: "#pricing" },
+    { label: "Timeline", href: "#timeline" },
     { label: "Specs", href: "#specs" },
     { label: "FAQ", href: "#faq" },
   ],
@@ -437,8 +504,11 @@ export const content: SiteContent = {
       },
       {
         question: "When will it ship?",
-        answer:
-          "See the delivery date shown on this page. Founder's Edition units enter production first; pre-orders follow in the standard queue.",
+        // Se arma desde DELIVERY_DATE para que no exista una segunda fecha
+        // literal que pueda quedar desactualizada.
+        answer: DELIVERY_DATE
+          ? `Mass production begins August 2026 and delivery is scheduled for ${DELIVERY_DATE}. Founder's Edition units enter production first; pre-orders follow in the standard queue.`
+          : "The delivery date hasn't been announced yet. Founder's Edition units enter production first; pre-orders follow in the standard queue.",
       },
       {
         question: "What warranty does it have?",
