@@ -58,10 +58,21 @@ const config: Config = {
         "body-sm": ["0.875rem", { lineHeight: "1.5" }],
       },
       colors: {
-        // Naranja Cmax — PLACEHOLDER hasta recibir el hex exacto.
+        /**
+         * Naranja Cmax — PLACEHOLDER hasta recibir el hex exacto.
+         *
+         * El naranja de marca tiene 3.1:1 contra blanco: sirve como FONDO y
+         * para texto grande, pero NO para texto chico (AA pide 4.5:1). Por eso
+         * hay dos variantes de texto:
+         *   ink   → texto naranja sobre fondos claros (5.5:1 sobre blanco)
+         *   light → texto naranja sobre fondos oscuros (5.4:1 sobre el hero)
+         * Al cambiar el hex definitivo, recalcular estas dos.
+         */
         brand: {
           DEFAULT: "#F26522",
           hover: "#D9531A", // estados hover/active de CTAs
+          ink: "#B8430F", // texto de marca sobre claro
+          light: "#FF9A66", // texto de marca sobre oscuro
           tint: "#FEF3EC", // fondos suaves de secciones destacadas
           ring: "#F26522",
         },

@@ -44,7 +44,7 @@ function PlanCard({ plan }: { plan: PricingPlan }) {
         <p className="mt-1 flex flex-wrap items-baseline gap-x-3">
           <span className="text-title">{formatUsd(plan.priceToday)}</span>
           {plan.savings ? (
-            <span className="rounded bg-brand-tint px-2 py-0.5 text-body-sm font-semibold text-brand">
+            <span className="rounded bg-brand-tint px-2 py-0.5 text-body-sm font-semibold text-brand-ink">
               {pricing.savingsLabel} {formatUsd(plan.savings)}
             </span>
           ) : null}
@@ -80,7 +80,7 @@ function PlanCard({ plan }: { plan: PricingPlan }) {
             <li key={extra} className="flex items-center gap-2 text-body-sm">
               <Check
                 aria-hidden
-                className="size-4 shrink-0 text-brand"
+                className="size-4 shrink-0 text-brand-ink"
                 strokeWidth={3}
               />
               {extra}

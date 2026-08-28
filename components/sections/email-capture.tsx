@@ -26,7 +26,7 @@ export function EmailCapture() {
         {submitted ? (
           <p
             role="status"
-            className="mt-8 flex items-center justify-center gap-2 text-body font-semibold text-brand"
+            className="mt-8 flex items-center justify-center gap-2 text-body font-semibold text-brand-ink"
           >
             <Check aria-hidden className="size-5" strokeWidth={3} />
             You&apos;re on the list. We&apos;ll be in touch.

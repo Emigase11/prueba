@@ -18,10 +18,13 @@ export function Hero() {
         sizes="100vw"
         className="object-cover"
       />
-      {/* Velo para contraste del texto: oscuro abajo, leve arriba para el logo */}
+      {/* Velo de contraste. La foto es un atardecer muy claro, así que el
+          bloque de texto necesita una base consistentemente oscura: los stops
+          están fijados a mano para que la zona del texto quede >=0.75 de
+          negro y el naranja del eyebrow llegue a 5.4:1. */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-black/75"
+        className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.92)_0%,rgba(0,0,0,0.78)_35%,rgba(0,0,0,0.3)_62%,rgba(0,0,0,0.15)_100%)]"
       />
 
       <header className="relative">
@@ -34,7 +37,7 @@ export function Hero() {
 
       <div className="relative mt-auto">
         <div className="container pb-10 pt-24 md:pb-16">
-          <p className="text-body-sm font-semibold uppercase tracking-widest text-brand">
+          <p className="text-body-sm font-semibold uppercase tracking-widest text-brand-light">
             {hero.eyebrow}
           </p>
           <h1 className="mt-3 max-w-2xl text-balance text-display text-white">
@@ -63,7 +66,7 @@ export function Hero() {
               asChild
               size="lg"
               variant="outline"
-              className="border-white/40 bg-transparent text-body font-semibold text-white hover:bg-white/10 hover:text-white"
+              className="border-white/60 bg-transparent text-body font-semibold text-white hover:bg-white/10 hover:text-white"
             >
               <Link href={hero.ctaSecondary.href}>{hero.ctaSecondary.label}</Link>
             </Button>
