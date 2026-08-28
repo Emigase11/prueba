@@ -15,7 +15,7 @@ export function Faq() {
   const { faq } = content;
 
   return (
-    <section id="faq" className="py-section md:py-section-lg">
+    <section id="faq" className="bg-muted/40 py-section md:py-section-lg">
       <div className="container max-w-3xl">
         <h2 className="text-title">{faq.heading}</h2>
 

@@ -15,7 +15,7 @@ export function Steps() {
   return (
     <section
       id="how-it-works"
-      className="bg-gradient-to-b from-background to-brand-tint/40 py-section md:py-section-lg"
+      className="bg-gradient-to-b from-background to-brand-tint py-section md:py-section-lg"
     >
       <div className="container">
         <h2 className="text-title">{steps.heading}</h2>

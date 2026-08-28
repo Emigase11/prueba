@@ -18,7 +18,7 @@ export function Timeline() {
   const { timeline, deliveryDateFallback } = content;
 
   return (
-    <section id="timeline" className="bg-brand-tint/30 py-section md:py-section-lg">
+    <section id="timeline" className="bg-brand-tint/60 py-section md:py-section-lg">
       <div className="container">
         <h2 className="text-title">{timeline.heading}</h2>
         <p className="mt-3 max-w-xl text-body text-muted-foreground">

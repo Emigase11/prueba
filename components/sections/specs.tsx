@@ -17,7 +17,7 @@ export function Specs() {
   const { specs } = content;
 
   return (
-    <section id="specs" className="py-section md:py-section-lg">
+    <section id="specs" className="bg-dots py-section md:py-section-lg">
       <div className="container">
         <h2 className="text-title">{specs.heading}</h2>
         <p className="mt-3 max-w-xl text-body text-muted-foreground">

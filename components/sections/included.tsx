@@ -12,7 +12,7 @@ export function Included() {
   return (
     <section
       id="included"
-      className="bg-muted/40 py-section md:py-section-lg"
+      className="bg-gradient-to-b from-brand-tint/60 to-background py-section md:py-section-lg"
     >
       <div className="container">
         <div className="mx-auto max-w-2xl text-center">

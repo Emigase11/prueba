@@ -33,7 +33,7 @@ export function VideoShowcase() {
         <div className="mt-10 grid gap-6 md:mt-14 md:grid-cols-5">
           {/* Film: 30 s con audio, click-to-play */}
           <figure className="flex flex-col md:col-span-3">
-            <div className="relative aspect-video overflow-hidden rounded-lg bg-black shadow-2xl shadow-brand/20 md:aspect-auto md:flex-1">
+            <div className="relative aspect-video overflow-hidden rounded-lg bg-black shadow-2xl shadow-brand/20">
               {playing ? (
                 <video
                   controls

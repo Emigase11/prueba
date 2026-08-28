@@ -300,3 +300,13 @@
     @apply font-heading;
   }
 }
+
+/* --- Textura de puntos para secciones claras (mata el blanco plano) --- */
+.bg-dots {
+  background-image: radial-gradient(
+    circle,
+    rgba(26, 29, 35, 0.07) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}
