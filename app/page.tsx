@@ -1,8 +1,11 @@
+import { SiteHeader } from "@/components/sections/site-header";
 import { Hero } from "@/components/sections/hero";
 import { Steps } from "@/components/sections/steps";
+import { VideoShowcase } from "@/components/sections/video-showcase";
 import { Pricing } from "@/components/sections/pricing";
 import { UseCases } from "@/components/sections/use-cases";
 import { Tech } from "@/components/sections/tech";
+import { Included } from "@/components/sections/included";
 import { Specs } from "@/components/sections/specs";
 import { EmailCapture } from "@/components/sections/email-capture";
 import { Press } from "@/components/sections/press";
@@ -14,13 +17,16 @@ import { StickyBuyBar } from "@/components/sections/sticky-buy-bar";
 export default function Home() {
   return (
     <>
+      <SiteHeader />
       {/* pb-24 en mobile: deja aire para que StickyBuyBar no tape el final. */}
       <main className="pb-24 md:pb-0">
         <Hero />
         <Steps />
+        <VideoShowcase />
         <Pricing />
         <UseCases />
         <Tech />
+        <Included />
         <Specs />
         <EmailCapture />
         <Press />

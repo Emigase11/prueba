@@ -19,8 +19,28 @@ export function Specs() {
     <section id="specs" className="py-section md:py-section-lg">
       <div className="container">
         <h2 className="text-title">{specs.heading}</h2>
+        <p className="mt-3 max-w-xl text-body text-muted-foreground">
+          {specs.subheading}
+        </p>
 
-        <div className="mt-8 overflow-x-auto md:mt-12">
+        {/* Los cuatro numeros que la gente busca primero, antes de la tabla. */}
+        <dl className="mt-8 grid grid-cols-2 gap-4 md:mt-12 md:grid-cols-4">
+          {specs.highlights.map((item) => (
+            <div key={item.label} className="rounded-lg bg-brand-tint px-5 py-6">
+              <dt className="sr-only">{item.label}</dt>
+              <dd>
+                <span className="block text-title text-brand-ink">
+                  {item.value}
+                </span>
+                <span className="mt-1 block text-body-sm text-muted-foreground">
+                  {item.label}
+                </span>
+              </dd>
+            </div>
+          ))}
+        </dl>
+
+        <div className="mt-10 overflow-x-auto">
           <Table className="max-w-2xl">
             <TableBody>
               {specs.rows.map((row) => (

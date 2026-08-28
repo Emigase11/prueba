@@ -74,6 +74,8 @@ export interface SiteContent {
   /** Única fecha de entrega de la página. null = aún sin confirmar. */
   deliveryDate: string | null;
   deliveryDateFallback: string;
+  /** Enlaces de la barra fija superior (desktop). */
+  nav: { label: string; href: string }[];
   hero: {
     eyebrow: string;
     headline: string;
@@ -89,6 +91,19 @@ export interface SiteContent {
     heading: string;
     subheading: string;
     items: { title: string; description: string; image: ImageAsset }[];
+  };
+  video: {
+    eyebrow: string;
+    heading: string;
+    subheading: string;
+    playLabel: string;
+    /** Loop ambiente, sin audio. Solo desktop: en mobile se muestra el poster. */
+    loopSrc: string;
+    /** Film completo con audio. preload="none": solo baja si el usuario le da play. */
+    filmSrc: string;
+    filmDuration: string;
+    loopPoster: ImageAsset;
+    filmPoster: ImageAsset;
   };
   /** Barra fija inferior en mobile. */
   stickyBar: {
@@ -113,8 +128,17 @@ export interface SiteContent {
     paragraphs: string[];
     image: ImageAsset;
   };
+  /** Kit completo. El copy no enumera piezas: las muestra la foto oficial. */
+  included: {
+    heading: string;
+    subheading: string;
+    image: ImageAsset;
+  };
   specs: {
     heading: string;
+    subheading: string;
+    /** Los 4 datos que la gente busca primero, sacados de `rows`. */
+    highlights: { value: string; label: string }[];
     rows: SpecRow[];
   };
   emailCapture: {
@@ -151,6 +175,14 @@ export const content: SiteContent = {
 
   deliveryDate: null, // ← poner acá la fecha única cuando el cliente la confirme
   deliveryDateFallback: "Delivery date to be announced",
+
+  nav: [
+    { label: "How it works", href: "#how-it-works" },
+    { label: "Video", href: "#video" },
+    { label: "Pricing", href: "#pricing" },
+    { label: "Specs", href: "#specs" },
+    { label: "FAQ", href: "#faq" },
+  ],
 
   hero: {
     eyebrow: "Inflatable AeroCabin",
@@ -197,6 +229,25 @@ export const content: SiteContent = {
         },
       },
     ],
+  },
+
+  video: {
+    eyebrow: "See it in motion",
+    heading: "Thirty seconds is all it takes to get it.",
+    subheading:
+      "From folded panel to floating cabin — watch the Cmax Air X2 do the thing photos can't show.",
+    playLabel: "Watch the film",
+    loopSrc: "/videos/cmax-air-x2-loop.mp4",
+    filmSrc: "/videos/cmax-air-x2-film.mp4",
+    filmDuration: "0:30",
+    loopPoster: {
+      src: "/images/video-loop-poster.jpg",
+      alt: "The Cmax Air X2 AeroCabin lit in a dark studio, turning slowly",
+    },
+    filmPoster: {
+      src: "/images/video-film-poster.jpg",
+      alt: "Opening frame of the Cmax Air X2 film, showing the AeroCabin in a dark studio",
+    },
   },
 
   stickyBar: {
@@ -308,8 +359,24 @@ export const content: SiteContent = {
     },
   },
 
+  included: {
+    heading: "What's in the box",
+    subheading: "The complete Cmax Air X2 kit.",
+    image: {
+      src: "/images/whats-include-cmax-air-x2.png",
+      alt: "The Cmax Air X2 kit laid out: the AeroCabin shown from two angles, two paddles, a hand pump, a rolled carry bag, a repair kit, a coiled leash and three fins",
+    },
+  },
+
   specs: {
     heading: "Specs",
+    subheading: "The numbers that matter, and the full sheet below.",
+    highlights: [
+      { value: "42 kg", label: "Packed weight" },
+      { value: "2 + 2", label: "Adults and kids" },
+      { value: "10 bar", label: "Max pressure" },
+      { value: "3 years", label: "Warranty" },
+    ],
     rows: [
       { label: "Dimensions", value: "To be confirmed", pending: true },
       { label: "Weight", value: "42 kg" },

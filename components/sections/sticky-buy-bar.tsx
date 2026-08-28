@@ -17,27 +17,26 @@ export function StickyBuyBar() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const heroEl = document.getElementById("hero");
-    const pricingEl = document.getElementById("pricing");
-    if (!heroEl || !pricingEl) return;
+    const onScroll = () => {
+      const heroEl = document.getElementById("hero");
+      const pricingEl = document.getElementById("pricing");
+      if (!heroEl || !pricingEl) return;
 
-    const state = { heroVisible: true, pricingVisible: false };
+      const pastHero = heroEl.getBoundingClientRect().bottom <= 0;
+      const pricing = pricingEl.getBoundingClientRect();
+      const pricingOnScreen =
+        pricing.top < window.innerHeight && pricing.bottom > 0;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.target === heroEl) state.heroVisible = entry.isIntersecting;
-          if (entry.target === pricingEl)
-            state.pricingVisible = entry.isIntersecting;
-        }
-        setVisible(!state.heroVisible && !state.pricingVisible);
-      },
-      { threshold: 0 },
-    );
+      setVisible(pastHero && !pricingOnScreen);
+    };
 
-    observer.observe(heroEl);
-    observer.observe(pricingEl);
-    return () => observer.disconnect();
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   return (
