@@ -13,7 +13,10 @@ export function Steps() {
   const { steps } = content;
 
   return (
-    <section id="how-it-works" className="py-section md:py-section-lg">
+    <section
+      id="how-it-works"
+      className="bg-gradient-to-b from-background to-brand-tint/40 py-section md:py-section-lg"
+    >
       <div className="container">
         <h2 className="text-title">{steps.heading}</h2>
         <p className="mt-3 max-w-xl text-body text-muted-foreground">

@@ -109,8 +109,8 @@ const config: Config = {
       },
       spacing: {
         // Ritmo vertical de secciones: py-section (mobile) / md:py-section-lg
-        section: "4rem", // 64px
-        "section-lg": "7rem", // 112px
+        section: "3.5rem", // 56px
+        "section-lg": "6rem", // 96px
       },
       borderRadius: {
         lg: "var(--radius)",

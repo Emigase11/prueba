@@ -10,7 +10,7 @@ export function Impact() {
   const { impact } = content;
 
   return (
-    <section id="impact" className="py-section md:py-section-lg">
+    <section id="impact" className="bg-muted/40 py-section md:py-section-lg">
       <div className="container">
         {/* Texto oscuro sobre el naranja, no blanco: blanco sobre #F26522 da
             2.9:1 y no pasa AA para texto de cuerpo; el oscuro da 5.0:1. */}

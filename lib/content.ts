@@ -128,7 +128,9 @@ export interface SiteContent {
     heading: string;
     subheading: string;
     playLabel: string;
-    /** Loop ambiente, sin audio. Solo desktop: en mobile se muestra el poster. */
+    filmCaption: string;
+    loopCaption: string;
+    /** Loop ambiente, sin audio; autoreproduce en todos los tamanos. */
     loopSrc: string;
     /** Film completo con audio. preload="none": solo baja si el usuario le da play. */
     filmSrc: string;
@@ -314,6 +316,8 @@ export const content: SiteContent = {
     loopSrc: "/videos/cmax-air-x2-loop.mp4",
     filmSrc: "/videos/cmax-air-x2-film.mp4",
     filmDuration: "0:30",
+    filmCaption: "The full presentation film - 30 seconds, with sound.",
+    loopCaption: "Studio, interior and open water - 11 seconds on loop.",
     loopPoster: {
       src: "/images/video-loop-poster.jpg",
       alt: "The Cmax Air X2 AeroCabin lit in a dark studio, turning slowly",
