@@ -1,6 +1,8 @@
 import { content } from "@/lib/content";
 import { Hero } from "@/components/sections/hero";
 import { Steps } from "@/components/sections/steps";
+import { Pricing } from "@/components/sections/pricing";
+import { StickyBuyBar } from "@/components/sections/sticky-buy-bar";
 
 /**
  * Esqueleto de la página: una caja por sección, en el orden final.
@@ -8,7 +10,6 @@ import { Steps } from "@/components/sections/steps";
  * components/sections/ a medida que avanzamos sección por sección.
  */
 const sections: { id: string; label: string }[] = [
-  { id: "pricing", label: `3. ${content.pricing.heading}` },
   { id: "use-cases", label: `4. ${content.useCases.heading}` },
   { id: "tech", label: `5. ${content.tech.heading}` },
   { id: "specs", label: `6. ${content.specs.heading}` },
@@ -19,10 +20,12 @@ const sections: { id: string; label: string }[] = [
 ];
 
 export default function Home() {
+  // pb-24 en mobile: deja aire para que StickyBuyBar no tape el final.
   return (
-    <main>
+    <main className="pb-24 md:pb-0">
       <Hero />
       <Steps />
+      <Pricing />
       <div className="container py-section">
         <div className="space-y-4">
           {sections.map((section) => (
@@ -38,7 +41,7 @@ export default function Home() {
           ))}
         </div>
       </div>
-      {/* Barra fija inferior mobile (precio + CTA) se agrega con la sección de pricing */}
+      <StickyBuyBar />
     </main>
   );
 }

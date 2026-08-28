@@ -21,20 +21,36 @@ export interface ImageAsset {
   alt: string;
 }
 
+/**
+ * Fila comparable entre planes. Las etiquetas y su orden son IDÉNTICOS en
+ * ambos planes para que las tarjetas se lean en paralelo de un vistazo.
+ * Solo se comparan datos que el brief define para AMBOS planes; los
+ * beneficios exclusivos van en `extras` (no se afirma su ausencia en el otro).
+ * `tone` colorea el valor: "good" verde, "warn" ámbar, undefined neutro.
+ */
+export interface PlanRow {
+  label: string;
+  value: string;
+  tone?: "good" | "warn";
+}
+
 export interface PricingPlan {
   id: "founders" | "preorder";
   name: string;
+  tagline: string;
   /** Pago exigido hoy, en USD */
   priceToday: number;
+  priceTodayLabel: string;
   /** Costo total del plan, en USD */
   priceTotal: number;
   priceNote: string;
-  features: string[];
+  rows: PlanRow[];
+  /** Beneficios exclusivos de este plan. Vacío = sin extras. */
+  extras: string[];
   cta: Cta;
   recommended: boolean;
   /** Ahorro vs. el otro plan, en USD (solo el recomendado) */
   savings?: number;
-  refundPolicy: string;
 }
 
 export interface SpecRow {
@@ -74,9 +90,16 @@ export interface SiteContent {
     subheading: string;
     items: { title: string; description: string; image: ImageAsset }[];
   };
+  /** Barra fija inferior en mobile. */
+  stickyBar: {
+    priceLabel: string;
+    cta: Cta;
+  };
   pricing: {
     heading: string;
     subheading: string;
+    recommendedLabel: string;
+    savingsLabel: string;
     plans: PricingPlan[];
   };
   useCases: {
@@ -176,36 +199,51 @@ export const content: SiteContent = {
     ],
   },
 
+  stickyBar: {
+    priceLabel: "Launch price",
+    cta: { label: "Reserve yours", href: "#pricing" },
+  },
+
   pricing: {
     heading: "Two ways to get yours",
     subheading: "Both options reserve a Cmax Air X2 from the first production run.",
+    recommendedLabel: "Recommended",
+    savingsLabel: "Save",
     plans: [
       {
         id: "founders",
         name: "Founder's Edition",
+        tagline: "Pay in full, save the most.",
         priceToday: 1295,
+        priceTodayLabel: "Pay today",
         priceTotal: 1295,
-        priceNote: "One payment. Nothing else to pay.",
-        features: [
-          "Free shipping",
-          "Numbered serial unit",
-          "First in the production queue",
+        priceNote: "One payment. Nothing left to pay.",
+        rows: [
+          { label: "Total cost", value: "$1,295", tone: "good" },
+          { label: "Production queue", value: "First in line", tone: "good" },
+          { label: "Cancellation", value: "Non-refundable", tone: "warn" },
         ],
+        extras: ["Free shipping", "Numbered serial unit"],
         cta: { label: "Get Founder's Edition", href: "#" },
         recommended: true,
         savings: 259,
-        refundPolicy: "Non-refundable",
       },
       {
         id: "preorder",
         name: "Pre-order",
+        tagline: "Small deposit, decide later.",
         priceToday: 299,
+        priceTodayLabel: "Deposit today",
         priceTotal: 1554,
-        priceNote: "USD 299 deposit today + USD 1,255 balance before shipping.",
-        features: ["Refundable deposit", "Standard production queue", "Cancel anytime"],
-        cta: { label: "Pre-order for USD 299", href: "#" },
+        priceNote: "$299 now + $1,255 balance before shipping.",
+        rows: [
+          { label: "Total cost", value: "$1,554" },
+          { label: "Production queue", value: "Standard" },
+          { label: "Cancellation", value: "Cancel anytime", tone: "good" },
+        ],
+        extras: [],
+        cta: { label: "Pre-order for $299", href: "#" },
         recommended: false,
-        refundPolicy: "Deposit fully refundable",
       },
     ],
   },
