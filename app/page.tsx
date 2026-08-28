@@ -1,4 +1,6 @@
 import { content } from "@/lib/content";
+import { Hero } from "@/components/sections/hero";
+import { Steps } from "@/components/sections/steps";
 
 /**
  * Esqueleto de la página: una caja por sección, en el orden final.
@@ -6,8 +8,6 @@ import { content } from "@/lib/content";
  * components/sections/ a medida que avanzamos sección por sección.
  */
 const sections: { id: string; label: string }[] = [
-  { id: "hero", label: `1. Hero — ${content.hero.headline}` },
-  { id: "how-it-works", label: `2. ${content.steps.heading}` },
   { id: "pricing", label: `3. ${content.pricing.heading}` },
   { id: "use-cases", label: `4. ${content.useCases.heading}` },
   { id: "tech", label: `5. ${content.tech.heading}` },
@@ -21,12 +21,10 @@ const sections: { id: string; label: string }[] = [
 export default function Home() {
   return (
     <main>
+      <Hero />
+      <Steps />
       <div className="container py-section">
-        <p className="text-body-sm font-semibold uppercase tracking-widest text-brand">
-          {content.brand.name} — demo scaffold
-        </p>
-        <h1 className="mt-2 text-display">{content.brand.productName}</h1>
-        <div className="mt-10 space-y-4">
+        <div className="space-y-4">
           {sections.map((section) => (
             <section
               key={section.id}
