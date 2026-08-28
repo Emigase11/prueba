@@ -276,7 +276,7 @@ export const content: SiteContent = {
         description: "Ground, truck bed, snow — or water.",
         image: {
           src: "/images/cmax-air-step-1-1.png",
-          alt: "Step 1: choosing a surface for the Cmax Air X2",
+          alt: "Step 1: a person kneels beside the folded Cmax Air X2 panel laid flat on the ground",
         },
       },
       {
@@ -284,15 +284,15 @@ export const content: SiteContent = {
         description: "High-pressure drop-stitch chambers give it a rigid structure.",
         image: {
           src: "/images/cmax-air-step-2-1.png",
-          alt: "Step 2: inflating the Cmax Air X2",
+          alt: "Step 2: a person inflates the Cmax Air X2 with a hand pump as the cabin takes shape",
         },
       },
       {
         title: "Move in",
-        description: "A solid, insulated cabin — set up in minutes.",
+        description: "A rigid, insulated cabin — no poles, no frame.",
         image: {
           src: "/images/cmax-air-step-3-1.png",
-          alt: "Step 3: the Cmax Air X2 fully set up",
+          alt: "Step 3: the Cmax Air X2 fully inflated, with a person opening the side door",
         },
       },
     ],
@@ -300,9 +300,11 @@ export const content: SiteContent = {
 
   video: {
     eyebrow: "See it in motion",
-    heading: "Thirty seconds is all it takes to get it.",
+    heading: "Watch it become a cabin",
+    // Ojo: el "30 segundos" es la duración del film, NO el tiempo de armado.
+    // Tiene que quedar explícito o se lee como un claim del producto.
     subheading:
-      "From folded panel to floating cabin — watch the Cmax Air X2 do the thing photos can't show.",
+      "A 30-second film — from folded panel to floating shelter, doing what photos can't.",
     playLabel: "Watch the film",
     loopSrc: "/videos/cmax-air-x2-loop.mp4",
     filmSrc: "/videos/cmax-air-x2-film.mp4",
@@ -342,7 +344,9 @@ export const content: SiteContent = {
           { label: "Cancellation", value: "Non-refundable", tone: "warn" },
         ],
         extras: ["Free shipping", "Numbered serial unit"],
-        cta: { label: "Get Founder's Edition", href: "#" },
+        // Sin checkout todavía: apunta a la captura de email en vez de "#",
+        // que saltaría al tope de la página y parecería roto.
+        cta: { label: "Get Founder's Edition", href: "#email" },
         recommended: true,
         savings: 259,
       },
@@ -357,10 +361,10 @@ export const content: SiteContent = {
         rows: [
           { label: "Total cost", value: "$1,554" },
           { label: "Production queue", value: "Standard" },
-          { label: "Cancellation", value: "Cancel anytime", tone: "good" },
+          { label: "Cancellation", value: "Refundable, cancel anytime", tone: "good" },
         ],
         extras: [],
-        cta: { label: "Pre-order for $299", href: "#" },
+        cta: { label: "Pre-order for $299", href: "#email" },
         recommended: false,
       },
     ],
@@ -368,7 +372,9 @@ export const content: SiteContent = {
 
   useCases: {
     heading: "One cabin, every terrain",
-    subheading: "Real photos of the Cmax Air X2 in the field.",
+    // No decir "fotos reales": estas cinco imágenes son renders oficiales
+    // de Cmax, no fotografías.
+    subheading: "The same cabin, in five very different places.",
     items: [
       {
         title: "Lakes & calm water",
@@ -396,7 +402,7 @@ export const content: SiteContent = {
       },
       {
         title: "Events & festivals",
-        description: "A private cabin in the middle of the desert, up in minutes.",
+        description: "A private, lockable cabin in the middle of the desert.",
         image: {
           src: "/images/burning-man-Aerocabin-Cmax-X2.jpg",
           alt: "Several Cmax Air X2 AeroCabins set up at a desert festival at night, lit from inside",
@@ -438,10 +444,12 @@ export const content: SiteContent = {
   specs: {
     heading: "Specs",
     subheading: "The numbers that matter, and the full sheet below.",
+    // Cada destacado repite EXACTAMENTE un dato de `rows`. Si cambia una
+    // fila, cambiar también el destacado que le corresponde.
     highlights: [
-      { value: "42 kg", label: "Packed weight" },
-      { value: "2 + 2", label: "Adults and kids" },
-      { value: "10 bar", label: "Max pressure" },
+      { value: "42 kg", label: "Weight" },
+      { value: "2 + 2", label: "Adults + kids" },
+      { value: "10 bar", label: "Max inflation pressure" },
       { value: "3 years", label: "Warranty" },
     ],
     rows: [
@@ -456,7 +464,7 @@ export const content: SiteContent = {
 
   emailCapture: {
     heading: "Be first to know",
-    subheading: "Get notified when the Cmax Air X2 ships and when new colors drop.",
+    subheading: "Get notified when production starts and when your unit ships.",
     placeholder: "Your email",
     buttonLabel: "Notify me",
     disclaimer: "No spam. One email when it matters.",
@@ -477,7 +485,8 @@ export const content: SiteContent = {
   impact: {
     heading: "Buy one, protect a family",
     ratioLabel: "1 in 10",
-    body: "For every 10 units sold, Cmax System donates 1 AeroCabin to families in flood-affected areas.",
+    // El brief solo define el ratio. No inventar quién recibe la donación.
+    body: "For every 10 units sold, Cmax System donates 1 AeroCabin.",
   },
 
   faq: {

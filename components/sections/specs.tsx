@@ -26,16 +26,17 @@ export function Specs() {
         {/* Los cuatro numeros que la gente busca primero, antes de la tabla. */}
         <dl className="mt-8 grid grid-cols-2 gap-4 md:mt-12 md:grid-cols-4">
           {specs.highlights.map((item) => (
-            <div key={item.label} className="rounded-lg bg-brand-tint px-5 py-6">
-              <dt className="sr-only">{item.label}</dt>
-              <dd>
-                <span className="block text-title text-brand-ink">
-                  {item.value}
-                </span>
-                <span className="mt-1 block text-body-sm text-muted-foreground">
-                  {item.label}
-                </span>
-              </dd>
+            // col-reverse: en el DOM va dt (etiqueta) y despues dd (valor),
+            // que es el orden que anuncia un lector de pantalla; visualmente
+            // el numero queda arriba. Sin dt oculto, asi no se repite.
+            <div
+              key={item.label}
+              className="flex flex-col-reverse rounded-lg bg-brand-tint px-5 py-6"
+            >
+              <dt className="mt-1 text-body-sm text-muted-foreground">
+                {item.label}
+              </dt>
+              <dd className="text-title text-brand-ink">{item.value}</dd>
             </div>
           ))}
         </dl>

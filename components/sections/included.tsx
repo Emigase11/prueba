@@ -10,7 +10,10 @@ export function Included() {
   const { included } = content;
 
   return (
-    <section id="included" className="py-section md:py-section-lg">
+    <section
+      id="included"
+      className="bg-muted/40 py-section md:py-section-lg"
+    >
       <div className="container">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-title">{included.heading}</h2>
@@ -19,7 +22,7 @@ export function Included() {
           </p>
         </div>
 
-        <div className="mt-10 flex justify-center rounded-lg bg-brand-tint px-6 py-10 md:mt-14 md:py-14">
+        <div className="mt-10 flex justify-center rounded-lg bg-background px-6 py-10 md:mt-14 md:py-14">
           <Image
             src={included.image.src}
             alt={included.image.alt}
