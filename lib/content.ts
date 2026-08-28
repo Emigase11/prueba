@@ -304,7 +304,7 @@ export const content: SiteContent = {
     ],
     image: {
       src: "/images/cmax-air-x2-dropstitch-aerocabin.jpg",
-      alt: "Close-up of the Cmax Air X2 drop-stitch panel construction",
+      alt: "Cutaway view of the Cmax Air X2 with a wall panel peeled back, exposing the dense internal drop-stitch threads that run between the inner and outer layers",
     },
   },
 

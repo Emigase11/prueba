@@ -127,6 +127,12 @@ export function Pricing() {
             <PlanCard key={plan.id} plan={plan} />
           ))}
         </div>
+
+        {/* ÚNICA fecha de entrega de la página. Mientras deliveryDate sea
+            null se muestra el texto neutro. */}
+        <p className="mt-6 text-center text-body-sm text-muted-foreground">
+          {content.deliveryDate ?? content.deliveryDateFallback}
+        </p>
       </div>
     </section>
   );
