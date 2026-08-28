@@ -2,6 +2,7 @@ import { content } from "@/lib/content";
 import { Hero } from "@/components/sections/hero";
 import { Steps } from "@/components/sections/steps";
 import { Pricing } from "@/components/sections/pricing";
+import { UseCases } from "@/components/sections/use-cases";
 import { StickyBuyBar } from "@/components/sections/sticky-buy-bar";
 
 /**
@@ -10,7 +11,6 @@ import { StickyBuyBar } from "@/components/sections/sticky-buy-bar";
  * components/sections/ a medida que avanzamos sección por sección.
  */
 const sections: { id: string; label: string }[] = [
-  { id: "use-cases", label: `4. ${content.useCases.heading}` },
   { id: "tech", label: `5. ${content.tech.heading}` },
   { id: "specs", label: `6. ${content.specs.heading}` },
   { id: "email", label: `7. ${content.emailCapture.heading}` },
@@ -26,6 +26,7 @@ export default function Home() {
       <Hero />
       <Steps />
       <Pricing />
+      <UseCases />
       <div className="container py-section">
         <div className="space-y-4">
           {sections.map((section) => (

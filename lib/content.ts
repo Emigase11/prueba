@@ -159,7 +159,7 @@ export const content: SiteContent = {
       "The Cmax Air X2 is an inflatable AeroCabin for camping, overlanding and flood emergencies. Choose a surface, inflate, and you're in.",
     image: {
       src: "/images/cmax-air-X2-water.png",
-      alt: "Cmax Air X2 AeroCabin floating on open water",
+      alt: "Two people sit on top of the Cmax Air X2 AeroCabin as it floats on a calm mountain lake at sunset",
     },
     launchPrice: 1295,
     msrp: 2590,
@@ -254,10 +254,10 @@ export const content: SiteContent = {
     items: [
       {
         title: "Lakes & calm water",
-        description: "It floats. Anchor it and sleep on the water.",
+        description: "It floats. Anchor it and spend the night on the water.",
         image: {
           src: "/images/cmax-air-X2-water.png",
-          alt: "Cmax Air X2 floating on a lake",
+          alt: "The Cmax Air X2 floats on a calm mountain lake while two people fish from the top",
         },
       },
       {
@@ -265,7 +265,7 @@ export const content: SiteContent = {
         description: "Rigid walls stand up to wind and cold nights.",
         image: {
           src: "/images/montain-cmax-air-x2.png",
-          alt: "Cmax Air X2 set up in the mountains",
+          alt: "A person sits on top of the Cmax Air X2 at a mountain overlook at sunset",
         },
       },
       {
@@ -273,23 +273,23 @@ export const content: SiteContent = {
         description: "Fits in a pickup bed and turns it into a camper.",
         image: {
           src: "/images/cmax-air-x2-cibertruk.png",
-          alt: "Cmax Air X2 mounted on a pickup truck bed",
+          alt: "The Cmax Air X2 inflated in the bed of a pickup truck beside a mountain lake",
         },
       },
       {
         title: "Events & festivals",
-        description: "Set up a private cabin anywhere in minutes.",
+        description: "A private cabin in the middle of the desert, up in minutes.",
         image: {
           src: "/images/burning-man-Aerocabin-Cmax-X2.jpg",
-          alt: "Cmax Air X2 AeroCabin at a festival",
+          alt: "Several Cmax Air X2 AeroCabins set up at a desert festival at night, lit from inside",
         },
       },
       {
         title: "Flood preparedness",
-        description: "A floating shelter when water rises. Designed with rescue in mind.",
+        description: "A floating shelter when the water rises. Designed with rescue in mind.",
         image: {
           src: "/images/flooding-cmax-air-x2.png",
-          alt: "Cmax Air X2 used as a floating shelter in a flood",
+          alt: "A family boards a floating Cmax Air X2 on a flooded residential street at dusk",
         },
       },
     ],
