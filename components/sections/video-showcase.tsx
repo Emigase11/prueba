@@ -21,7 +21,7 @@ export function VideoShowcase() {
   return (
     <section
       id="video"
-      className="bg-foreground py-section text-background md:py-section-lg"
+      className="bg-tech-grid bg-foreground py-section text-background md:py-section-lg"
     >
       <div className="container">
         <div className="mx-auto max-w-2xl text-center">
@@ -32,7 +32,7 @@ export function VideoShowcase() {
           <p className="mt-3 text-body text-background/70">{video.subheading}</p>
         </div>
 
-        <div className="relative mt-10 aspect-video overflow-hidden rounded-lg bg-black md:mt-14">
+        <div className="relative mt-10 aspect-video overflow-hidden rounded-lg bg-black shadow-2xl shadow-brand/20 md:mt-14">
           {playing ? (
             <video
               controls
@@ -79,11 +79,18 @@ export function VideoShowcase() {
                 onClick={() => setPlaying(true)}
                 className="group absolute inset-0 flex flex-col items-center justify-center gap-4 text-white transition-colors hover:bg-black/20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand focus-visible:ring-inset"
               >
-                <span className="flex size-16 items-center justify-center rounded-full bg-brand transition-transform duration-300 group-hover:scale-110 motion-reduce:transition-none motion-reduce:group-hover:scale-100 md:size-20">
-                  <Play
+                <span className="relative">
+                  {/* Anillo de pulso detrás del botón */}
+                  <span
                     aria-hidden
-                    className="ml-1 size-7 fill-white text-white md:size-8"
+                    className="absolute inset-0 animate-ping rounded-full bg-brand opacity-40 motion-reduce:hidden"
                   />
+                  <span className="relative flex size-16 items-center justify-center rounded-full bg-brand transition-transform duration-300 group-hover:scale-110 motion-reduce:transition-none motion-reduce:group-hover:scale-100 md:size-20">
+                    <Play
+                      aria-hidden
+                      className="ml-1 size-7 fill-white text-white md:size-8"
+                    />
+                  </span>
                 </span>
                 <span className="text-subtitle">
                   {video.playLabel}

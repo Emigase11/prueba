@@ -18,6 +18,12 @@ import { StickyBuyBar } from "@/components/sections/sticky-buy-bar";
 export default function Home() {
   return (
     <>
+      {/* Barra de progreso de lectura: CSS puro con animation-timeline.
+          Sin soporte del navegador queda en scaleX(0), invisible. */}
+      <div
+        aria-hidden
+        className="scroll-progress fixed inset-x-0 top-0 z-[60] h-1 bg-brand"
+      />
       <SiteHeader />
       {/* pb-24 en mobile: deja aire para que StickyBuyBar no tape el final. */}
       <main className="pb-24 md:pb-0">

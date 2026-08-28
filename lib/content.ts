@@ -107,7 +107,10 @@ export interface SiteContent {
   hero: {
     eyebrow: string;
     headline: string;
+    /** Remate del titular, renderizado con el brillo animado. */
+    headlineAccent?: string;
     subheadline: string;
+    scrollCueLabel: string;
     image: ImageAsset;
     launchPrice: number;
     msrp: number;
@@ -253,7 +256,9 @@ export const content: SiteContent = {
 
   hero: {
     eyebrow: "Inflatable AeroCabin",
-    headline: "A cabin that goes anywhere. Even on water.",
+    headline: "A cabin that goes anywhere.",
+    headlineAccent: "Even on water.",
+    scrollCueLabel: "Scroll down to see how it works",
     subheadline:
       "The Cmax Air X2 is an inflatable AeroCabin for camping, overlanding and flood emergencies. Choose a surface, inflate, and you're in.",
     image: {

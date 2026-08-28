@@ -1,3 +1,4 @@
+import { StatValue } from "@/components/fx/stat-value";
 import { content } from "@/lib/content";
 import { cn } from "@/lib/utils";
 import {
@@ -36,7 +37,9 @@ export function Specs() {
               <dt className="mt-1 text-body-sm text-muted-foreground">
                 {item.label}
               </dt>
-              <dd className="text-title text-brand-ink">{item.value}</dd>
+              <dd className="text-title text-brand-ink">
+                <StatValue text={item.value} />
+              </dd>
             </div>
           ))}
         </dl>

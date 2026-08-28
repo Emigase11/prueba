@@ -48,7 +48,7 @@ export function EmailCapture() {
               required
               autoComplete="email"
               placeholder={emailCapture.placeholder}
-              className="h-12 flex-1 bg-background text-body"
+              className="h-12 flex-1 bg-background text-body transition-shadow focus-visible:shadow-[0_0_40px_-8px] focus-visible:shadow-brand/60 focus-visible:ring-brand"
             />
             <Button type="submit" size="lg" className="h-12 text-body font-semibold">
               {emailCapture.buttonLabel}
