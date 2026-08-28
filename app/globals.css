@@ -2,26 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/*
+ * Paleta shadcn en tripletas HSL (la config de Tailwind las envuelve en hsl()).
+ * La landing es light-only: una página de venta con un solo look comprometido.
+ *
+ * --primary = naranja de marca (PLACEHOLDER #F26522 ≈ hsl(19 89% 54%)).
+ * Cuando llegue el hex definitivo, actualizar --primary y --ring acá
+ * y brand.* en tailwind.config.ts. Nada más.
+ */
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 0 0% 100%;
+    --foreground: 220 15% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 12%;
+    --primary: 19 89% 54%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 15% 12%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 42%;
+    --accent: 22 92% 95%;
+    --accent-foreground: 19 75% 32%;
+    --destructive: 0 72% 51%;
+    --border: 220 13% 90%;
+    --input: 220 13% 90%;
+    --ring: 19 89% 54%;
+    --radius: 0.75rem;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground font-sans text-body antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading;
   }
 }
