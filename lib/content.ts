@@ -53,9 +53,16 @@ export interface PricingPlan {
   savings?: number;
 }
 
-export interface SpecRow {
+/**
+ * Grupo de la ficha técnica. `note` es para aclaraciones legales al pie del
+ * grupo (ej. que la flotabilidad no lo convierte en salvavidas certificado).
+ * `layout: "chips"` renderiza los valores como etiquetas en vez de lista.
+ */
+export interface SpecGroup {
   label: string;
-  value: string;
+  values: string[];
+  note?: string;
+  layout?: "list" | "chips";
   /** true = dato pendiente de confirmación del cliente */
   pending?: boolean;
 }
@@ -192,9 +199,9 @@ export interface SiteContent {
   specs: {
     heading: string;
     subheading: string;
-    /** Los 4 datos que la gente busca primero, sacados de `rows`. */
+    /** Los 4 datos que la gente busca primero, sacados de `groups`. */
     highlights: { value: string; label: string }[];
-    rows: SpecRow[];
+    groups: SpecGroup[];
   };
   emailCapture: {
     heading: string;
@@ -500,23 +507,96 @@ export const content: SiteContent = {
   },
 
   specs: {
-    heading: "Specs",
-    subheading: "The numbers that matter, and the full sheet below.",
-    // Cada destacado repite EXACTAMENTE un dato de `rows`. Si cambia una
-    // fila, cambiar también el destacado que le corresponde.
+    heading: "Tech specs",
+    subheading:
+      "Need more info? Explore the core specifications behind the Cmax Air X2 — advanced drop-stitch technology, engineered for mobility, comfort and rapid deployment.",
+    // Cada destacado repite EXACTAMENTE un dato de `groups`. Si cambia un
+    // grupo, cambiar tambien el destacado que le corresponde.
     highlights: [
-      { value: "42 kg", label: "Weight" },
+      { value: "28 kg", label: "Weight" },
       { value: "2 + 2", label: "Adults + kids" },
       { value: "10 bar", label: "Max inflation pressure" },
-      { value: "3 years", label: "Warranty" },
+      { value: "2 years", label: "Cabin warranty" },
     ],
-    rows: [
-      { label: "Dimensions", value: "To be confirmed", pending: true },
-      { label: "Weight", value: "42 kg" },
-      { label: "Capacity", value: "2 adults + 2 kids" },
-      { label: "Inflation pressure", value: "Up to 10 bar" },
-      { label: "Materials", value: "Drop-stitch construction — details to be confirmed", pending: true },
-      { label: "Warranty", value: "3 years" },
+    groups: [
+      {
+        label: "Dimensions",
+        values: ['98" × 49" × 53"', "248 cm × 125 cm × 135 cm"],
+      },
+      {
+        label: "Structure",
+        values: [
+          "High-pressure drop-stitch inflatable walls",
+          "8 cm reinforced structural thickness",
+          "Thermal welded seams",
+        ],
+      },
+      {
+        label: "Capacity",
+        values: [
+          "Designed for up to 2 adults and 2 kids",
+          "Spacious panoramic interior",
+        ],
+      },
+      {
+        label: "Weight",
+        values: ["Approx. 28 kg / 61 lbs", "Portable and compact when packed"],
+      },
+      {
+        label: "Inflation",
+        values: [
+          "Rapid inflation system",
+          "Single front inflation valve",
+          "Compatible with electric and manual pumps",
+          "Max inflation 10 bar",
+        ],
+      },
+      {
+        label: "Floating capability",
+        values: [
+          "Buoyant inflatable structure",
+          "Designed to float during flood situations",
+        ],
+        // Aclaracion legal del cliente. No quitar ni suavizar.
+        note: "Not a certified life-saving device. Certified life jackets should always be used.",
+      },
+      {
+        label: "Materials",
+        values: [
+          "Reinforced PVC drop-stitch fabric",
+          "UV and weather resistant components",
+          "High-durability outdoor construction",
+        ],
+      },
+      {
+        label: "Portability",
+        values: [
+          "Deflates into a compact transport bag",
+          "Easy to carry, store and deploy",
+          "Packed: 130 × 52 × 32 cm / 51.18 × 20.47 × 12.60 in",
+        ],
+      },
+      {
+        label: "Warranty",
+        values: [
+          "2 years on the cabin, inflatable system and structural components",
+          "1 year on accessories and non-structural components",
+          "Replacements and repairs carry the remaining period of the original warranty",
+        ],
+      },
+      {
+        label: "Use cases",
+        layout: "chips",
+        values: [
+          "Camping",
+          "Overlanding",
+          "Concerts",
+          "Fishing",
+          "Emergency preparedness",
+          "Flood response",
+          "Remote exploration",
+        ],
+      },
     ],
   },
 
@@ -567,7 +647,7 @@ export const content: SiteContent = {
       {
         question: "Does it really float?",
         answer:
-          "Yes. The high-pressure drop-stitch chambers make the cabin buoyant, which is why it also works as a flood-preparedness shelter.",
+          "Yes. The high-pressure drop-stitch chambers make the cabin buoyant, and it is designed to float during flood situations. Important: it is not a certified life-saving device — certified life jackets should always be used.",
       },
       {
         question: "When will it ship?",
@@ -579,7 +659,8 @@ export const content: SiteContent = {
       },
       {
         question: "What warranty does it have?",
-        answer: "Every Cmax Air X2 comes with a 3-year warranty.",
+        answer:
+          "The cabin, inflatable system and structural components are covered for 2 years from the purchase date. Accessories and non-structural components are covered for 1 year. Replacements and repaired components carry the remaining period of the original warranty.",
       },
     ],
   },

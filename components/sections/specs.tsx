@@ -1,25 +1,19 @@
+import { AlertTriangle } from "lucide-react";
 import { StatValue } from "@/components/fx/stat-value";
 import { PendingHint } from "@/components/fx/pending-hint";
 import { content } from "@/lib/content";
 import { cn } from "@/lib/utils";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-} from "@/components/ui/table";
 
 /**
- * Specs en tabla de dos columnas. Las filas marcadas `pending` son datos que
- * el cliente todavía no confirmó: se muestran atenuadas en vez de inventar
- * un valor, con un tooltip que explica por qué faltan.
+ * Ficha tecnica agrupada. Reemplaza a la tabla plana de 6 filas: el cliente
+ * paso la ficha completa organizada por temas (dimensiones, estructura,
+ * inflado, flotabilidad, etc.) y esa agrupacion se respeta.
  *
- * Sección oscura. Ojo con dos cosas al tocar estilos acá:
- *  - Los tokens son los de fondo oscuro (text-background/*, brand-light),
- *    no los de fondo claro (text-muted-foreground, brand-ink).
- *  - TableRow de shadcn trae `border-b` y `hover:bg-muted/50`, ambos grises
- *    para fondo claro: hay que pisarlos o los bordes desaparecen y el hover
- *    prende un bloque gris claro sobre el negro.
+ * El grupo con `note` renderiza la aclaracion legal destacada, no como letra
+ * chica: la de flotabilidad aclara que NO es un salvavidas certificado.
+ *
+ * Seccion oscura: los tokens son los de fondo oscuro (text-background/*,
+ * brand-light), no los de fondo claro (text-muted-foreground, brand-ink).
  */
 export function Specs() {
   const { specs } = content;
@@ -36,11 +30,11 @@ export function Specs() {
 
       <div className="container relative">
         <h2 className="text-title">{specs.heading}</h2>
-        <p className="mt-3 max-w-xl text-body text-background/70">
+        <p className="mt-3 max-w-2xl text-body text-background/70">
           {specs.subheading}
         </p>
 
-        {/* Los cuatro numeros que la gente busca primero, antes de la tabla. */}
+        {/* Los cuatro numeros que la gente busca primero, antes de la ficha. */}
         <dl className="mt-8 grid grid-cols-2 gap-4 md:mt-12 md:grid-cols-4">
           {specs.highlights.map((item) => (
             // col-reverse: en el DOM va dt (etiqueta) y despues dd (valor),
@@ -60,31 +54,58 @@ export function Specs() {
           ))}
         </dl>
 
-        <div className="mt-10 overflow-x-auto">
-          <Table className="max-w-2xl">
-            <TableBody>
-              {specs.rows.map((row) => (
-                <TableRow
-                  key={row.label}
-                  className="border-background/15 hover:bg-background/5"
-                >
-                  <TableCell className="w-1/2 py-4 text-body-sm text-background/60">
-                    {row.label}
-                  </TableCell>
-                  <TableCell
-                    className={cn(
-                      "py-4 text-body-sm font-semibold",
-                      row.pending && "font-normal italic text-background/50",
-                    )}
-                  >
-                    {row.value}
-                    {row.pending && <PendingHint />}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+        <dl className="mt-10 grid gap-x-10 gap-y-8 md:mt-14 md:grid-cols-2 lg:grid-cols-3">
+          {specs.groups.map((group) => (
+            <div
+              key={group.label}
+              className="border-t border-background/15 pt-5"
+            >
+              <dt className="text-body-sm font-semibold uppercase tracking-widest text-brand-light">
+                {group.label}
+                {group.pending && <PendingHint />}
+              </dt>
+
+              <dd>
+                {group.layout === "chips" ? (
+                  <ul className="mt-3 flex flex-wrap gap-2">
+                    {group.values.map((value) => (
+                      <li
+                        key={value}
+                        className="rounded-full border border-background/15 bg-background/5 px-3 py-1 text-body-sm text-background/80"
+                      >
+                        {value}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <ul className="mt-3 space-y-1.5">
+                    {group.values.map((value) => (
+                      <li
+                        key={value}
+                        className={cn(
+                          "text-body-sm text-background/80",
+                          group.pending && "italic text-background/50",
+                        )}
+                      >
+                        {value}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {group.note && (
+                  <p className="mt-3 flex gap-2 rounded-md border border-amber-400/30 bg-amber-400/10 px-3 py-2 text-body-sm text-amber-200">
+                    <AlertTriangle
+                      aria-hidden
+                      className="mt-0.5 size-4 shrink-0"
+                    />
+                    <span>{group.note}</span>
+                  </p>
+                )}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   );
