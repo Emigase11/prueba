@@ -3,18 +3,30 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Play } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { content } from "@/lib/content";
 
 /**
  * Los dos videos, visibles a la vez:
- *  - Film (30 s, con audio): click-to-play con controles nativos y
- *    preload="none" - no descarga un byte hasta que el usuario le da play.
+ *  - Film (30 s, con audio): abre en un lightbox a pantalla casi completa,
+ *    con controles nativos. El <video> solo se monta cuando el diálogo se
+ *    abre, así que sigue sin descargar un byte hasta que el usuario le da
+ *    play — y al cerrarlo se desmonta y para.
  *  - Loop (11 s, sin audio): autoreproduce en bucle, tambien en mobile.
  * Con prefers-reduced-motion el loop se oculta y queda su poster.
+ *
+ * Antes el film se reproducía dentro de la tarjeta de 3/5 de ancho. El
+ * lightbox le da el tamaño que un film de producto merece sin romper el
+ * ritmo de la sección.
  */
 export function VideoShowcase() {
   const { video } = content;
-  const [playing, setPlaying] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <section
@@ -31,37 +43,25 @@ export function VideoShowcase() {
         </div>
 
         <div className="mt-10 grid gap-6 md:mt-14 md:grid-cols-5">
-          {/* Film: 30 s con audio, click-to-play */}
+          {/* Film: 30 s con audio, se abre en lightbox */}
           <figure className="flex flex-col md:col-span-3">
-            <div className="relative aspect-video overflow-hidden rounded-lg bg-black shadow-2xl shadow-brand/20">
-              {playing ? (
-                <video
-                  controls
-                  autoPlay
-                  playsInline
-                  preload="none"
-                  poster={video.filmPoster.src}
-                  className="h-full w-full"
-                >
-                  <source src={video.filmSrc} type="video/mp4" />
-                </video>
-              ) : (
-                <>
-                  <Image
-                    src={video.filmPoster.src}
-                    alt={video.filmPoster.alt}
-                    fill
-                    quality={90}
-                    sizes="(min-width: 768px) 60vw, 100vw"
-                    className="object-cover"
-                  />
-                  <div
-                    aria-hidden
-                    className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30"
-                  />
+            <Dialog open={open} onOpenChange={setOpen}>
+              <div className="relative aspect-video overflow-hidden rounded-lg bg-black shadow-2xl shadow-brand/20">
+                <Image
+                  src={video.filmPoster.src}
+                  alt={video.filmPoster.alt}
+                  fill
+                  quality={90}
+                  sizes="(min-width: 768px) 60vw, 100vw"
+                  className="object-cover"
+                />
+                <div
+                  aria-hidden
+                  className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30"
+                />
+                <DialogTrigger asChild>
                   <button
                     type="button"
-                    onClick={() => setPlaying(true)}
                     className="group absolute inset-0 flex flex-col items-center justify-center gap-4 text-white transition-colors hover:bg-black/20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand focus-visible:ring-inset"
                   >
                     <span className="relative">
@@ -84,9 +84,25 @@ export function VideoShowcase() {
                       </span>
                     </span>
                   </button>
-                </>
-              )}
-            </div>
+                </DialogTrigger>
+              </div>
+
+              <DialogContent className="max-w-[min(92vw,72rem)] overflow-hidden border-none bg-black p-0 shadow-2xl shadow-brand/20">
+                <DialogTitle className="sr-only">{video.heading}</DialogTitle>
+                {/* Sin `open` este subárbol no existe: preload="none" real. */}
+                <video
+                  controls
+                  autoPlay
+                  playsInline
+                  preload="none"
+                  poster={video.filmPoster.src}
+                  className="aspect-video w-full"
+                >
+                  <source src={video.filmSrc} type="video/mp4" />
+                </video>
+              </DialogContent>
+            </Dialog>
+
             <figcaption className="mt-3 text-body-sm text-background/60">
               {video.filmCaption}
             </figcaption>

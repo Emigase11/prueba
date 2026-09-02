@@ -14,6 +14,7 @@ import { Impact } from "@/components/sections/impact";
 import { Faq } from "@/components/sections/faq";
 import { Footer } from "@/components/sections/footer";
 import { StickyBuyBar } from "@/components/sections/sticky-buy-bar";
+import { BackToTop } from "@/components/fx/back-to-top";
 
 export default function Home() {
   return (
@@ -43,6 +44,7 @@ export default function Home() {
       </main>
       <Footer />
       <StickyBuyBar />
+      <BackToTop />
     </>
   );
 }

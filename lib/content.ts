@@ -86,6 +86,25 @@ export interface TimelineItem {
  */
 const DELIVERY_DATE: string | null = "September 2026";
 
+/**
+ * Copy de los controles de interfaz (menu, galeria, avisos).
+ * Vive aca por la misma regla que el resto: ningun componente hardcodea texto.
+ */
+export interface UiCopy {
+  menuLabel: string;
+  menuTitle: string;
+  menuDescription: string;
+  backToTopLabel: string;
+  galleryLabel: string;
+  galleryPrev: string;
+  galleryNext: string;
+  galleryOpenHint: string;
+  galleryCounter: (current: number, total: number) => string;
+  pendingSpecNote: string;
+  emailToastTitle: string;
+  emailToastDescription: string;
+}
+
 export interface SiteContent {
   brand: {
     name: string;
@@ -97,6 +116,7 @@ export interface SiteContent {
   deliveryDateFallback: string;
   /** Prefijo de la línea de entrega bajo los planes. */
   deliveryShipsLabel: string;
+  ui: UiCopy;
   timeline: {
     heading: string;
     subheading: string;
@@ -209,6 +229,23 @@ export const content: SiteContent = {
   deliveryDate: DELIVERY_DATE,
   deliveryDateFallback: "Delivery date to be announced",
   deliveryShipsLabel: "Ships",
+
+  ui: {
+    menuLabel: "Menu",
+    menuTitle: "Cmax Air X2",
+    menuDescription: "Jump to any section of the page.",
+    backToTopLabel: "Back to top",
+    galleryLabel: "Use case gallery",
+    galleryPrev: "Previous image",
+    galleryNext: "Next image",
+    galleryOpenHint: "View full size",
+    galleryCounter: (current, total) => `${current} of ${total}`,
+    pendingSpecNote:
+      "Awaiting final confirmation from Cmax System. We publish the exact figure here the day it is signed off.",
+    emailToastTitle: "You're on the list.",
+    emailToastDescription:
+      "We'll email you when production starts and when your unit ships.",
+  },
 
   timeline: {
     heading: "Where we are",

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Check } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { content } from "@/lib/content";
@@ -15,7 +16,7 @@ import { content } from "@/lib/content";
  * destacar del fondo claro que lo rodea.
  */
 export function EmailCapture() {
-  const { emailCapture } = content;
+  const { emailCapture, ui } = content;
   const [submitted, setSubmitted] = useState(false);
 
   return (
@@ -50,6 +51,11 @@ export function EmailCapture() {
                 onSubmit={(event) => {
                   event.preventDefault();
                   setSubmitted(true);
+                  // El bloque inline reemplaza al formulario y queda fuera de
+                  // vista si la persona ya scrolleó; el toast confirma igual.
+                  toast.success(ui.emailToastTitle, {
+                    description: ui.emailToastDescription,
+                  });
                 }}
                 className="mt-8 flex flex-col gap-3 sm:flex-row"
               >

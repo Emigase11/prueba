@@ -62,13 +62,26 @@
       animation-range: entry 0% entry 40%;
     }
 
-    /* Cascada por ítem: pasos, galería y timeline entran de a uno. */
+    /* Cascada por ítem: pasos y timeline entran de a uno. */
     #how-it-works li,
-    #use-cases li,
     #timeline li {
       animation: reveal-in linear both;
       animation-timeline: view();
       animation-range: entry 0% entry 30%;
+    }
+
+    /*
+     * Casos de uso: solo desde md.
+     * En mobile esa lista es un riel horizontal con scroll-snap, y view()
+     * mide contra el scrollport más cercano — que ahí no scrollea en el eje
+     * de bloque. Las tarjetas se quedarían en opacity 0 para siempre.
+     */
+    @media (min-width: 768px) {
+      #use-cases li {
+        animation: reveal-in linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 30%;
+      }
     }
   }
 }

@@ -1,4 +1,5 @@
 import { StatValue } from "@/components/fx/stat-value";
+import { PendingHint } from "@/components/fx/pending-hint";
 import { content } from "@/lib/content";
 import { cn } from "@/lib/utils";
 import {
@@ -11,7 +12,7 @@ import {
 /**
  * Specs en tabla de dos columnas. Las filas marcadas `pending` son datos que
  * el cliente todavía no confirmó: se muestran atenuadas en vez de inventar
- * un valor.
+ * un valor, con un tooltip que explica por qué faltan.
  */
 export function Specs() {
   const { specs } = content;
@@ -59,6 +60,7 @@ export function Specs() {
                     )}
                   >
                     {row.value}
+                    {row.pending && <PendingHint />}
                   </TableCell>
                 </TableRow>
               ))}
