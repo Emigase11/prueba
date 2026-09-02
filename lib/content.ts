@@ -181,10 +181,12 @@ export interface SiteContent {
     paragraphs: string[];
     image: ImageAsset;
   };
-  /** Kit completo. El copy no enumera piezas: las muestra la foto oficial. */
+  /** Kit completo: la foto oficial mas la lista confirmada por el cliente. */
   included: {
     heading: string;
     subheading: string;
+    /** Contenido del kit, confirmado por el cliente. */
+    items: string[];
     image: ImageAsset;
   };
   specs: {
@@ -480,7 +482,17 @@ export const content: SiteContent = {
 
   included: {
     heading: "What's in the box",
-    subheading: "The complete Cmax Air X2 kit.",
+    subheading:
+      "Everything you need to get on the water, in one bag. No extras to buy.",
+    items: [
+      "AeroCabin™ Cmax Air X2",
+      "2 adjustable carbon fiber paddles",
+      "Dual-action pump",
+      "Cmax orange carry bag",
+      "Repair kit",
+      "Safety leash",
+      "3 removable fins",
+    ],
     image: {
       src: "/images/whats-include-cmax-air-x2.png",
       alt: "The Cmax Air X2 kit laid out: the AeroCabin shown from two angles, two paddles, a hand pump, a rolled carry bag, a repair kit, a coiled leash and three fins",
