@@ -38,6 +38,8 @@ export interface PricingPlan {
   id: "founders" | "preorder";
   name: string;
   tagline: string;
+  /** Descuento respecto del MSRP futuro. */
+  discountNote: string;
   /** Pago exigido hoy, en USD */
   priceToday: number;
   priceTodayLabel: string;
@@ -72,6 +74,14 @@ export interface FaqItem {
   answer: string;
 }
 
+export type SocialIcon =
+  | "instagram"
+  | "tiktok"
+  | "youtube"
+  | "facebook"
+  | "x"
+  | "linkedin";
+
 export interface TimelineItem {
   /** null en el marcador "estás acá". */
   date: string | null;
@@ -91,7 +101,14 @@ export interface TimelineItem {
  * timeline— y ambos leen de acá, así que nunca pueden contradecirse.
  * Poner null para volver al texto neutro.
  */
-const DELIVERY_DATE: string | null = "September 2026";
+const DELIVERY_DATE: string | null = null;
+
+/**
+ * Arranque de la primera tanda de produccion. Es el unico compromiso de
+ * fecha que la marca asume hoy: la entrega se estima por unidad recien
+ * cuando entra en produccion, por eso DELIVERY_DATE queda en null.
+ */
+const PRODUCTION_START = "September 2026";
 
 /**
  * Copy de los controles de interfaz (menu, galeria, avisos).
@@ -123,6 +140,9 @@ export interface SiteContent {
   deliveryDateFallback: string;
   /** Prefijo de la línea de entrega bajo los planes. */
   deliveryShipsLabel: string;
+  /** Arranque de produccion — se muestra mientras no haya fecha de entrega. */
+  productionStart: string;
+  productionLabel: string;
   ui: UiCopy;
   timeline: {
     heading: string;
@@ -223,6 +243,15 @@ export interface SiteContent {
     heading: string;
     items: FaqItem[];
   };
+  /** Redes oficiales. `icon` mapea al componente en SocialLinks. */
+  social: {
+    heading: string;
+    body: string;
+    links: { label: string; href: string; icon: SocialIcon }[];
+  };
+  contact: { company: string; location: string; email: string };
+  /** Paginas legales. El slug resuelve /legal/[slug]. */
+  legal: { label: string; slug: string }[];
 }
 
 export const content: SiteContent = {
@@ -238,6 +267,8 @@ export const content: SiteContent = {
   deliveryDate: DELIVERY_DATE,
   deliveryDateFallback: "Delivery date to be announced",
   deliveryShipsLabel: "Ships",
+  productionStart: PRODUCTION_START,
+  productionLabel: "First production batch begins",
 
   ui: {
     menuLabel: "Menu",
@@ -280,14 +311,19 @@ export const content: SiteContent = {
         status: "now",
       },
       {
-        date: "August 2026",
-        title: "Mass production begins",
-        description: "The first production batch is limited.",
+        date: PRODUCTION_START,
+        title: "First production batch",
+        description:
+          "The first batch is limited. Reservations are fulfilled in the order they were received.",
         status: "upcoming",
       },
       {
+        // Sin fecha a proposito: cae al texto neutro hasta que la marca
+        // comprometa una. La estimacion es por unidad, no global.
         date: DELIVERY_DATE,
         title: "Delivery worldwide",
+        description:
+          "You get an estimated delivery date as soon as your unit enters production.",
         status: "upcoming",
       },
     ],
@@ -389,6 +425,7 @@ export const content: SiteContent = {
         id: "founders",
         name: "Founder's Edition",
         tagline: "Pay in full, save the most.",
+        discountNote: "50% off the future MSRP",
         priceToday: 1295,
         priceTodayLabel: "Pay today",
         priceTotal: 1295,
@@ -398,7 +435,13 @@ export const content: SiteContent = {
           { label: "Production queue", value: "First in line", tone: "good" },
           { label: "Cancellation", value: "Non-refundable", tone: "warn" },
         ],
-        extras: ["Free shipping", "Numbered serial unit"],
+        extras: [
+          "Free US shipping, VAT included",
+          "Founder's Edition serial number",
+          "Priority fulfillment",
+          "Production updates by email",
+          "15% off your next Cmax purchase",
+        ],
         // Sin checkout todavía: apunta a la captura de email en vez de "#",
         // que saltaría al tope de la página y parecería roto.
         cta: { label: "Get Founder's Edition", href: "#email" },
@@ -409,6 +452,7 @@ export const content: SiteContent = {
         id: "preorder",
         name: "Pre-order",
         tagline: "Small deposit, decide later.",
+        discountNote: "40% off the future MSRP",
         priceToday: 299,
         priceTodayLabel: "Deposit today",
         priceTotal: 1554,
@@ -416,9 +460,13 @@ export const content: SiteContent = {
         rows: [
           { label: "Total cost", value: "$1,554" },
           { label: "Production queue", value: "Standard" },
-          { label: "Cancellation", value: "Refundable, cancel anytime", tone: "good" },
+          {
+            label: "Cancellation",
+            value: "Refundable until production",
+            tone: "good",
+          },
         ],
-        extras: [],
+        extras: ["Choose your color before production"],
         cta: { label: "Pre-order for $299", href: "#email" },
         recommended: false,
       },
@@ -513,7 +561,7 @@ export const content: SiteContent = {
     // Cada destacado repite EXACTAMENTE un dato de `groups`. Si cambia un
     // grupo, cambiar tambien el destacado que le corresponde.
     highlights: [
-      { value: "28 kg", label: "Weight" },
+      { value: "40 kg", label: "Weight" },
       { value: "2 + 2", label: "Adults + kids" },
       { value: "10 bar", label: "Max inflation pressure" },
       { value: "2 years", label: "Cabin warranty" },
@@ -540,7 +588,7 @@ export const content: SiteContent = {
       },
       {
         label: "Weight",
-        values: ["Approx. 28 kg / 61 lbs", "Portable and compact when packed"],
+        values: ["Approx. 40 kg / 88 lbs", "Portable and compact when packed"],
       },
       {
         label: "Inflation",
@@ -631,39 +679,116 @@ export const content: SiteContent = {
     heading: "Frequently asked questions",
     items: [
       {
-        question: "What's the difference between Founder's Edition and Pre-order?",
+        question:
+          "What's the difference between the $299 deposit and paying in full?",
         answer:
-          "Founder's Edition is a single payment of USD 1,295 with free shipping, a numbered serial unit and first place in the production queue — it saves you USD 259, but it's non-refundable. Pre-order is a refundable USD 299 deposit plus a USD 1,255 balance before shipping (USD 1,554 total), in the standard queue, and you can cancel anytime.",
+          "Paying in full gets you the Launch Price of USD 1,295 — 50% off the future MSRP — plus priority fulfillment, a Founder's Edition serial number, production updates by email and 15% off your next Cmax purchase. The USD 299 refundable deposit secures your place in the production queue and locks in the Pre-Order Price of USD 1,554 (40% off the future MSRP). Before production begins you complete the remaining USD 1,255 balance and choose your color.",
       },
       {
-        question: "Is the deposit refundable?",
+        question: "Is the $299 deposit refundable?",
         answer:
-          "The USD 299 pre-order deposit is fully refundable and you can cancel anytime. The Founder's Edition payment is non-refundable.",
+          "Yes, until you confirm your order and your AeroCabin™ enters production. Once you select your color and pay the remaining balance, your unit is assigned exclusively to you and the deposit becomes non-refundable. Refunds are processed within 5–10 business days. Stripe's card processing fee (approximately USD 13) is non-refundable.",
+      },
+      {
+        question: "Does my deposit apply toward the final price?",
+        answer:
+          "Yes. The USD 299 deposit is part of the USD 1,554 total. Before production begins you are invited to choose your color and pay the remaining USD 1,255 balance. Once full payment is received, your AeroCabin™ is assigned exclusively to you and your order enters production.",
+      },
+      {
+        question: "What if I pay in full and change my mind?",
+        answer:
+          "Full payment orders are non-refundable: your unit is scheduled for production immediately, which is what guarantees priority fulfillment. If your circumstances change, your payment converts to store credit for a future Cmax purchase. If you prefer flexibility, choose the USD 299 refundable deposit instead.",
+      },
+      {
+        question: "What's included in the $1,295 price?",
+        answer:
+          "For US customers: free shipping, VAT included and warranty included. No hidden fees — USD 1,295 is the final price delivered to your door. For international customers, shipping costs and applicable taxes are confirmed at the time of fulfillment based on your location.",
+      },
+      {
+        question: "When will I receive my Air X2?",
+        answer:
+          "The first production batch begins in September 2026. Reservations are fulfilled in the order they are received. As soon as your unit enters production we give you an estimated delivery date and keep you updated through manufacturing and shipping.",
+      },
+      {
+        question: "Do you ship internationally?",
+        answer:
+          "Yes. Shipping availability and costs for international orders are confirmed closer to fulfillment. We do not guarantee shipping costs or delivery timelines outside the US, since customs, taxes and courier rates vary by country.",
+      },
+      {
+        question: "I'm a Cmax investor. Do I get a special price?",
+        answer:
+          "Yes. Cmax investors get an exclusive price of USD 1,100 with free US shipping included. Use the discount code sent to your registered email — if you don't have it, request it at info@cmaxsystem.com.",
+      },
+      {
+        question: "Is my payment secure?",
+        answer:
+          "Yes. All payments are processed through Stripe, the same infrastructure used by Amazon, Google and Apple. Your card data is never stored on our servers.",
       },
       {
         question: "How many people fit inside?",
-        answer: "The Cmax Air X2 is designed for 2 adults and 2 kids.",
+        answer:
+          "The Cmax Air X2 is designed for up to 2 adults and 2 kids. Do not exceed the recommended occupant capacity or weight limits: doing so affects stability, flotation and structural performance.",
       },
       {
         question: "Does it really float?",
         answer:
-          "Yes. The high-pressure drop-stitch chambers make the cabin buoyant, and it is designed to float during flood situations. Important: it is not a certified life-saving device — certified life jackets should always be used.",
-      },
-      {
-        question: "When will it ship?",
-        // Se arma desde DELIVERY_DATE para que no exista una segunda fecha
-        // literal que pueda quedar desactualizada.
-        answer: DELIVERY_DATE
-          ? `Mass production begins August 2026 and delivery is scheduled for ${DELIVERY_DATE}. Founder's Edition units enter production first; pre-orders follow in the standard queue.`
-          : "The delivery date hasn't been announced yet. Founder's Edition units enter production first; pre-orders follow in the standard queue.",
+          "Yes. The high-pressure drop-stitch chambers make the cabin buoyant, and it is designed to float during flood situations. Important: it is not a certified life-saving device — it is not certified by the US Coast Guard or any international authority as a rescue craft, lifeboat or survival craft. Always wear an approved flotation device near or on water, and never rely on it as your only means of rescue or evacuation.",
       },
       {
         question: "What warranty does it have?",
         answer:
-          "The cabin, inflatable system and structural components are covered for 2 years from the purchase date. Accessories and non-structural components are covered for 1 year. Replacements and repaired components carry the remaining period of the original warranty.",
+          "The cabin, inflatable system and structural components are covered for 2 years from the purchase date. Accessories and non-structural components are covered for 1 year. Replacements and repaired components carry the remaining period of the original warranty. The warranty covers manufacturing defects, not normal wear, punctures, misuse or improper storage.",
       },
     ],
   },
+
+  social: {
+    heading: "Follow us",
+    body: "Latest innovations, global projects and behind-the-scenes moments from our work around the world.",
+    links: [
+      {
+        label: "Instagram",
+        href: "https://www.instagram.com/cmaxsysteminc/",
+        icon: "instagram",
+      },
+      {
+        label: "TikTok",
+        href: "https://www.tiktok.com/@cmaxsysteminc",
+        icon: "tiktok",
+      },
+      {
+        label: "YouTube",
+        href: "https://www.youtube.com/channel/UC2cYgU2kGWwa3NE0EB-4SpQ",
+        icon: "youtube",
+      },
+      {
+        label: "Facebook",
+        href: "https://www.facebook.com/cmaxsystem",
+        icon: "facebook",
+      },
+      { label: "X", href: "https://x.com/cmaxsystem", icon: "x" },
+      {
+        label: "LinkedIn",
+        href: "https://www.linkedin.com/company/cmax-system-inc./",
+        icon: "linkedin",
+      },
+    ],
+  },
+
+  contact: {
+    company: "Cmax System Inc.",
+    location: "Washington, DC, USA",
+    email: "info@cmaxsystem.com",
+  },
+
+  legal: [
+    { label: "Privacy Policy", slug: "privacy" },
+    { label: "Terms & Conditions", slug: "terms" },
+    { label: "Limited Warranty", slug: "warranty" },
+    { label: "Shipping & Returns", slug: "shipping-returns" },
+    { label: "Cookie Policy", slug: "cookies" },
+    { label: "Safety & Usage", slug: "safety" },
+  ],
 };
 
 /** Formatea precios USD sin decimales: 1295 → "$1,295" */

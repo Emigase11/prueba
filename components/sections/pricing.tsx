@@ -34,6 +34,9 @@ function PlanCard({ plan }: { plan: PricingPlan }) {
           )}
         </div>
         <p className="mt-2 text-body-sm text-muted-foreground">{plan.tagline}</p>
+        <p className="mt-1 text-body-sm font-medium text-brand-ink">
+          {plan.discountNote}
+        </p>
       </div>
 
       {/* 2. Precio */}
@@ -133,7 +136,7 @@ export function Pricing() {
         <p className="mt-6 text-center text-body-sm text-muted-foreground">
           {content.deliveryDate
             ? `${content.deliveryShipsLabel} ${content.deliveryDate}`
-            : content.deliveryDateFallback}
+            : `${content.productionLabel} ${content.productionStart}`}
         </p>
       </div>
     </section>
