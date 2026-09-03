@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import { content, formatUsd } from "@/lib/content";
+import { isScrolledPast, useScrollSignal } from "@/lib/use-scroll-signal";
 import { cn } from "@/lib/utils";
 import logo from "@/public/images/logo-web-orange-cmax-system.png";
 
@@ -35,25 +36,12 @@ import logo from "@/public/images/logo-web-orange-cmax-system.png";
  */
 export function SiteHeader() {
   const { brand, nav, stickyBar, hero, ui } = content;
-  const [visible, setVisible] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const onScroll = () => {
-      const heroEl = document.getElementById("hero");
-      const heroBottom = heroEl?.getBoundingClientRect().bottom ?? 0;
-      setVisible(heroBottom <= 72);
-    };
-
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, []);
+  // 72px: la barra aparece recien cuando el hero termino de pasar por
+  // debajo de su propia altura, no apenas empieza a salir.
+  const visible = useScrollSignal(() => isScrolledPast("hero", 72));
 
   // Sección activa: se marca la última que cruzó la banda superior de la
   // pantalla, así el indicador coincide con lo que el usuario está leyendo.

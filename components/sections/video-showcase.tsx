@@ -62,7 +62,7 @@ export function VideoShowcase() {
                 <DialogTrigger asChild>
                   <button
                     type="button"
-                    className="group absolute inset-0 flex flex-col items-center justify-center gap-4 text-white transition-colors hover:bg-black/20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand focus-visible:ring-inset"
+                    className="group absolute inset-0 flex flex-col items-center justify-center gap-4 text-white transition-colors hover:bg-black/20 active:bg-black/35 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand focus-visible:ring-inset"
                   >
                     <span className="relative">
                       {/* Anillo de pulso detras del boton */}
@@ -70,7 +70,7 @@ export function VideoShowcase() {
                         aria-hidden
                         className="absolute inset-0 animate-ping rounded-full bg-brand opacity-40 motion-reduce:hidden"
                       />
-                      <span className="relative flex size-16 items-center justify-center rounded-full bg-brand transition-transform duration-300 group-hover:scale-110 motion-reduce:transition-none motion-reduce:group-hover:scale-100 md:size-20">
+                      <span className="relative flex size-16 items-center justify-center rounded-full bg-brand transition-transform duration-300 group-hover:scale-110 group-active:scale-95 motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-active:scale-100 md:size-20">
                         <Play
                           aria-hidden
                           className="ml-1 size-7 fill-white text-white md:size-8"

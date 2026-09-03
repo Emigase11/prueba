@@ -1,10 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { content, formatUsd } from "@/lib/content";
 import { cn } from "@/lib/utils";
+import {
+  isOnScreen,
+  isScrolledPast,
+  useScrollSignal,
+} from "@/lib/use-scroll-signal";
 
 /**
  * Barra de compra fija, solo mobile.
@@ -14,30 +18,9 @@ import { cn } from "@/lib/utils";
  */
 export function StickyBuyBar() {
   const { hero, stickyBar } = content;
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const heroEl = document.getElementById("hero");
-      const pricingEl = document.getElementById("pricing");
-      if (!heroEl || !pricingEl) return;
-
-      const pastHero = heroEl.getBoundingClientRect().bottom <= 0;
-      const pricing = pricingEl.getBoundingClientRect();
-      const pricingOnScreen =
-        pricing.top < window.innerHeight && pricing.bottom > 0;
-
-      setVisible(pastHero && !pricingOnScreen);
-    };
-
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, []);
+  const visible = useScrollSignal(
+    () => isScrolledPast("hero") && !isOnScreen("pricing"),
+  );
 
   return (
     <div

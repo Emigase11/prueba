@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+
 import { ArrowUp } from "lucide-react";
 import { content } from "@/lib/content";
 import { cn } from "@/lib/utils";
+import { isScrolledPast, useScrollSignal } from "@/lib/use-scroll-signal";
 
 /**
  * Volver arriba. Aparece pasado el hero.
@@ -16,22 +17,7 @@ import { cn } from "@/lib/utils";
  */
 export function BackToTop() {
   const { ui } = content;
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const heroEl = document.getElementById("hero");
-      setVisible((heroEl?.getBoundingClientRect().bottom ?? 0) <= 0);
-    };
-
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, []);
+  const visible = useScrollSignal(() => isScrolledPast("hero"));
 
   return (
     <a

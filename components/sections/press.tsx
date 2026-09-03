@@ -1,14 +1,24 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
+import { Pause, Play } from "lucide-react";
 import { content } from "@/lib/content";
+import { cn } from "@/lib/utils";
 
 /**
- * Barra de prensa. Marquee infinito en CSS puro: dos copias idénticas de la
+ * Barra de prensa. Marquee infinito en CSS puro: dos copias identicas de la
  * lista y translateX(-50%); cada copia lleva su propio padding derecho para
  * que el bucle empalme exacto. La segunda copia va aria-hidden (los lectores
- * de pantalla leen los logos una sola vez) y el hover pausa el scroll.
+ * de pantalla leen los logos una sola vez).
  *
- * Con prefers-reduced-motion el marquee se oculta y se muestra la grilla
- * estática original.
+ * El boton de pausa no es decorativo: WCAG 2.2.2 (Pause, Stop, Hide) pide un
+ * mecanismo para detener el movimiento que arranca solo y dura mas de cinco
+ * segundos. El hover pausa tambien, pero no le sirve a quien navega con
+ * teclado ni a quien esta en touch.
+ *
+ * Con prefers-reduced-motion el marquee se oculta entero y se muestra la
+ * grilla estatica, asi que ahi el boton tampoco hace falta.
  */
 function LogoRow({ hidden }: { hidden?: boolean }) {
   const { press } = content;
@@ -35,7 +45,8 @@ function LogoRow({ hidden }: { hidden?: boolean }) {
 }
 
 export function Press() {
-  const { press } = content;
+  const { press, ui } = content;
+  const [paused, setPaused] = useState(false);
 
   return (
     <section id="press" className="border-y py-12 md:py-16">
@@ -45,14 +56,32 @@ export function Press() {
         </h2>
       </div>
 
-      <div className="marquee mt-8 overflow-hidden motion-reduce:hidden">
-        <div className="marquee-track flex">
-          <LogoRow />
-          <LogoRow hidden />
+      <div className="motion-reduce:hidden">
+        <div className={cn("marquee mt-8 overflow-hidden", paused && "marquee-paused")}>
+          <div className="marquee-track flex">
+            <LogoRow />
+            <LogoRow hidden />
+          </div>
+        </div>
+
+        <div className="container mt-5 flex justify-center">
+          <button
+            type="button"
+            onClick={() => setPaused((value) => !value)}
+            aria-pressed={paused}
+            className="flex items-center gap-2 rounded-full border px-3 py-1.5 text-body-sm text-muted-foreground transition-colors hover:text-foreground active:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+          >
+            {paused ? (
+              <Play aria-hidden className="size-3.5" />
+            ) : (
+              <Pause aria-hidden className="size-3.5" />
+            )}
+            {paused ? ui.marqueePlay : ui.marqueePause}
+          </button>
         </div>
       </div>
 
-      {/* Fallback estático para reduced-motion */}
+      {/* Fallback estatico para reduced-motion */}
       <div className="container hidden motion-reduce:block">
         <ul className="mt-8 grid grid-cols-3 items-center gap-x-6 gap-y-8 md:grid-cols-6">
           {press.logos.map((logo) => (

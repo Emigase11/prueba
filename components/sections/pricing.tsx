@@ -17,7 +17,7 @@ function PlanCard({ plan }: { plan: PricingPlan }) {
   return (
     <div
       className={cn(
-        "relative grid rounded-lg border bg-card p-6 transition-all duration-300 hover:-translate-y-1.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0 md:row-span-5 md:grid-rows-subgrid md:gap-0 md:p-8",
+        "relative grid rounded-lg border bg-card p-6 transition-all duration-300 hover:-translate-y-1.5 active:translate-y-0 active:scale-[0.99] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:active:scale-100 md:row-span-5 md:grid-rows-subgrid md:gap-0 md:p-8",
         plan.recommended
           ? "border-brand shadow-xl shadow-brand/20 ring-1 ring-brand hover:shadow-2xl hover:shadow-brand/30"
           : "border-border hover:shadow-lg",

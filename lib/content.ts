@@ -125,6 +125,8 @@ export interface UiCopy {
   galleryOpenHint: string;
   galleryCounter: (current: number, total: number) => string;
   pendingSpecNote: string;
+  marqueePause: string;
+  marqueePlay: string;
   emailToastTitle: string;
   emailToastDescription: string;
 }
@@ -282,6 +284,8 @@ export const content: SiteContent = {
     galleryCounter: (current, total) => `${current} of ${total}`,
     pendingSpecNote:
       "Awaiting final confirmation from Cmax System. We publish the exact figure here the day it is signed off.",
+    marqueePause: "Pause logo animation",
+    marqueePlay: "Resume logo animation",
     emailToastTitle: "You're on the list.",
     emailToastDescription:
       "We'll email you when production starts and when your unit ships.",

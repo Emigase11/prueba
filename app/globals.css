@@ -240,8 +240,11 @@
   width: max-content;
   animation: marquee-scroll 28s linear infinite;
 }
+/* Hover pausa para mouse. El boton de pausa cubre a todos los demas:
+   WCAG 2.2.2 pide poder detener el movimiento que arranca solo y dura mas
+   de 5 s, y el hover no le sirve ni al teclado ni al touch. */
 .marquee:hover .marquee-track,
-.marquee:focus-within .marquee-track {
+.marquee-paused .marquee-track {
   animation-play-state: paused;
 }
 

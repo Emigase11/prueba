@@ -58,7 +58,10 @@ export function UseCases() {
             <li
               key={item.title}
               className={cn(
-                "group w-[82%] shrink-0 snap-center md:w-auto md:shrink",
+                // El active vive aca y no en TiltCard: .tilt-card ya define
+                // su propio transform (el tilt 3D) y ambos pelearian por la
+                // misma propiedad. En elementos separados se componen.
+                "group w-[82%] shrink-0 snap-center transition-transform duration-200 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 md:w-auto md:shrink",
                 SPANS[i],
               )}
             >
