@@ -44,7 +44,7 @@ export function VideoShowcase() {
 
         <div className="mt-10 grid gap-6 md:mt-14 md:grid-cols-5">
           {/* Film: 30 s con audio, se abre en lightbox */}
-          <figure className="flex flex-col md:col-span-3">
+          <div className="flex flex-col md:col-span-3">
             <Dialog open={open} onOpenChange={setOpen}>
               <div className="relative aspect-video overflow-hidden rounded-lg bg-black shadow-2xl shadow-brand/20">
                 <Image
@@ -102,14 +102,10 @@ export function VideoShowcase() {
                 </video>
               </DialogContent>
             </Dialog>
-
-            <figcaption className="mt-3 text-body-sm text-background/60">
-              {video.filmCaption}
-            </figcaption>
-          </figure>
+          </div>
 
           {/* Loop: 11 s sin audio, siempre reproduciendo */}
-          <figure className="flex flex-col md:col-span-2">
+          <div className="flex flex-col md:col-span-2">
             <div className="relative aspect-video overflow-hidden rounded-lg bg-black md:aspect-auto md:flex-1">
               {/* Poster debajo: es lo que se ve con reduced-motion */}
               <Image
@@ -133,10 +129,7 @@ export function VideoShowcase() {
                 <source src={video.loopSrc} type="video/mp4" />
               </video>
             </div>
-            <figcaption className="mt-3 text-body-sm text-background/60">
-              {video.loopCaption}
-            </figcaption>
-          </figure>
+          </div>
         </div>
       </div>
     </section>

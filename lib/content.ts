@@ -125,8 +125,6 @@ export interface UiCopy {
   galleryOpenHint: string;
   galleryCounter: (current: number, total: number) => string;
   pendingSpecNote: string;
-  marqueePause: string;
-  marqueePlay: string;
   emailToastTitle: string;
   emailToastDescription: string;
 }
@@ -177,8 +175,6 @@ export interface SiteContent {
     heading: string;
     subheading: string;
     playLabel: string;
-    filmCaption: string;
-    loopCaption: string;
     /** Loop ambiente, sin audio; autoreproduce en todos los tamanos. */
     loopSrc: string;
     /** Film completo con audio. preload="none": solo baja si el usuario le da play. */
@@ -284,8 +280,6 @@ export const content: SiteContent = {
     galleryCounter: (current, total) => `${current} of ${total}`,
     pendingSpecNote:
       "Awaiting final confirmation from Cmax System. We publish the exact figure here the day it is signed off.",
-    marqueePause: "Pause logo animation",
-    marqueePlay: "Resume logo animation",
     emailToastTitle: "You're on the list.",
     emailToastDescription:
       "We'll email you when production starts and when your unit ships.",
@@ -402,8 +396,6 @@ export const content: SiteContent = {
     loopSrc: "/videos/cmax-air-x2-loop.mp4",
     filmSrc: "/videos/cmax-air-x2-film.mp4",
     filmDuration: "0:30",
-    filmCaption: "The full presentation film - 30 seconds, with sound.",
-    loopCaption: "Studio, interior and open water - 11 seconds on loop.",
     loopPoster: {
       src: "/images/video-loop-poster.jpg",
       alt: "The Cmax Air X2 AeroCabin lit in a dark studio, turning slowly",
