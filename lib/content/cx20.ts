@@ -14,13 +14,21 @@ import type { Cta, FaqItem, ImageAsset } from "./shared";
 export interface Cx20Content {
   /** Anclas de esta pagina para la barra fija. */
   nav: { label: string; href: string }[];
-  /** Barra de anuncio del producto nuevo, arriba de todo. */
-  announcement: {
+  /**
+   * El Air X2 dentro del hero: es el lanzamiento, pero el principal de la
+   * home es el CX20. Por eso entra como franja debajo del CX20 y no como
+   * primer bloque.
+   */
+  airX2Teaser: {
     badge: string;
-    headline: string;
-    body: string;
-    linkLabel: string;
-    href: string;
+    eyebrow: string;
+    name: string;
+    tagline: string;
+    image: ImageAsset;
+    launchPrice: number;
+    msrp: number;
+    priceLabel: string;
+    cta: Cta;
   };
   hero: {
     eyebrow: string;
@@ -112,12 +120,19 @@ export const cx20: Cx20Content = {
     { label: "FAQ", href: "#faq" },
   ],
 
-  announcement: {
+  airX2Teaser: {
     badge: "New",
-    headline: "Cmax Air X2",
-    body: "The floating AeroCabin. Inflatable, deployable on land and water.",
-    linkLabel: "Discover it",
-    href: "/air-x2",
+    eyebrow: "Inflatable AeroCabin",
+    name: "Cmax Air X2",
+    tagline: "A cabin that goes anywhere. Even on water.",
+    image: {
+      src: "/images/montain-cmax-air-x2.png",
+      alt: "A man sits on top of the Cmax Air X2 AeroCabin pitched on a mountain ridge at sunrise, looking out over a valley with a lake and snow-capped peaks",
+    },
+    launchPrice: 1295,
+    msrp: 2590,
+    priceLabel: "Launch price",
+    cta: { label: "See the Air X2", href: "/air-x2" },
   },
 
   hero: {

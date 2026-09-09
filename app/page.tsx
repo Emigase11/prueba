@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/sections/site-header";
-import { Announcement } from "@/components/cx20/announcement";
 import { Cx20Hero } from "@/components/cx20/hero";
 import { ProductSwitch } from "@/components/cx20/product-switch";
 import { Facts } from "@/components/cx20/facts";
@@ -38,16 +37,16 @@ export const metadata: Metadata = {
 };
 
 /**
- * Home: Cmax System y la linea CX20. Desde aca se accede al Air X2 (hero,
- * seccion de productos, menu y footer). Las secciones compartidas reciben
- * el contenido del CX20 por props.
+ * Home: Cmax System y la linea CX20. El hero muestra los dos productos —el
+ * CX20 como principal y el Air X2 como lanzamiento— y desde ahi se accede a
+ * la landing del X2 (hero, seccion de productos, menu y footer). Las
+ * secciones compartidas reciben el contenido del CX20 por props.
  */
 export default function HomePage() {
   return (
     <>
       <div aria-hidden className="scroll-progress fixed inset-x-0 top-0 z-[60] h-1 bg-brand" />
       <SiteHeader nav={cx20.nav} cta={cx20.stickyCta.cta} priceLine={null} />
-      <Announcement />
       <main className="pb-24 md:pb-0">
         <Cx20Hero />
         <ProductSwitch />
