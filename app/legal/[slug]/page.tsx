@@ -24,7 +24,7 @@ export async function generateMetadata({
   const doc = getLegalDoc(params.slug);
   if (!doc) return {};
   return {
-    title: `${doc.title} | ${content.brand.name}`,
+    title: doc.title,
     description: doc.intro?.[0] ?? doc.title,
   };
 }
@@ -45,7 +45,7 @@ export default function LegalPage({ params }: { params: { slug: string } }) {
             className="flex items-center gap-2 text-body-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
             <ArrowLeft aria-hidden className="size-4" />
-            Back to the Cmax Air X2
+            Back to Cmax System
           </Link>
         </div>
       </header>

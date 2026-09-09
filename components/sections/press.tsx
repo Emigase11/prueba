@@ -1,24 +1,33 @@
 import Image from "next/image";
 import { content } from "@/lib/content";
 
+type PressContent = typeof content.press;
+
 /**
- * Barra de prensa. Marquee infinito en CSS puro: dos copias identicas de la
- * lista y translateX(-50%); cada copia lleva su propio padding derecho para
- * que el bucle empalme exacto. La segunda copia va aria-hidden (los lectores
- * de pantalla leen los logos una sola vez).
+ * Barra de prensa. Compartida entre productos: cada uno pasa su lista de
+ * logos (la home muestra mas medios que la landing del Air X2).
+ *
+ * Marquee infinito en CSS puro: dos copias identicas de la lista y
+ * translateX(-50%); cada copia lleva su propio padding derecho para que el
+ * bucle empalme exacto. La segunda copia va aria-hidden (los lectores de
+ * pantalla leen los logos una sola vez).
  *
  * El movimiento se pausa al pasar el mouse. Con prefers-reduced-motion el
- * marquee se oculta entero y se muestra la grilla estatica de abajo, que es
- * la via de escape para quien no usa mouse.
+ * marquee se oculta entero y se muestra la grilla estatica de abajo.
  */
-function LogoRow({ hidden }: { hidden?: boolean }) {
-  const { press } = content;
+function LogoRow({
+  logos,
+  hidden,
+}: {
+  logos: PressContent["logos"];
+  hidden?: boolean;
+}) {
   return (
     <ul
       aria-hidden={hidden || undefined}
       className="flex shrink-0 items-center gap-14 pr-14"
     >
-      {press.logos.map((logo) => (
+      {logos.map((logo) => (
         <li key={logo.alt} className="shrink-0">
           <Image
             src={logo.src}
@@ -35,9 +44,7 @@ function LogoRow({ hidden }: { hidden?: boolean }) {
   );
 }
 
-export function Press() {
-  const { press } = content;
-
+export function Press({ press = content.press }: { press?: PressContent }) {
   return (
     <section id="press" className="border-y py-12 md:py-16">
       <div className="container">
@@ -48,8 +55,8 @@ export function Press() {
 
       <div className="marquee mt-8 overflow-hidden motion-reduce:hidden">
         <div className="marquee-track flex">
-          <LogoRow />
-          <LogoRow hidden />
+          <LogoRow logos={press.logos} />
+          <LogoRow logos={press.logos} hidden />
         </div>
       </div>
 

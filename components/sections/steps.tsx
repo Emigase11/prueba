@@ -1,17 +1,20 @@
 import Image from "next/image";
 import { content } from "@/lib/content";
 
-/**
- * Las fotos de pasos son recortes PNG con fondo transparente y el número
- * naranja ya incorporado — por eso no se agrega un badge numérico (sería
- * duplicado) y van sobre un bloque tintado que las contiene.
- *
- * Nativo: 360x235. Nunca se escalan por encima de eso (max-w) para no
- * perder nitidez.
- */
-export function Steps() {
-  const { steps } = content;
+type StepsContent = typeof content.steps;
 
+/**
+ * Tres pasos ilustrados. Compartido entre productos: por defecto muestra los
+ * del Air X2; la home le pasa los del CX20.
+ *
+ * Las ilustraciones son PNG con fondo transparente y el numero ya dibujado
+ * adentro (naranja en el Air X2, celeste en el CX20) — por eso no se agrega
+ * un badge numerico y van sobre un bloque tintado que las contiene.
+ *
+ * Nativo: 360x235. Nunca se escalan por encima de eso (max-w) para no perder
+ * nitidez.
+ */
+export function Steps({ steps = content.steps }: { steps?: StepsContent }) {
   return (
     <section
       id="how-it-works"

@@ -6,14 +6,15 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-/**
- * FAQ en acordeón. Radix aporta la navegación por teclado (Tab entre
- * triggers, Enter/Espacio para abrir, y el estado se anuncia con
- * aria-expanded), así que no hace falta manejo manual de foco.
- */
-export function Faq() {
-  const { faq } = content;
+type FaqContent = typeof content.faq;
 
+/**
+ * FAQ en acordeon. Compartido entre productos.
+ * Radix aporta la navegacion por teclado (Tab entre triggers, Enter/Espacio
+ * para abrir, y el estado se anuncia con aria-expanded), asi que no hace
+ * falta manejo manual de foco.
+ */
+export function Faq({ faq = content.faq }: { faq?: FaqContent }) {
   return (
     <section id="faq" className="bg-muted/40 py-section md:py-section-lg">
       <div className="container max-w-3xl">

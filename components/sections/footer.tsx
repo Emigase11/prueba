@@ -6,27 +6,30 @@ import { content } from "@/lib/content";
 import logo from "@/public/images/logo-web-orange-cmax-system.png";
 
 /**
- * Footer oscuro: ancla visual del final de la pagina, con la misma grilla
- * tecnica de las secciones oscuras.
+ * Footer oscuro, comun a todas las paginas: ancla visual del final, con la
+ * misma grilla tecnica de las secciones oscuras.
  *
- * Repite la navegacion (quien llego hasta aca scrolleando no deberia volver
- * arriba para saltar a precios) y suma redes, legales y contacto.
+ * Lleva la navegacion entre productos (no las anclas de una pagina: es el
+ * mismo footer en la home, en el Air X2 y en las legales), redes, legales
+ * y contacto completo con direccion y telefono.
  *
  * Los enlaces externos llevan rel="noopener noreferrer": target="_blank" sin
  * eso deja que la pagina destino acceda a window.opener.
  */
 export function Footer() {
-  const { brand, nav, social, legal, contact } = content;
+  const { brand, siteNav, social, legal, contact } = content;
 
   return (
     <footer className="bg-tech-grid bg-foreground py-12 text-background">
       <div className="container">
         <div className="flex flex-col items-center gap-6 text-center">
-          <Image src={logo} alt={brand.logo.alt} className="h-8 w-auto" />
+          <Link href="/" aria-label={`${brand.name} — home`}>
+            <Image src={logo} alt={brand.logo.alt} className="h-8 w-auto" />
+          </Link>
 
-          <nav aria-label="Sections">
+          <nav aria-label="Products">
             <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-              {nav.map((item) => (
+              {siteNav.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
@@ -78,13 +81,23 @@ export function Footer() {
           </nav>
 
           <address className="not-italic text-body-sm text-background/60">
-            {contact.company} &middot; {contact.location} &middot;{" "}
-            <a
-              href={`mailto:${contact.email}`}
-              className="underline-offset-4 transition-colors hover:text-brand-light hover:underline"
-            >
-              {contact.email}
-            </a>
+            <span className="block">{contact.company}</span>
+            <span className="block">{contact.address}</span>
+            <span className="block">
+              <a
+                href={`tel:${contact.phone.replace(/[^+\d]/g, "")}`}
+                className="underline-offset-4 transition-colors hover:text-brand-light hover:underline"
+              >
+                {contact.phone}
+              </a>
+              {" · "}
+              <a
+                href={`mailto:${contact.email}`}
+                className="underline-offset-4 transition-colors hover:text-brand-light hover:underline"
+              >
+                {contact.email}
+              </a>
+            </span>
           </address>
 
           <p className="text-body-sm text-background/50">

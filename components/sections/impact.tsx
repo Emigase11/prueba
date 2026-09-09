@@ -1,14 +1,14 @@
 import { StatValue } from "@/components/fx/stat-value";
 import { content } from "@/lib/content";
 
-/**
- * Programa de impacto: 1 donada cada 10 vendidas.
- * El ratio se muestra como dato grande porque es la idea entera de la
- * sección; el resto es una sola frase de contexto.
- */
-export function Impact() {
-  const { impact } = content;
+type ImpactContent = typeof content.impact;
 
+/**
+ * Programa de impacto: 1 donada cada 10 vendidas. Compartido entre productos.
+ * El ratio se muestra como dato grande porque es la idea entera de la
+ * seccion; el resto es una sola frase de contexto.
+ */
+export function Impact({ impact = content.impact }: { impact?: ImpactContent }) {
   return (
     <section id="impact" className="bg-muted/40 py-section md:py-section-lg">
       <div className="container">

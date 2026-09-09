@@ -15,27 +15,41 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
-import { content, formatUsd } from "@/lib/content";
+import { content, formatUsd, type Cta } from "@/lib/content";
 import { isScrolledPast, useScrollSignal } from "@/lib/use-scroll-signal";
 import { cn } from "@/lib/utils";
 import logo from "@/public/images/logo-web-orange-cmax-system.png";
 
+type NavItem = { label: string; href: string };
+
 /**
- * Barra de navegación fija. Aparece cuando el hero termina de pasar.
+ * Barra de navegacion fija. Compartida entre productos: cada pagina le pasa
+ * sus anclas y su CTA. Aparece cuando el hero termina de pasar.
  *
- * En desktop muestra los enlaces con indicador de sección activa; en mobile
- * la misma barra queda en 56px con un botón de menú que abre un panel
- * lateral. Antes en mobile no había navegación de ningún tipo —solo la
- * StickyBuyBar de abajo—, así que desde cualquier punto de la página había
- * que hacer scroll a mano para llegar a otra sección.
+ * En desktop muestra los enlaces con indicador de seccion activa; en mobile
+ * la misma barra queda en 56px con un boton de menu que abre un panel
+ * lateral. El panel suma la navegacion entre productos (siteNav), asi desde
+ * cualquier landing se llega a la otra.
  *
- * Usa posición de scroll en vez de IntersectionObserver para mostrarse: el
- * cálculo por rect es directo de verificar y no depende de que el
- * compositor esté activo. La sección activa sí usa IntersectionObserver,
- * que es la herramienta correcta para "qué se está viendo ahora".
+ * Usa posicion de scroll en vez de IntersectionObserver para mostrarse: el
+ * calculo por rect es directo de verificar y no depende de que el
+ * compositor este activo. La seccion activa si usa IntersectionObserver,
+ * que es la herramienta correcta para "que se esta viendo ahora".
  */
-export function SiteHeader() {
-  const { brand, nav, stickyBar, hero, ui } = content;
+export function SiteHeader({
+  nav = content.nav,
+  cta = content.stickyBar.cta,
+  priceLine = {
+    label: content.stickyBar.priceLabel,
+    value: formatUsd(content.hero.launchPrice),
+  },
+}: {
+  nav?: NavItem[];
+  cta?: Cta;
+  /** Linea de precio del panel mobile. null = sin precio (CX20). */
+  priceLine?: { label: string; value: string } | null;
+}) {
+  const { brand, siteNav, ui } = content;
   const [activeId, setActiveId] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -43,8 +57,8 @@ export function SiteHeader() {
   // debajo de su propia altura, no apenas empieza a salir.
   const visible = useScrollSignal(() => isScrolledPast("hero", 72));
 
-  // Sección activa: se marca la última que cruzó la banda superior de la
-  // pantalla, así el indicador coincide con lo que el usuario está leyendo.
+  // Seccion activa: se marca la ultima que cruzo la banda superior de la
+  // pantalla, asi el indicador coincide con lo que el usuario esta leyendo.
   useEffect(() => {
     const sections = nav
       .map((item) => document.getElementById(item.href.slice(1)))
@@ -58,7 +72,7 @@ export function SiteHeader() {
           .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
         if (hit) setActiveId(hit.target.id);
       },
-      // La banda va del 20% al 65% del alto: una sección "es la activa"
+      // La banda va del 20% al 65% del alto: una seccion "es la activa"
       // cuando ocupa el centro de la pantalla, no cuando apenas asoma.
       { rootMargin: "-20% 0px -35% 0px", threshold: 0 },
     );
@@ -77,8 +91,8 @@ export function SiteHeader() {
     >
       <div className="container flex h-14 items-center justify-between gap-8 md:h-16">
         <Link
-          href="#hero"
-          aria-label={`${brand.name} — back to top`}
+          href="/"
+          aria-label={`${brand.name} — home`}
           tabIndex={visible ? 0 : -1}
         >
           <Image src={logo} alt={brand.logo.alt} className="h-7 w-auto" />
@@ -116,10 +130,10 @@ export function SiteHeader() {
           className="hidden font-semibold md:inline-flex"
           tabIndex={visible ? 0 : -1}
         >
-          <Link href={stickyBar.cta.href}>{stickyBar.cta.label}</Link>
+          <Link href={cta.href}>{cta.label}</Link>
         </Button>
 
-        {/* Menú mobile */}
+        {/* Menu mobile */}
         <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
           <SheetTrigger asChild>
             <Button
@@ -169,16 +183,38 @@ export function SiteHeader() {
 
             <Separator className="my-6" />
 
+            {/* Navegacion entre productos */}
+            <nav aria-label="Products">
+              <ul className="flex flex-col gap-1">
+                {siteNav.map((item) => (
+                  <li key={item.href}>
+                    <SheetClose asChild>
+                      <Link
+                        href={item.href}
+                        className="block py-2 pl-4 text-body-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                      >
+                        {item.label}
+                      </Link>
+                    </SheetClose>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            <Separator className="my-6" />
+
             <div className="space-y-3">
-              <p className="text-body-sm text-muted-foreground">
-                {stickyBar.priceLabel}{" "}
-                <span className="font-semibold text-foreground">
-                  {formatUsd(hero.launchPrice)}
-                </span>
-              </p>
+              {priceLine && (
+                <p className="text-body-sm text-muted-foreground">
+                  {priceLine.label}{" "}
+                  <span className="font-semibold text-foreground">
+                    {priceLine.value}
+                  </span>
+                </p>
+              )}
               <SheetClose asChild>
                 <Button asChild size="lg" className="w-full font-semibold">
-                  <Link href={stickyBar.cta.href}>{stickyBar.cta.label}</Link>
+                  <Link href={cta.href}>{cta.label}</Link>
                 </Button>
               </SheetClose>
             </div>

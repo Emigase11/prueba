@@ -2,15 +2,28 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { content, formatUsd } from "@/lib/content";
+import { content } from "@/lib/content";
+import { cx20 } from "@/lib/content/cx20";
 import logo from "@/public/images/logo-web-orange-cmax-system.png";
 
-export function Hero() {
-  const { brand, hero } = content;
+/**
+ * Hero de la home (CX20). Misma anatomia que el del Air X2 — foto a pantalla,
+ * velo de contraste, entrada escalonada, acento con brillo — para que las
+ * dos landings se lean como el mismo sitio.
+ *
+ * Contraste en dos capas, porque la foto de fabrica es casi blanca:
+ *  1. velo base denso (0.95 abajo -> 0.6 arriba), fijado a mano;
+ *  2. degradado local en el bloque de texto, que crece con el texto: en
+ *     pantallas angostas el titular ocupa varias lineas y el eyebrow sube
+ *     hasta donde el velo base solo ya no alcanza (medido: 1.1:1 sin esto).
+ * Con ambas, el naranja del eyebrow (brand-light) supera 5:1 en el peor caso.
+ */
+export function Cx20Hero() {
+  const { brand } = content;
+  const { hero } = cx20;
 
   return (
     <section id="hero" className="relative flex min-h-[88svh] flex-col overflow-hidden">
-      {/* overflow-hidden en la sección contiene el zoom de la foto */}
       <Image
         src={hero.image.src}
         alt={hero.image.alt}
@@ -18,21 +31,23 @@ export function Hero() {
         priority
         quality={90}
         sizes="100vw"
-        className="hero-zoom object-cover"
+        className="hero-zoom object-cover object-[60%_center]"
       />
-      {/* Velo de contraste, identico al de la home. Dos capas: este velo base
-          y el degradado local del bloque de texto de mas abajo. Hace falta
-          porque en pantallas angostas el titular ocupa varias lineas y el
-          eyebrow sube hasta donde un velo solo no alcanza (medido 1.0:1). */}
       <div
         aria-hidden
         className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.95)_0%,rgba(0,0,0,0.9)_50%,rgba(0,0,0,0.82)_75%,rgba(0,0,0,0.6)_100%)]"
       />
 
       <header className="relative">
-        <div className="container flex h-16 items-center md:h-20">
+        <div className="container flex h-16 items-center justify-between md:h-20">
           <Link href="/" aria-label={`${brand.name} — home`}>
             <Image src={logo} alt={brand.logo.alt} className="h-8 w-auto md:h-9" />
+          </Link>
+          <Link
+            href={hero.ctaSecondary.href}
+            className="text-body-sm font-semibold text-white/85 underline-offset-4 transition-colors hover:text-white hover:underline"
+          >
+            {hero.ctaSecondary.label} &rarr;
           </Link>
         </div>
       </header>
@@ -52,18 +67,7 @@ export function Hero() {
             {hero.subheadline}
           </p>
 
-          <div className="rise rise-4 mt-6 flex items-baseline gap-3">
-            <p className="text-title text-white">
-              <span className="sr-only">{hero.priceLabel}: </span>
-              {formatUsd(hero.launchPrice)}
-            </p>
-            <p className="text-body text-white/70">
-              <span className="sr-only">Regular price: </span>
-              <s>{formatUsd(hero.msrp)}</s> MSRP
-            </p>
-          </div>
-
-          <div className="rise rise-5 mt-8 flex flex-col gap-3 sm:flex-row">
+          <div className="rise rise-4 mt-8 flex flex-col gap-3 sm:flex-row">
             <Button asChild size="lg" className="text-body font-semibold">
               <Link href={hero.ctaPrimary.href}>{hero.ctaPrimary.label}</Link>
             </Button>
@@ -79,7 +83,6 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Indicador de scroll — solo desktop; con reduced-motion se oculta */}
       <Link
         href="#how-it-works"
         aria-label={hero.scrollCueLabel}
