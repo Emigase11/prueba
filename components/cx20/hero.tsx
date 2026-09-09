@@ -7,59 +7,48 @@ import { cx20 } from "@/lib/content/cx20";
 import logo from "@/public/images/logo-web-orange-cmax-system.png";
 
 /**
- * Hero de la home (CX20). Misma anatomia y el mismo velo que el del Air X2,
- * para que las dos landings se lean como el mismo sitio.
+ * Hero de la home (CX20): partido, texto a un lado y producto al otro.
  *
- * El velo esta calibrado para que la foto se siga viendo: es el activo mas
- * fuerte de la pagina. No subirlo para ganar contraste en el eyebrow — si
- * hace falta, resolverlo en el texto (sombra, peso), no tapando la imagen.
+ * No es a sangre como el del Air X2, y es a proposito. Esa foto es un plano
+ * de estudio 4:3; llenando un viewport panoramico con object-cover se comia
+ * medio producto. Aca va en su propia caja con la MISMA proporcion 4:3 que
+ * el archivo, asi que no se recorta nada: se ve la unidad entera.
+ *
+ * Al no haber texto encima de la foto tampoco hace falta velo, que era el
+ * otro problema: la imagen se ve tal cual es.
+ *
+ * La del Air X2 sigue a sangre porque es una foto de paisaje al atardecer,
+ * que es lo que ese formato pide.
  */
 export function Cx20Hero() {
   const { brand } = content;
   const { hero } = cx20;
 
   return (
-    <section id="hero" className="relative flex min-h-[88svh] flex-col overflow-hidden">
-      <Image
-        src={hero.image.src}
-        alt={hero.image.alt}
-        fill
-        priority
-        quality={90}
-        sizes="100vw"
-        className="hero-zoom object-cover object-[60%_center]"
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.92)_0%,rgba(0,0,0,0.78)_35%,rgba(0,0,0,0.3)_62%,rgba(0,0,0,0.15)_100%)]"
-      />
-
-      <header className="relative">
-        <div className="container flex h-16 items-center justify-between md:h-20">
+    <section
+      id="hero"
+      className="bg-gradient-to-b from-brand-tint/50 to-background pb-section md:pb-section-lg"
+    >
+      <header>
+        <div className="container flex h-16 items-center md:h-20">
           <Link href="/" aria-label={`${brand.name} — home`}>
-            <Image src={logo} alt={brand.logo.alt} className="h-8 w-auto md:h-9" />
-          </Link>
-          <Link
-            href={hero.ctaSecondary.href}
-            className="text-body-sm font-semibold text-white/85 underline-offset-4 transition-colors hover:text-white hover:underline"
-          >
-            {hero.ctaSecondary.label} &rarr;
+            <Image src={logo} alt={brand.logo.alt} className="h-8 w-auto md:h-9" sizes="170px" />
           </Link>
         </div>
       </header>
 
-      <div className="relative mt-auto">
-        <div className="container pb-10 pt-24 md:pb-16">
-          <p className="rise text-body-sm font-semibold uppercase tracking-widest text-brand-light">
+      <div className="container grid items-center gap-10 pt-6 md:grid-cols-2 md:gap-14 md:pt-10">
+        <div>
+          <p className="rise text-body-sm font-semibold uppercase tracking-widest text-brand-ink">
             {hero.eyebrow}
           </p>
-          <h1 className="rise rise-2 mt-3 max-w-2xl text-balance text-display text-white">
+          <h1 className="rise rise-2 mt-3 text-balance text-display">
             {hero.headline}
             {hero.headlineAccent && (
-              <span className="text-shimmer block">{hero.headlineAccent}</span>
+              <span className="block text-brand-ink">{hero.headlineAccent}</span>
             )}
           </h1>
-          <p className="rise rise-3 mt-4 max-w-xl text-body text-white/85">
+          <p className="rise rise-3 mt-4 max-w-xl text-body text-muted-foreground">
             {hero.subheadline}
           </p>
 
@@ -71,21 +60,36 @@ export function Cx20Hero() {
               asChild
               size="lg"
               variant="outline"
-              className="border-white/60 bg-transparent text-body font-semibold text-white hover:bg-white/10 hover:text-white active:bg-white/20"
+              className="text-body font-semibold"
             >
               <Link href={hero.ctaSecondary.href}>{hero.ctaSecondary.label}</Link>
             </Button>
           </div>
         </div>
+
+        {/* aspect-[4/3] = la proporcion nativa del archivo: recorte cero. */}
+        <div className="rise rise-2 relative aspect-[4/3] overflow-hidden rounded-lg bg-muted shadow-xl">
+          <Image
+            src={hero.image.src}
+            alt={hero.image.alt}
+            fill
+            priority
+            quality={90}
+            sizes="(min-width: 768px) 50vw, 100vw"
+            className="object-cover"
+          />
+        </div>
       </div>
 
-      <Link
-        href="#how-it-works"
-        aria-label={hero.scrollCueLabel}
-        className="scroll-cue absolute bottom-5 left-1/2 hidden -translate-x-1/2 text-white/80 hover:text-white md:block"
-      >
-        <ChevronDown aria-hidden className="size-7" />
-      </Link>
+      <div className="container mt-10 hidden justify-center md:flex">
+        <Link
+          href="#how-it-works"
+          aria-label={hero.scrollCueLabel}
+          className="scroll-cue-plain text-muted-foreground transition-colors hover:text-brand-ink"
+        >
+          <ChevronDown aria-hidden className="size-7" />
+        </Link>
+      </div>
     </section>
   );
 }

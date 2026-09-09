@@ -36,7 +36,7 @@ export function Hero() {
       <header className="relative">
         <div className="container flex h-16 items-center md:h-20">
           <Link href="/" aria-label={`${brand.name} — home`}>
-            <Image src={logo} alt={brand.logo.alt} className="h-8 w-auto md:h-9" />
+            <Image src={logo} alt={brand.logo.alt} className="h-8 w-auto md:h-9" sizes="170px" />
           </Link>
         </div>
       </header>

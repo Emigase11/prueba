@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/sections/site-header";
+import { Announcement } from "@/components/cx20/announcement";
 import { Cx20Hero } from "@/components/cx20/hero";
 import { ProductSwitch } from "@/components/cx20/product-switch";
 import { Facts } from "@/components/cx20/facts";
@@ -46,6 +47,7 @@ export default function HomePage() {
     <>
       <div aria-hidden className="scroll-progress fixed inset-x-0 top-0 z-[60] h-1 bg-brand" />
       <SiteHeader nav={cx20.nav} cta={cx20.stickyCta.cta} priceLine={null} />
+      <Announcement />
       <main className="pb-24 md:pb-0">
         <Cx20Hero />
         <ProductSwitch />

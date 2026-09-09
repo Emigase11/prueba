@@ -38,7 +38,7 @@ export default function LegalPage({ params }: { params: { slug: string } }) {
       <header className="border-b bg-background">
         <div className="container flex h-16 items-center justify-between">
           <Link href="/" aria-label={`${content.brand.name} — home`}>
-            <Image src={logo} alt={content.brand.logo.alt} className="h-7 w-auto" />
+            <Image src={logo} alt={content.brand.logo.alt} className="h-7 w-auto" sizes="170px" />
           </Link>
           <Link
             href="/"

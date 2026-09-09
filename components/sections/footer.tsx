@@ -24,7 +24,7 @@ export function Footer() {
       <div className="container">
         <div className="flex flex-col items-center gap-6 text-center">
           <Link href="/" aria-label={`${brand.name} — home`}>
-            <Image src={logo} alt={brand.logo.alt} className="h-8 w-auto" />
+            <Image src={logo} alt={brand.logo.alt} className="h-8 w-auto" sizes="170px" />
           </Link>
 
           <nav aria-label="Products">

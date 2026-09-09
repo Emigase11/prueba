@@ -95,7 +95,7 @@ export function SiteHeader({
           aria-label={`${brand.name} — home`}
           tabIndex={visible ? 0 : -1}
         >
-          <Image src={logo} alt={brand.logo.alt} className="h-7 w-auto" />
+          <Image src={logo} alt={brand.logo.alt} className="h-7 w-auto" sizes="170px" />
         </Link>
 
         <nav aria-label="Sections" className="hidden md:block">

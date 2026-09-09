@@ -14,6 +14,14 @@ import type { Cta, FaqItem, ImageAsset } from "./shared";
 export interface Cx20Content {
   /** Anclas de esta pagina para la barra fija. */
   nav: { label: string; href: string }[];
+  /** Barra de anuncio del producto nuevo, arriba de todo. */
+  announcement: {
+    badge: string;
+    headline: string;
+    body: string;
+    linkLabel: string;
+    href: string;
+  };
   hero: {
     eyebrow: string;
     headline: string;
@@ -34,6 +42,9 @@ export interface Cx20Content {
       href: string;
       ctaLabel: string;
       current?: boolean;
+      /** Destaca la tarjeta como lanzamiento. */
+      isNew?: boolean;
+      badge?: string;
       /** contain para recortes PNG sobre tinte; cover para fotos. */
       fit?: "contain" | "cover";
       image: ImageAsset;
@@ -101,6 +112,14 @@ export const cx20: Cx20Content = {
     { label: "FAQ", href: "#faq" },
   ],
 
+  announcement: {
+    badge: "New",
+    headline: "Cmax Air X2",
+    body: "The floating AeroCabin. Inflatable, deployable on land and water.",
+    linkLabel: "Discover it",
+    href: "/air-x2",
+  },
+
   hero: {
     eyebrow: "Foldable housing technology",
     headline: "A shelter that ships flat.",
@@ -113,7 +132,7 @@ export const cx20: Cx20Content = {
       alt: "A CX20 unit fully deployed inside a bright warehouse, seen from the corner: white fabric walls with a triangular window, the orange-framed door and a rigid white end panel with an orange X-brace",
     },
     ctaPrimary: { label: "Pre-order the CX20", href: "#pre-order" },
-    ctaSecondary: { label: "Explore the Cmax Air X2", href: "/air-x2" },
+    ctaSecondary: { label: "See how it works", href: "#how-it-works" },
   },
 
   productSwitch: {
@@ -137,6 +156,8 @@ export const cx20: Cx20Content = {
         tagline: "Inflatable AeroCabin for camping, overlanding and floods.",
         href: "/air-x2",
         ctaLabel: "See the Air X2",
+        isNew: true,
+        badge: "New",
         image: {
           src: "/images/cmax-air-X2-water.png",
           alt: "The Cmax Air X2 AeroCabin floating on a calm mountain lake at sunset",

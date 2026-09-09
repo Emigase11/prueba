@@ -5,19 +5,19 @@ import { cx20 } from "@/lib/content/cx20";
 import { cn } from "@/lib/utils";
 
 /**
- * Puente entre las dos lineas de producto. Es la navegacion principal
- * CX20 <-> Air X2 dentro del contenido, ademas del enlace del hero y del
- * footer: quien entra por la home tiene que descubrir que existe la cabina
- * inflable sin buscarla en un menu.
+ * Puente entre las dos lineas de producto, y la via principal al Air X2
+ * dentro del contenido (las otras son la barra de anuncio y el footer).
  *
- * La tarjeta del producto actual no es un enlace a otra pagina (no hay a
- * donde ir): baja a "como funciona".
+ * La tarjeta destacada es la del producto NUEVO, no la de la pagina actual:
+ * quien esta aca ya encontro el CX20. Por eso el Air X2 lleva el aro naranja,
+ * la etiqueta de lanzamiento y la sombra, y el CX20 queda en tono neutro con
+ * un "estas aca" que solo baja a la seccion de abajo.
  */
 export function ProductSwitch() {
   const { productSwitch } = cx20;
 
   return (
-    <section id="products" className="py-section md:py-section-lg">
+    <section id="products" className="bg-dots py-section md:py-section-lg">
       <div className="container">
         <div className="max-w-2xl">
           <h2 className="text-title">{productSwitch.heading}</h2>
@@ -31,16 +31,16 @@ export function ProductSwitch() {
                 href={card.href}
                 aria-current={card.current ? "page" : undefined}
                 className={cn(
-                  "group flex h-full flex-col overflow-hidden rounded-lg border bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-xl active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:active:scale-100",
-                  card.current
-                    ? "border-brand ring-1 ring-brand"
-                    : "border-border",
+                  "group flex h-full flex-col overflow-hidden rounded-lg border bg-card transition-all duration-300 hover:-translate-y-1 active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:active:scale-100",
+                  card.isNew
+                    ? "border-brand shadow-xl shadow-brand/20 ring-1 ring-brand hover:shadow-2xl hover:shadow-brand/30"
+                    : "border-border hover:shadow-lg",
                 )}
               >
                 <div
                   className={cn(
                     "relative aspect-[4/3] overflow-hidden",
-                    card.fit === "contain" ? "bg-brand-tint p-8" : "bg-muted",
+                    card.fit === "contain" ? "bg-brand-tint" : "bg-muted",
                   )}
                 >
                   <Image
@@ -54,7 +54,13 @@ export function ProductSwitch() {
                       card.fit === "contain" ? "object-contain p-8" : "object-cover",
                     )}
                   />
+                  {card.badge && (
+                    <span className="absolute left-4 top-4 rounded-full bg-brand px-3 py-1 text-body-sm font-semibold uppercase tracking-wide leading-none text-white shadow-lg">
+                      {card.badge}
+                    </span>
+                  )}
                 </div>
+
                 <div className="flex flex-1 flex-col gap-2 p-6">
                   <h3 className="text-subtitle">{card.name}</h3>
                   <p className="text-body-sm text-muted-foreground">{card.tagline}</p>
