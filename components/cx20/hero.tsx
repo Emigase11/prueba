@@ -7,16 +7,12 @@ import { cx20 } from "@/lib/content/cx20";
 import logo from "@/public/images/logo-web-orange-cmax-system.png";
 
 /**
- * Hero de la home (CX20). Misma anatomia que el del Air X2 — foto a pantalla,
- * velo de contraste, entrada escalonada, acento con brillo — para que las
- * dos landings se lean como el mismo sitio.
+ * Hero de la home (CX20). Misma anatomia y el mismo velo que el del Air X2,
+ * para que las dos landings se lean como el mismo sitio.
  *
- * Contraste en dos capas, porque la foto de fabrica es casi blanca:
- *  1. velo base denso (0.95 abajo -> 0.6 arriba), fijado a mano;
- *  2. degradado local en el bloque de texto, que crece con el texto: en
- *     pantallas angostas el titular ocupa varias lineas y el eyebrow sube
- *     hasta donde el velo base solo ya no alcanza (medido: 1.1:1 sin esto).
- * Con ambas, el naranja del eyebrow (brand-light) supera 5:1 en el peor caso.
+ * El velo esta calibrado para que la foto se siga viendo: es el activo mas
+ * fuerte de la pagina. No subirlo para ganar contraste en el eyebrow — si
+ * hace falta, resolverlo en el texto (sombra, peso), no tapando la imagen.
  */
 export function Cx20Hero() {
   const { brand } = content;
@@ -35,7 +31,7 @@ export function Cx20Hero() {
       />
       <div
         aria-hidden
-        className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.95)_0%,rgba(0,0,0,0.9)_50%,rgba(0,0,0,0.82)_75%,rgba(0,0,0,0.6)_100%)]"
+        className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.92)_0%,rgba(0,0,0,0.78)_35%,rgba(0,0,0,0.3)_62%,rgba(0,0,0,0.15)_100%)]"
       />
 
       <header className="relative">
@@ -52,7 +48,7 @@ export function Cx20Hero() {
         </div>
       </header>
 
-      <div className="relative mt-auto bg-gradient-to-t from-black/65 via-black/50 to-black/15">
+      <div className="relative mt-auto">
         <div className="container pb-10 pt-24 md:pb-16">
           <p className="rise text-body-sm font-semibold uppercase tracking-widest text-brand-light">
             {hero.eyebrow}

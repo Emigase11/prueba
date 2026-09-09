@@ -20,13 +20,17 @@ export function Hero() {
         sizes="100vw"
         className="hero-zoom object-cover"
       />
-      {/* Velo de contraste, identico al de la home. Dos capas: este velo base
-          y el degradado local del bloque de texto de mas abajo. Hace falta
-          porque en pantallas angostas el titular ocupa varias lineas y el
-          eyebrow sube hasta donde un velo solo no alcanza (medido 1.0:1). */}
+      {/* Velo de contraste. La foto es un atardecer muy claro, así que el
+          bloque de texto necesita una base consistentemente oscura: los stops
+          están fijados a mano para que la zona del texto quede >=0.75 de
+          negro y el naranja del eyebrow llegue a 5.4:1.
+
+          NO oscurecer más: la foto del lago es el activo más fuerte de la
+          página y a más velo deja de distinguirse. Si hace falta contraste,
+          resolverlo en el texto, no tapando la imagen. */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.95)_0%,rgba(0,0,0,0.9)_50%,rgba(0,0,0,0.82)_75%,rgba(0,0,0,0.6)_100%)]"
+        className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.92)_0%,rgba(0,0,0,0.78)_35%,rgba(0,0,0,0.3)_62%,rgba(0,0,0,0.15)_100%)]"
       />
 
       <header className="relative">
@@ -37,7 +41,7 @@ export function Hero() {
         </div>
       </header>
 
-      <div className="relative mt-auto bg-gradient-to-t from-black/65 via-black/50 to-black/15">
+      <div className="relative mt-auto">
         <div className="container pb-10 pt-24 md:pb-16">
           <p className="rise text-body-sm font-semibold uppercase tracking-widest text-brand-light">
             {hero.eyebrow}
