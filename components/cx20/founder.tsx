@@ -6,10 +6,11 @@ import { cx20 } from "@/lib/content/cx20";
  * Fundador y testimonios. Es la seccion de confianza de la home: quien esta
  * detras y quien lo respalda.
  *
- * Cada testimonio lleva el retrato de quien lo dijo. Las fotos originales
- * venian con un aro celeste incrustado en el pixel sobre fondo blanco; estan
- * recortadas al circulo interior con scripts/crop-avatar.mjs, asi que lo que
- * queda de aro cae en las esquinas del cuadrado y se va con el rounded-full.
+ * Cada testimonio lleva el retrato de quien lo dijo, recortado con
+ * scripts/crop-avatar.mjs y centrado en esa persona: a 56px un plano general
+ * no se lee. Dos de las fotos venian con un aro celeste incrustado en el pixel
+ * y el script se encarga de dejarlo afuera del circulo visible.
+ *
  * Las citas son textuales del sitio actual.
  */
 export function Founder() {
