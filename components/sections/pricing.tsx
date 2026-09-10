@@ -28,7 +28,7 @@ function PlanCard({ plan }: { plan: PricingPlan }) {
         <div className="flex flex-wrap items-center gap-2">
           <h3 className="text-subtitle">{plan.name}</h3>
           {plan.recommended && (
-            <span className="rounded-full bg-brand px-2.5 py-1 text-body-sm font-semibold leading-none text-white">
+            <span className="rounded-full bg-brand-ink px-2.5 py-1 text-body-sm font-semibold leading-none text-white">
               {pricing.recommendedLabel}
             </span>
           )}

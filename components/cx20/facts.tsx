@@ -40,7 +40,7 @@ export function Facts() {
             <li key={feature.title} className="flex gap-3">
               <span
                 aria-hidden
-                className="mt-1 flex size-5 shrink-0 items-center justify-center rounded-full bg-brand text-white"
+                className="mt-1 flex size-5 shrink-0 items-center justify-center rounded-full bg-brand-ink text-white"
               >
                 <Check className="size-3" strokeWidth={4} />
               </span>

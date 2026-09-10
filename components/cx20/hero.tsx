@@ -112,7 +112,7 @@ export function Cx20Hero() {
 
           <div className="min-w-0 flex-1">
             <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
-              <span className="rounded-full bg-brand px-2.5 py-0.5 text-body-sm font-semibold uppercase tracking-wide leading-none text-white">
+              <span className="rounded-full bg-brand-ink px-2.5 py-0.5 text-body-sm font-semibold uppercase tracking-wide leading-none text-white">
                 {airX2Teaser.badge}
               </span>
               <span className="text-body-sm font-semibold uppercase tracking-widest text-brand-light">

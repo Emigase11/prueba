@@ -52,7 +52,7 @@ export function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={item.label}
-                    className="flex size-10 items-center justify-center rounded-full border border-background/15 text-background/70 transition-colors hover:border-brand hover:bg-brand hover:text-white"
+                    className="flex size-10 items-center justify-center rounded-full border border-background/15 text-background/70 transition-colors hover:border-brand-ink hover:bg-brand-ink hover:text-white"
                   >
                     <SocialIconSvg icon={item.icon} />
                   </a>

@@ -55,7 +55,7 @@ export function ProductSwitch() {
                     )}
                   />
                   {card.badge && (
-                    <span className="absolute left-4 top-4 rounded-full bg-brand px-3 py-1 text-body-sm font-semibold uppercase tracking-wide leading-none text-white shadow-lg">
+                    <span className="absolute left-4 top-4 rounded-full bg-brand-ink px-3 py-1 text-body-sm font-semibold uppercase tracking-wide leading-none text-white shadow-lg">
                       {card.badge}
                     </span>
                   )}

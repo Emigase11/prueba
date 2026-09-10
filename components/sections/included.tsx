@@ -47,7 +47,7 @@ export function Included() {
                 <li key={item} className="flex items-start gap-3">
                   <span
                     aria-hidden
-                    className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-brand text-white"
+                    className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-brand-ink text-white"
                   >
                     <Check className="size-3" strokeWidth={4} />
                   </span>

@@ -6,9 +6,18 @@
  * Paleta shadcn en tripletas HSL (la config de Tailwind las envuelve en hsl()).
  * La landing es light-only: una página de venta con un solo look comprometido.
  *
- * --primary = naranja de marca (PLACEHOLDER #F26522 ≈ hsl(19 89% 54%)).
- * Cuando llegue el hex definitivo, actualizar --primary y --ring acá
- * y brand.* en tailwind.config.ts. Nada más.
+ * --primary = brand.ink #B8430F (hsl(18 85% 39%)), NO el naranja de marca.
+ * El naranja #F26522 con texto blanco da 3,19:1 y el mínimo para texto es
+ * 4,5:1, así que sobre el naranja puro nunca va texto: es color de relleno,
+ * de borde y de acento. Cuando lleva texto blanco encima se usa brand.ink,
+ * que da 5,46:1. La única excepción deliberada es el panel de impacto, que
+ * pone texto oscuro (text-foreground) sobre el naranja pleno: 5,03:1.
+ *
+ * --ring sí queda en el naranja vivo: el foco es un elemento gráfico, no
+ * texto, y su mínimo es 3:1 contra lo que tiene al lado.
+ *
+ * Cuando llegue el hex definitivo hay que actualizar brand.* en
+ * tailwind.config.ts y volver a derivar de ahí --primary y --ring.
  */
 
 @layer base {
@@ -19,7 +28,7 @@
     --card-foreground: 220 15% 12%;
     --popover: 0 0% 100%;
     --popover-foreground: 220 15% 12%;
-    --primary: 19 89% 54%;
+    --primary: 18 85% 39%;
     --primary-foreground: 0 0% 100%;
     --secondary: 220 14% 96%;
     --secondary-foreground: 220 15% 12%;

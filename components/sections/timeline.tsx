@@ -69,7 +69,7 @@ export function Timeline() {
                     aria-hidden
                     className={cn(
                       "flex size-5 shrink-0 items-center justify-center rounded-full border-2",
-                      isDone && "border-brand bg-brand text-white",
+                      isDone && "border-brand-ink bg-brand-ink text-white",
                       // Hueco: el relleno iguala al fondo de la sección.
                       isNow && "border-brand bg-foreground ring-4 ring-brand/30",
                       item.status === "upcoming" &&
