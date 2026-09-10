@@ -14,11 +14,19 @@ import { extendTailwindMerge } from "tailwind-merge"
  * color del contenedor. En el hero claro eso daba texto oscuro sobre el naranja.
  *
  * Declarando las cinco clases como font-size, cada una convive con su color.
+ *
+ * Lo mismo pasa con nuestras texturas de fondo. bg-tech-grid y bg-dots pintan
+ * un background-image, no un color, pero el merge las lee como color y las
+ * descarta contra bg-foreground o bg-muted. Asi desaparecio la grilla de la
+ * seccion de impacto cuando paso a construir su clase con cn(): quedaba
+ * bg-foreground sola y el fondo salia liso. Declaradas como background-image,
+ * conviven con el color.
  */
 const twMerge = extendTailwindMerge({
   extend: {
     classGroups: {
       "font-size": [{ text: ["display", "title", "subtitle", "body", "body-sm"] }],
+      "bg-image": [{ bg: ["tech-grid", "dots"] }],
     },
   },
 })

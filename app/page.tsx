@@ -55,7 +55,7 @@ export default function HomePage() {
         <Interior />
         <Uses />
         <Founder />
-        <Impact impact={cx20.impact} />
+        <Impact impact={cx20.impact} tone="dark" />
         <Glamp />
         <PreorderForm />
         <Press press={cx20.press} />

@@ -26,8 +26,16 @@ export function Founder() {
   const { founder } = cx20;
 
   return (
-    <section id="founder" className="bg-gradient-to-b from-background to-brand-tint/60 py-section md:py-section-lg">
-      <div className="container">
+    <section
+      id="founder"
+      className="bg-tech-grid relative overflow-hidden bg-foreground py-section text-background md:py-section-lg"
+    >
+      <div
+        aria-hidden
+        className="glow-orb absolute -left-28 top-1/4 size-72 bg-brand/35"
+      />
+
+      <div className="container relative">
         <div className="grid items-center gap-10 md:grid-cols-2 md:gap-14">
           <div className="relative aspect-[16/10] overflow-hidden rounded-lg">
             <Image
@@ -41,19 +49,19 @@ export function Founder() {
           </div>
 
           <div>
-            <p className="text-body-sm font-semibold uppercase tracking-widest text-brand-ink">
+            <p className="text-body-sm font-semibold uppercase tracking-widest text-brand-light">
               {founder.eyebrow}
             </p>
-            <h2 className="mt-3 text-title">{founder.name}</h2>
-            <p className="mt-1 text-body text-muted-foreground">{founder.role}</p>
-            <p className="mt-5 max-w-xl text-body">{founder.bio}</p>
+            <h2 className="mt-3 text-title text-white">{founder.name}</h2>
+            <p className="mt-1 text-body text-background/70">{founder.role}</p>
+            <p className="mt-5 max-w-xl text-body text-background/80">{founder.bio}</p>
           </div>
         </div>
 
-        <h3 className="mt-20 text-subtitle md:mt-28">
+        <h3 className="mt-20 text-subtitle text-white md:mt-28">
           {founder.testimonialsHeading}
         </h3>
-        <ul className="mt-8 divide-y md:mt-10">
+        <ul className="mt-8 divide-y divide-background/15 md:mt-10">
           {founder.testimonials.map((item, i) => {
             const photoRight = i % 2 === 1;
             return (
@@ -67,19 +75,19 @@ export function Founder() {
                     quality={88}
                     sizes="(min-width: 768px) 46vw, 92vw"
                     className={cn(
-                      "h-auto w-full rounded-lg shadow-xl shadow-black/10 ring-1 ring-black/5",
+                      "h-auto w-full rounded-lg shadow-2xl shadow-black/50 ring-1 ring-white/10",
                       photoRight && "md:order-2"
                     )}
                   />
 
                   <figcaption className={cn(photoRight && "md:order-1")}>
-                    <Quote aria-hidden className="size-7 text-brand" />
+                    <Quote aria-hidden className="size-7 text-brand-light" />
                     <blockquote className="mt-4 text-body">
                       <p className="text-pretty">{item.quote}</p>
                     </blockquote>
-                    <p className="mt-6 text-subtitle">{item.name}</p>
+                    <p className="mt-6 text-subtitle text-white">{item.name}</p>
                     {item.role && (
-                      <p className="mt-0.5 text-body-sm text-muted-foreground">
+                      <p className="mt-0.5 text-body-sm text-background/60">
                         {item.role}
                       </p>
                     )}
