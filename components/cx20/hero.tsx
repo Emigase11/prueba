@@ -55,12 +55,18 @@ export function Cx20Hero() {
 
             El valor esta medido, no elegido a ojo: la foto tiene luminancia
             media 0,288 y el minimo para que el texto blanco llegue a 4,5:1 es
-            21% de velo. Abajo hay 85%, sobra. Arriba no hay nada y no debe
-            haberlo: ahi esta la foto, que es lo unico que esta seccion tiene
-            para dar. NO subir el velo de la mitad superior. */}
+            21% de velo. En la franja del texto hay 55% o mas, sobra. Arriba no
+            hay nada y no debe haberlo: ahi esta la foto, que es lo unico que
+            esta seccion tiene para dar. NO subir el velo de la mitad superior.
+
+            El degradado usa el MISMO color que el fondo de la banda de abajo y
+            se mantiene opaco en el ultimo 7%, no solo en la ultima linea. Sin
+            ese tramo el pie del hero quedaba en rgb(30,25,27), tibio, contra el
+            rgb(28,29,35) frio de la banda: ocho puntos de azul de diferencia a
+            lo ancho de toda la pagina, que el ojo lee como una costura. */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-[linear-gradient(to_top,rgba(12,13,16,0.88)_0%,rgba(12,13,16,0.62)_26%,rgba(12,13,16,0.28)_52%,rgba(12,13,16,0.06)_78%,transparent_100%)]"
+          className="absolute inset-0 bg-[linear-gradient(to_top,rgb(26,29,35)_0%,rgb(26,29,35)_7%,rgba(26,29,35,0.78)_21%,rgba(26,29,35,0.5)_43%,rgba(26,29,35,0.2)_67%,rgba(26,29,35,0.03)_88%,transparent_100%)]"
         />
 
         <header className="relative z-10">
@@ -102,58 +108,90 @@ export function Cx20Hero() {
         </div>
       </div>
 
-      {/* --- Banda del Air X2: toda es el enlace, asi en mobile el objetivo es
-          del ancho completo y no un texto chico. --- */}
+      {/* --- Air X2 ---
+       *
+       * Antes era una fila fina —miniatura, texto, precio— flotando en un
+       * bloque oscuro vacio, con un corte seco arriba. El vacio a la derecha
+       * del texto era la mitad del ancho.
+       *
+       * Ahora es un panel con la foto adentro, que ocupa ese vacio y le da al
+       * segundo producto la presencia que le faltaba. La jerarquia la sostiene
+       * el tamaño: el panel mide poco menos de la mitad del alto de la portada,
+       * asi que se ve pero no compite con el CX20.
+       *
+       * Lo que llama la atencion es el precio de lanzamiento, que es un dato
+       * real y no un adorno: es el unico numero de la pagina que viene con su
+       * precio anterior tachado al lado.
+       *
+       * Todo el panel es el enlace, asi en mobile el objetivo es del ancho
+       * completo y no un texto chico.
+       */}
       <div className="bg-tech-grid relative overflow-hidden pb-section md:pb-section-lg">
         <div
           aria-hidden
           className="glow-orb absolute -left-32 top-0 size-80 bg-brand/30"
         />
-        <div className={`${WRAP} relative pt-10 md:pt-14`}>
+        <div className={`${WRAP} relative pt-8 md:pt-12`}>
           <Link
             href={airX2Teaser.cta.href}
-            className="group grid gap-5 border-t border-background/15 pt-6 transition-colors hover:border-brand-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-4 focus-visible:ring-offset-foreground sm:grid-cols-[13rem_minmax(0,1fr)_auto] sm:items-center sm:gap-8 md:grid-cols-[17rem_minmax(0,1fr)_auto]"
+            className="group block overflow-hidden rounded-lg ring-1 ring-background/15 transition-colors duration-300 hover:ring-brand-light/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-4 focus-visible:ring-offset-foreground"
           >
-            <div className="relative aspect-[3/2] w-full overflow-hidden rounded-md">
-              <Image
-                src={airX2Teaser.image.src}
-                alt={airX2Teaser.image.alt}
-                fill
-                quality={90}
-                sizes="(min-width: 768px) 272px, (min-width: 640px) 208px, 100vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
-              />
-            </div>
-
-            <div className="min-w-0">
-              <p className="text-subtitle text-white">
-                {airX2Teaser.name}{" "}
-                <span className="font-normal text-background/60">
-                  {airX2Teaser.eyebrow}
-                </span>
-              </p>
-              <p className="mt-1 text-body-sm text-background/70">
-                {airX2Teaser.tagline}
-              </p>
-            </div>
-
-            <div className="flex items-center justify-between gap-6 sm:flex-col sm:items-end sm:justify-center sm:gap-2">
-              <p className="flex items-baseline gap-2 tabular-nums">
-                <span className="sr-only">{airX2Teaser.priceLabel}: </span>
-                <span className="text-subtitle text-white">
-                  {formatUsd(airX2Teaser.launchPrice)}
-                </span>
-                <span className="text-body-sm text-background/50">
-                  <s>{formatUsd(airX2Teaser.msrp)}</s>
-                </span>
-              </p>
-              <span className="flex shrink-0 items-center gap-1.5 whitespace-nowrap text-body-sm font-semibold text-brand-light underline-offset-4 group-hover:underline">
-                {airX2Teaser.cta.label}
-                <ArrowRight
-                  aria-hidden
-                  className="size-4 transition-transform group-hover:translate-x-1 motion-reduce:transition-none"
+            {/* min-h en la grilla, no en la columna de la foto: la foto usa
+                fill y necesita que la fila ya tenga alto. */}
+            <div className="grid md:min-h-[19rem] md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
+              <div className="relative aspect-[16/10] md:aspect-auto">
+                <Image
+                  src={airX2Teaser.image.src}
+                  alt={airX2Teaser.image.alt}
+                  fill
+                  quality={88}
+                  sizes="(min-width: 768px) 56vw, 100vw"
+                  className="object-cover object-[58%_42%] transition-transform duration-700 group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                 />
-              </span>
+                {/* Empalme entre la foto y el texto, en el eje que corresponde
+                    a cada layout: abajo cuando estan apilados, al costado
+                    cuando estan lado a lado. */}
+                <div
+                  aria-hidden
+                  className="absolute inset-x-0 bottom-0 h-24 bg-[linear-gradient(to_top,rgb(26,29,35),transparent)] md:hidden"
+                />
+                <div
+                  aria-hidden
+                  className="absolute inset-y-0 right-0 hidden w-28 bg-[linear-gradient(to_right,transparent,rgb(26,29,35))] md:block"
+                />
+              </div>
+
+              <div className="flex flex-col justify-center gap-5 px-5 pb-8 pt-1 md:px-10 md:py-10">
+                <div>
+                  <p className="text-subtitle text-white">
+                    {airX2Teaser.name}{" "}
+                    <span className="font-normal text-background/60">
+                      {airX2Teaser.eyebrow}
+                    </span>
+                  </p>
+                  <p className="mt-1.5 text-pretty text-body-sm text-background/70">
+                    {airX2Teaser.tagline}
+                  </p>
+                </div>
+
+                <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1 tabular-nums">
+                  <span className="sr-only">{airX2Teaser.priceLabel}: </span>
+                  <span className="text-title text-white">
+                    {formatUsd(airX2Teaser.launchPrice)}
+                  </span>
+                  <span className="text-body-sm text-background/50">
+                    <s>{formatUsd(airX2Teaser.msrp)}</s>
+                  </span>
+                </p>
+
+                <span className="flex items-center gap-1.5 text-body-sm font-semibold text-brand-light underline-offset-4 group-hover:underline">
+                  {airX2Teaser.cta.label}
+                  <ArrowRight
+                    aria-hidden
+                    className="size-4 transition-transform group-hover:translate-x-1 motion-reduce:transition-none"
+                  />
+                </span>
+              </div>
             </div>
           </Link>
         </div>
