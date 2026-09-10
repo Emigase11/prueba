@@ -82,6 +82,13 @@ export interface SharedContent {
   siteNav: { label: string; href: string }[];
   /** Paginas legales. El slug resuelve /legal/[slug]. */
   legal: { label: string; slug: string }[];
+  /** Copy de las paginas de 404 y de error (app/not-found.tsx, app/error.tsx). */
+  errorPages: {
+    notFound: { code: string; heading: string; body: string };
+    failure: { heading: string; body: string; retryLabel: string };
+    homeLabel: string;
+    contactPrefix: string;
+  };
 }
 
 export const shared: SharedContent = {
@@ -154,6 +161,21 @@ export const shared: SharedContent = {
     { label: "CX20 Series", href: "/#hero" },
     { label: "Cmax Air X2", href: "/air-x2" },
   ],
+  errorPages: {
+    notFound: {
+      code: "404",
+      heading: "This page does not exist",
+      body: "The link may be out of date or the address mistyped. Everything else is one click away.",
+    },
+    failure: {
+      heading: "Something went wrong",
+      body: "An unexpected error stopped this page from loading. Trying again usually solves it.",
+      retryLabel: "Try again",
+    },
+    homeLabel: "Go to the homepage",
+    contactPrefix: "If it keeps happening, write to us at",
+  },
+
   legal: [
     { label: "Privacy Policy", slug: "privacy" },
     { label: "Terms & Conditions", slug: "terms" },
