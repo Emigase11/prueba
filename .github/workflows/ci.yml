@@ -1,0 +1,58 @@
+name: CI
+
+# Corre en cada push a main y en cada rama con Pull Request abierto.
+# Vercel ya corre `next build` al deployar, asi que los errores de tipos y de
+# compilacion ya estaban cubiertos. Lo que agrega este workflow es lo que el
+# build NO mira: accesibilidad, contraste, imagenes sobredimensionadas y
+# enlaces o anclas rotas.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Si se pushea dos veces seguidas, cancela la corrida anterior.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Enlaces y Lighthouse
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Compilar
+        run: npm run build
+
+      - name: Levantar el sitio
+        run: |
+          npm start &
+          npx --yes wait-on http://localhost:3000 --timeout 60000
+
+      - name: Revisar enlaces y anclas
+        run: node scripts/check-links.mjs http://localhost:3000
+
+      - name: Lighthouse
+        run: npx lhci autorun
+
+      # Se sube siempre, tambien cuando falla: el informe es justamente lo
+      # que hace falta leer para entender por que fallo.
+      - name: Guardar informe de Lighthouse
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse
+          path: .lighthouseci
+          retention-days: 14
+          if-no-files-found: ignore

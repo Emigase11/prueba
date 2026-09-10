@@ -1,0 +1,43 @@
+{
+  "ci": {
+    "collect": {
+      "url": [
+        "http://localhost:3000/",
+        "http://localhost:3000/air-x2",
+        "http://localhost:3000/legal/privacy"
+      ],
+      "numberOfRuns": 1,
+      "settings": {
+        "preset": "desktop",
+        "chromeFlags": "--no-sandbox --headless=new"
+      }
+    },
+    "assert": {
+      "assertions": {
+        "categories:accessibility": ["error", { "minScore": 0.95 }],
+        "categories:seo": ["error", { "minScore": 0.9 }],
+        "categories:best-practices": ["warn", { "minScore": 0.9 }],
+        "categories:performance": ["warn", { "minScore": 0.75 }],
+
+        "color-contrast": "error",
+        "image-alt": "error",
+        "link-name": "error",
+        "html-has-lang": "error",
+        "meta-description": "error",
+        "document-title": "error",
+        "heading-order": "warn",
+
+        "uses-responsive-images": "warn",
+        "unsized-images": "warn",
+        "modern-image-formats": "off",
+        "uses-long-cache-ttl": "off",
+        "csp-xss": "off",
+        "errors-in-console": "warn"
+      }
+    },
+    "upload": {
+      "target": "filesystem",
+      "outputDir": ".lighthouseci"
+    }
+  }
+}
