@@ -31,11 +31,20 @@ export interface Cx20Content {
     cta: Cta;
   };
   hero: {
-    eyebrow: string;
     headline: string;
     headlineAccent?: string;
     subheadline: string;
-    scrollCueLabel: string;
+    /**
+     * Las dos medidas del producto, para dibujarlas a escala real: el largo de
+     * cada barra sale de `inches`, asi que su proporcion en pantalla es la
+     * proporcion de verdad. `inches` es solo para el dibujo; lo que se lee es
+     * `value`.
+     *
+     * OJO: el contenido no afirma que las dos medidas sean del mismo eje, asi
+     * que el dibujo no traza un datum compartido. Si Cmax confirma que 37" es
+     * el ancho plegado de esos mismos 14 ft, se pueden unir en una sola linea.
+     */
+    scale: { inches: number; value: string; label: string }[];
     image: ImageAsset;
     ctaPrimary: Cta;
     ctaSecondary: Cta;
@@ -141,12 +150,14 @@ export const cx20: Cx20Content = {
   },
 
   hero: {
-    eyebrow: "Foldable housing technology",
     headline: "A shelter that ships flat.",
     headlineAccent: "And stands in eleven minutes.",
     subheadline:
-      "The CX20 folds to 37 inches for transport and opens into a 14-foot living space for up to 8 people. No tools, no crew — two people and eleven minutes.",
-    scrollCueLabel: "Scroll down to see how it works",
+      "It folds to 37 inches for transport and opens into a 14-foot living space for up to 8 people.",
+    scale: [
+      { inches: 168, value: "14 ft", label: "Deployed living space" },
+      { inches: 37, value: "37 in", label: "Folded for transport" },
+    ],
     image: {
       src: "/images/cx20/cmax-system-2022-nico-garcia-mayor.jpeg",
       alt: "A CX20 unit fully deployed inside a bright warehouse, seen from the corner: white fabric walls with a triangular window, the orange-framed door and a rigid white end panel with an orange X-brace",

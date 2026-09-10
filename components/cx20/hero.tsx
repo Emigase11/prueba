@@ -1,26 +1,33 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ScaleDrawing } from "@/components/cx20/scale-drawing";
 import { content, formatUsd } from "@/lib/content";
 import { cx20 } from "@/lib/content/cx20";
 import logo from "@/public/images/logo-web-orange-cmax-system.png";
 
 /**
- * Hero de la home: oscuro con la grilla tecnica. Arriba el CX20 —texto de un
- * lado, producto del otro— y debajo la franja del Air X2, que es el
+ * Hero de la home: oscuro con la grilla tecnica. Arriba el CX20, texto de un
+ * lado y producto del otro, y debajo la franja del Air X2, que es el
  * lanzamiento pero no el producto principal de esta pagina.
  *
  * La foto del CX20 NO se recorta ni se deforma: su caja usa aspect-[4/3], la
  * misma proporcion que el archivo (2048x1536), asi que object-cover no tiene
- * nada que cortar. Para que pese en la pagina se le da la columna mas ancha
- * (7 de 12) dentro de un contenedor mas amplio que el del resto del sitio.
+ * nada que cortar. Si se cambia por una foto de otra proporcion hay que cambiar
+ * tambien el aspect de la caja; si no, vuelve el recorte.
  *
- * Si se cambia la foto por una de otra proporcion hay que cambiar tambien el
- * aspect de la caja; si no, vuelve el recorte.
+ * Lo unico que se agrego es la cota a escala debajo del texto: el hero afirmaba
+ * las medidas en prosa y no mostraba ninguna. Ver scale-drawing.tsx.
  *
- * La franja del Air X2 va sobre una superficie translucida con borde para
- * despegarse del fondo oscuro, que ahora comparte con el hero.
+ * Tres cosas que estaban y se fueron, las tres marcadas por las guias de
+ * diseño: el eyebrow sobre el titular (el titular se sostiene solo), el
+ * degradado sobre la linea naranja (el enfasis sale del peso y del color, no de
+ * un gradiente) y la flecha de scroll (quien todavia no scrolleo esta mirando
+ * el hero).
+ *
+ * La franja del Air X2 dejo de ser una tarjeta apoyada sobre el fondo oscuro y
+ * pasa a ser una banda separada por una regla: forma parte del hero.
  */
 const WRAP = "mx-auto w-full max-w-[84rem] px-4 sm:px-6 lg:px-8";
 
@@ -46,22 +53,24 @@ export function Cx20Hero() {
         </div>
       </header>
 
+      <div className={`${WRAP} relative pt-6 md:pt-10`}>
+        <h1 className="rise text-balance text-display text-white">
+          {hero.headline}
+          {hero.headlineAccent && (
+            <span className="block text-brand-light">{hero.headlineAccent}</span>
+          )}
+        </h1>
+      </div>
+
       <div
-        className={`${WRAP} relative grid items-center gap-10 pt-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-14 md:pt-10`}
+        className={`${WRAP} relative mt-8 grid items-center gap-10 md:mt-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] md:gap-12 lg:gap-16`}
       >
         <div>
-          <p className="rise text-body-sm font-semibold uppercase tracking-widest text-brand-light">
-            {hero.eyebrow}
-          </p>
-          <h1 className="rise rise-2 mt-3 text-balance text-display text-white">
-            {hero.headline}
-            {hero.headlineAccent && (
-              <span className="text-shimmer block">{hero.headlineAccent}</span>
-            )}
-          </h1>
-          <p className="rise rise-3 mt-4 max-w-xl text-body text-background/70">
+          <p className="rise rise-2 max-w-xl text-pretty text-body text-background/70">
             {hero.subheadline}
           </p>
+
+          <ScaleDrawing className="rise rise-3 mt-8 grid max-w-md gap-4" />
 
           <div className="rise rise-4 mt-8 flex flex-col gap-3 sm:flex-row">
             <Button asChild size="lg" className="text-body font-semibold">
@@ -86,47 +95,44 @@ export function Cx20Hero() {
             fill
             priority
             quality={90}
-            sizes="(min-width: 768px) 58vw, 100vw"
+            sizes="(min-width: 768px) 56vw, 100vw"
             className="object-cover"
           />
         </div>
       </div>
 
-      {/* Franja del Air X2: toda es el enlace, asi en mobile el objetivo es
-          del ancho completo y no un texto chico. */}
-      <div className={`${WRAP} relative mt-12 md:mt-16`}>
+      {/* Banda del Air X2: toda es el enlace, asi en mobile el objetivo es del
+          ancho completo y no un texto chico. */}
+      <div className={`${WRAP} relative mt-14 md:mt-20`}>
         <Link
           href={airX2Teaser.cta.href}
-          className="group flex flex-col gap-5 overflow-hidden rounded-lg border border-background/10 bg-background/5 p-4 transition-colors hover:bg-background/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-foreground sm:flex-row sm:items-center sm:gap-6 sm:p-5"
+          className="group grid gap-5 border-t border-background/15 pt-6 transition-colors hover:border-brand-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-4 focus-visible:ring-offset-foreground sm:grid-cols-[13rem_minmax(0,1fr)_auto] sm:items-center sm:gap-8 md:grid-cols-[17rem_minmax(0,1fr)_auto]"
         >
-          <div className="relative aspect-[3/2] w-full shrink-0 overflow-hidden rounded-md sm:w-44 md:w-56">
+          <div className="relative aspect-[3/2] w-full overflow-hidden rounded-md">
             <Image
               src={airX2Teaser.image.src}
               alt={airX2Teaser.image.alt}
               fill
               quality={90}
-              sizes="(min-width: 768px) 224px, (min-width: 640px) 176px, 100vw"
+              sizes="(min-width: 768px) 272px, (min-width: 640px) 208px, 100vw"
               className="object-cover transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
             />
           </div>
 
-          <div className="min-w-0 flex-1">
-            <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
-              <span className="rounded-full bg-brand-ink px-2.5 py-0.5 text-body-sm font-semibold uppercase tracking-wide leading-none text-white">
-                {airX2Teaser.badge}
-              </span>
-              <span className="text-body-sm font-semibold uppercase tracking-widest text-brand-light">
+          <div className="min-w-0">
+            <p className="text-subtitle text-white">
+              {airX2Teaser.name}{" "}
+              <span className="font-normal text-background/60">
                 {airX2Teaser.eyebrow}
               </span>
             </p>
-            <p className="mt-2 text-subtitle text-white">{airX2Teaser.name}</p>
             <p className="mt-1 text-body-sm text-background/70">
               {airX2Teaser.tagline}
             </p>
           </div>
 
-          <div className="flex items-center justify-between gap-6 sm:flex-col sm:items-end sm:justify-center sm:gap-3">
-            <p className="flex items-baseline gap-2">
+          <div className="flex items-center justify-between gap-6 sm:flex-col sm:items-end sm:justify-center sm:gap-2">
+            <p className="flex items-baseline gap-2 tabular-nums">
               <span className="sr-only">{airX2Teaser.priceLabel}: </span>
               <span className="text-subtitle text-white">
                 {formatUsd(airX2Teaser.launchPrice)}
@@ -143,16 +149,6 @@ export function Cx20Hero() {
               />
             </span>
           </div>
-        </Link>
-      </div>
-
-      <div className={`${WRAP} relative mt-10 hidden justify-center md:flex`}>
-        <Link
-          href="#how-it-works"
-          aria-label={hero.scrollCueLabel}
-          className="scroll-cue-plain text-background/60 transition-colors hover:text-brand-light"
-        >
-          <ChevronDown aria-hidden className="size-7" />
         </Link>
       </div>
     </section>

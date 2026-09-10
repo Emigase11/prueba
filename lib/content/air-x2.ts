@@ -103,7 +103,6 @@ export interface AirX2Content {
     /** Remate del titular, renderizado con el brillo animado. */
     headlineAccent?: string;
     subheadline: string;
-    scrollCueLabel: string;
     image: ImageAsset;
     launchPrice: number;
     msrp: number;
@@ -248,7 +247,6 @@ export const airX2: AirX2Content = {
     eyebrow: "Inflatable AeroCabin",
     headline: "A cabin that goes anywhere.",
     headlineAccent: "Even on water.",
-    scrollCueLabel: "Scroll down to see how it works",
     subheadline:
       "The Cmax Air X2 is an inflatable AeroCabin for camping, overlanding and flood emergencies. Choose a surface, inflate, and you're in.",
     image: {

@@ -101,8 +101,10 @@
    prefers-reduced-motion activo, la página queda estática y completa.
    ========================================================================== */
 
+/* Blanco sobre el naranja pleno da 3,19:1 y el minimo para texto es 4,5:1.
+   Con brand.ink da 5,46:1, la misma regla que los botones. */
 ::selection {
-  background: #f26522;
+  background: #b8430f;
   color: #fff;
 }
 
@@ -167,38 +169,6 @@
     animation: hero-zoom 16s ease-out both;
   }
 
-  /* Indicador de scroll del hero */
-  @keyframes cue-bounce {
-    0%,
-    100% {
-      transform: translate(-50%, 0);
-      opacity: 0.9;
-    }
-    50% {
-      transform: translate(-50%, 8px);
-      opacity: 0.5;
-    }
-  }
-  .scroll-cue {
-    animation: cue-bounce 2s ease-in-out infinite;
-  }
-
-  /* Igual pero sin centrado por transform, para layouts ya centrados. */
-  @keyframes cue-bounce-plain {
-    0%,
-    100% {
-      transform: translateY(0);
-      opacity: 0.9;
-    }
-    50% {
-      transform: translateY(8px);
-      opacity: 0.5;
-    }
-  }
-  .scroll-cue-plain {
-    animation: cue-bounce-plain 2s ease-in-out infinite;
-  }
-
   /* Orbes de luz flotantes en secciones oscuras */
   @keyframes orb-float {
     0%,
@@ -213,38 +183,7 @@
     animation: orb-float 14s ease-in-out infinite;
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .scroll-cue,
-  .scroll-cue-plain {
-    display: none;
-  }
-}
 
-/* --- Brillo animado sobre el acento del titular --- */
-@supports (-webkit-background-clip: text) or (background-clip: text) {
-  .text-shimmer {
-    background-image: linear-gradient(
-      100deg,
-      #ff9a66 20%,
-      #ffffff 45%,
-      #ff9a66 70%
-    );
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    @keyframes shimmer {
-      to {
-        background-position: -200% center;
-      }
-    }
-    .text-shimmer {
-      animation: shimmer 5s linear infinite;
-    }
-  }
-}
 
 /* --- Marquee de prensa --- */
 @keyframes marquee-scroll {
@@ -349,4 +288,94 @@
     transparent 1px
   );
   background-size: 22px 22px;
+}
+
+/* --- Cota a escala del hero: la regla se dibuja sola ---
+ *
+ * scaleX de 0 a 1 desde el borde izquierdo, como cuando se traza una cota a
+ * mano. Es la unica animacion propia del hero y hace exactamente lo que dice el
+ * titular, asi que no es decoracion: explica.
+ *
+ * Solo transform, asi corre fuera del hilo principal. Va entera adentro del
+ * media query: sin ella la regla se ve completa desde el primer frame, que es
+ * el estado correcto por defecto.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .dim-rule {
+    transform-origin: left center;
+    animation: dim-draw 700ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  }
+}
+
+@keyframes dim-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* --- Superficies que dibuja el navegador ---
+ *
+ * Seleccion, cursor de texto, barra de scroll, controles de formulario y el
+ * anillo de foco vienen con los valores por defecto del navegador, que no
+ * pertenecen a ningun sistema de diseño. Tematizarlos cuesta veinte lineas y es
+ * de las cosas que mas se notan sin que nadie sepa por que.
+ */
+:root {
+  color-scheme: light;
+  accent-color: #b8430f;
+}
+
+input,
+textarea,
+[contenteditable] {
+  caret-color: #b8430f;
+}
+
+/* Firefox */
+* {
+  scrollbar-color: rgba(26, 29, 35, 0.28) transparent;
+}
+
+/* Chrome, Safari, Edge */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background-clip: content-box;
+  background-color: rgba(26, 29, 35, 0.28);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(26, 29, 35, 0.45);
+}
+
+/* Sobre las secciones oscuras la barra tiene que invertirse o desaparece. */
+.bg-tech-grid ::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.28);
+}
+
+/* Piso de foco: los componentes de shadcn traen el suyo, pero todo lo demas
+   (enlaces del texto, resumenes, elementos con tabindex) se quedaba con el
+   contorno del navegador. */
+:where(a, summary, [tabindex]):focus-visible {
+  outline: 2px solid #f26522;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Las cifras que se leen como dato van en cifras de ancho fijo: precios,
+   medidas y specs quedan alineados en columna. */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
 }

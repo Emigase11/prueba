@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { content, formatUsd } from "@/lib/content";
 import logo from "@/public/images/logo-web-orange-cmax-system.png";
@@ -49,7 +48,7 @@ export function Hero() {
           <h1 className="rise rise-2 mt-3 max-w-2xl text-balance text-display text-white">
             {hero.headline}
             {hero.headlineAccent && (
-              <span className="text-shimmer block">{hero.headlineAccent}</span>
+              <span className="block text-brand-light">{hero.headlineAccent}</span>
             )}
           </h1>
           <p className="rise rise-3 mt-4 max-w-xl text-body text-white/85">
@@ -83,14 +82,6 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Indicador de scroll — solo desktop; con reduced-motion se oculta */}
-      <Link
-        href="#how-it-works"
-        aria-label={hero.scrollCueLabel}
-        className="scroll-cue absolute bottom-5 left-1/2 hidden -translate-x-1/2 text-white/80 hover:text-white md:block"
-      >
-        <ChevronDown aria-hidden className="size-7" />
-      </Link>
     </section>
   );
 }
