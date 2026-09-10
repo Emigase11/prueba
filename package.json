@@ -9,7 +9,9 @@
     "lint": "next lint",
     "check:links": "node scripts/check-links.mjs",
     "check:lh": "lhci autorun",
-    "check": "npm run lint && npm run check:links"
+    "check": "npm run lint && npm run check:links",
+    "verify": "node scripts/verify.mjs",
+    "verify:lh": "node scripts/verify.mjs --lighthouse"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.20",

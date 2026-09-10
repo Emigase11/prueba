@@ -32,19 +32,12 @@ jobs:
       - name: Instalar dependencias
         run: npm ci
 
-      - name: Compilar
-        run: npm run build
-
-      - name: Levantar el sitio
-        run: |
-          npm start &
-          npx --yes wait-on http://localhost:3000 --timeout 60000
-
-      - name: Revisar enlaces y anclas
-        run: node scripts/check-links.mjs http://localhost:3000
-
-      - name: Lighthouse
-        run: npx lhci autorun
+      # Un solo comando, el mismo que se corre a mano: compila en una carpeta
+      # aparte, levanta el sitio en su propio puerto, revisa enlaces y anclas y
+      # corre Lighthouse. Que sea el mismo evita que CI y el trabajo local se
+      # separen y que un fallo aparezca recien aca.
+      - name: Compilar y verificar
+        run: npm run verify:lh
 
       # Se sube siempre, tambien cuando falla: el informe es justamente lo
       # que hace falta leer para entender por que fallo.
