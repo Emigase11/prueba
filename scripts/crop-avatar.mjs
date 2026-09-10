@@ -22,10 +22,19 @@
  * Uso:
  *   node scripts/crop-avatar.mjs <entrada> <salida> [--focus=fx,fy] [--size=n] [--zoom=f]
  *
- *   --focus  centro del recorte en fracciones del ancho y alto (ej 0.4,0.31).
- *            Por defecto, el centro del aro o de la imagen.
- *   --size   lado del archivo de salida en pixeles (512 por defecto).
- *   --zoom   fraccion del recorte maximo posible (1 por defecto).
+ *   --focus   centro del recorte en fracciones del ancho y alto (ej 0.4,0.31).
+ *             Por defecto, el centro del aro o de la imagen.
+ *   --aspect  proporcion del recorte, ej 16:9. Por defecto 1:1.
+ *             Con aspecto distinto de 1:1 lo que se busca es el rectangulo mas
+ *             grande de esa proporcion que entra entero adentro del aro, sin
+ *             esquinas celestes: sirve para recuperar la foto rectangular
+ *             cuando no se consiguio el archivo original.
+ *   --size    ancho del archivo de salida en pixeles (512 por defecto).
+ *   --zoom    fraccion del recorte maximo posible (1 por defecto).
+ *   --round   el recorte se va a mostrar como circulo (rounded-full). Cambia
+ *             la condicion: alcanza con que entre el circulo inscripto, porque
+ *             las esquinas se descartan al recortar. Sin este flag se asume
+ *             que la foto se ve entera y tienen que entrar las esquinas.
  */
 import sharp from "sharp";
 
@@ -41,6 +50,9 @@ if (!input || !output) {
 }
 const SIZE = Number(opt("size", 512));
 const ZOOM = Number(opt("zoom", 1));
+const [AW, AH] = opt("aspect", "1:1").split(":").map(Number);
+const ASPECT = AW / AH;
+const ROUND = args.includes("--round");
 const MARGIN = 0.97; // 3% adentro del aro, para que el antialias no deje celeste
 
 const { data, info } = await sharp(input).removeAlpha().raw().toBuffer({ resolveWithObject: true });
@@ -113,33 +125,44 @@ if (focusArg) {
   fy = b * H;
 }
 
-let half;
+// halfW y halfH son las mitades del ancho y del alto del recorte.
+let halfH;
 if (hasRing) {
-  // El circulo que se ve (centro en el foco, radio = medio lado) tiene que
-  // entrar en el circulo de la foto.
   const dist = Math.hypot(fx - cx, fy - cy);
-  half = (limit - dist) * ZOOM;
-  if (half <= 0) {
+  if (ROUND) {
+    // Se muestra con rounded-full: lo que se ve es el circulo inscripto, asi
+    // que basta con que ese circulo entre en el de la foto. Las esquinas
+    // pueden caer sobre el aro porque se descartan al recortar.
+    halfH = limit - dist;
+  } else {
+    // Se ve entero, asi que son las esquinas las que tienen que entrar. Con
+    // semiejes (h*a, h) la esquina queda a h*sqrt(a^2+1) del centro.
+    halfH = (limit - dist) / Math.hypot(ASPECT, 1);
+  }
+  halfH *= ZOOM;
+  if (halfH <= 0) {
     console.error(`${input}: el foco cae fuera del circulo de la foto`);
     process.exit(1);
   }
 } else {
-  half = (Math.min(W, H) / 2) * ZOOM;
+  halfH = (Math.min(H, W / ASPECT) / 2) * ZOOM;
 }
 
-// Encajar el cuadrado dentro de la imagen sin deformarlo.
-half = Math.min(half, W / 2, H / 2);
-let left = Math.round(Math.min(Math.max(fx - half, 0), W - half * 2));
-let top = Math.round(Math.min(Math.max(fy - half, 0), H - half * 2));
-const side = Math.round(half * 2);
+// Encajar el recorte dentro de la imagen sin deformarlo.
+halfH = Math.min(halfH, H / 2, W / ASPECT / 2);
+const halfW = halfH * ASPECT;
+const left = Math.round(Math.min(Math.max(fx - halfW, 0), W - halfW * 2));
+const top = Math.round(Math.min(Math.max(fy - halfH, 0), H - halfH * 2));
+const cw = Math.round(halfW * 2);
+const ch = Math.round(halfH * 2);
 
 await sharp(input)
-  .extract({ left, top, width: side, height: side })
-  .resize(SIZE, SIZE)
+  .extract({ left, top, width: cw, height: ch })
+  .resize(SIZE, Math.round(SIZE / ASPECT))
   .jpeg({ quality: 82, mozjpeg: true })
   .toFile(output);
 
 console.log(
-  `  ${input.split(/[\/]/).pop().slice(0, 42).padEnd(44)}${W}x${H}  ${geom}` +
-  `  ->  ${side}x${side} en ${left},${top}  ->  ${output.split(/[\/]/).pop()} ${SIZE}px`
+  `  ${input.split(/[\/]/).pop().slice(0, 40).padEnd(42)}${W}x${H}  ${geom}` +
+  `  ->  ${cw}x${ch} en ${left},${top}  ->  ${output.split(/[\/]/).pop()} ${SIZE}px`
 );

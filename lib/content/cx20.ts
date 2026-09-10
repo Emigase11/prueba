@@ -92,7 +92,7 @@ export interface Cx20Content {
       quote: string;
       name: string;
       role: string;
-      image: ImageAsset;
+      image: ImageAsset & { width: number; height: number };
     }[];
   };
   impact: { heading: string; body: string; ratioLabel: string };
@@ -344,7 +344,9 @@ export const cx20: Cx20Content = {
         role: "",
         image: {
           src: "/images/cx20/testimonials/pope-francis.jpg",
-          alt: "Pope Francis smiling during his meeting with Nicolas Garcia Mayor in St. Peter's Square",
+          alt: "Pope Francis and Nicolas Garcia Mayor smiling face to face as they embrace in St. Peter's Square",
+          width: 1000,
+          height: 1000,
         },
       },
       {
@@ -354,7 +356,9 @@ export const cx20: Cx20Content = {
         role: "",
         image: {
           src: "/images/cx20/testimonials/princess-haya.jpg",
-          alt: "Princess Haya Bint Al Hussein at the exhibition stand where Nicolas Garcia Mayor presented the shelter to her",
+          alt: "Nicolas Garcia Mayor presenting the shelter to Princess Haya Bint Al Hussein and her delegation at an exhibition stand",
+          width: 1100,
+          height: 564,
         },
       },
       {
@@ -364,7 +368,9 @@ export const cx20: Cx20Content = {
         role: "UNHCR",
         image: {
           src: "/images/cx20/testimonials/firas-kayal.jpg",
-          alt: "Firas Kayal smiling in front of the UNHCR logo at the UNHCR office",
+          alt: "Firas Kayal and Nicolas Garcia Mayor shaking hands in front of the UNHCR logo at the UNHCR office",
+          width: 781,
+          height: 564,
         },
       },
     ],

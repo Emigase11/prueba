@@ -1,15 +1,24 @@
 import Image from "next/image";
 import { Quote } from "lucide-react";
 import { cx20 } from "@/lib/content/cx20";
+import { cn } from "@/lib/utils";
 
 /**
  * Fundador y testimonios. Es la seccion de confianza de la home: quien esta
  * detras y quien lo respalda.
  *
- * Cada testimonio lleva el retrato de quien lo dijo, recortado con
- * scripts/crop-avatar.mjs y centrado en esa persona: a 56px un plano general
- * no se lee. Dos de las fotos venian con un aro celeste incrustado en el pixel
- * y el script se encarga de dejarlo afuera del circulo visible.
+ * Los testimonios van en filas alternadas, foto de un lado y cita del otro.
+ * El motivo es la foto: las tres tienen proporciones muy distintas (1:1 el
+ * Papa, 1,38:1 ACNUR, 1,95:1 Haya) y son documentos, no retratos de archivo,
+ * asi que se muestran enteras. En una grilla de tres columnas eso obliga a
+ * recortarlas todas a la misma caja; en filas, cada una ocupa el alto que le
+ * corresponde y no se le toca ni un pixel.
+ *
+ * Por eso tambien van con width y height reales desde el contenido: next/image
+ * les reserva el lugar exacto y la pagina no salta al cargarlas.
+ *
+ * La alternancia se hace con order, que solo cambia el orden visual: en el DOM
+ * la foto sigue primero y el figcaption ultimo, como pide figure.
  *
  * Las citas son textuales del sitio actual.
  */
@@ -41,36 +50,44 @@ export function Founder() {
           </div>
         </div>
 
-        <h3 className="mt-16 text-subtitle md:mt-20">{founder.testimonialsHeading}</h3>
-        <ul className="mt-6 grid gap-6 md:grid-cols-3">
-          {founder.testimonials.map((item) => (
-            <li key={item.name}>
-              <figure className="flex h-full flex-col rounded-lg border bg-card p-6">
-                <Quote aria-hidden className="size-6 text-brand" />
-                <blockquote className="mt-4 flex-1 text-body text-muted-foreground">
-                  <p>{item.quote}</p>
-                </blockquote>
-                <figcaption className="mt-6 flex items-center gap-3 border-t pt-5 text-body-sm">
+        <h3 className="mt-20 text-subtitle md:mt-28">
+          {founder.testimonialsHeading}
+        </h3>
+        <ul className="mt-8 divide-y md:mt-10">
+          {founder.testimonials.map((item, i) => {
+            const photoRight = i % 2 === 1;
+            return (
+              <li key={item.name} className="py-10 first:pt-0 last:pb-0 md:py-14">
+                <figure className="grid items-center gap-8 md:grid-cols-2 md:gap-12 lg:gap-16">
                   <Image
                     src={item.image.src}
                     alt={item.image.alt}
-                    width={128}
-                    height={128}
-                    quality={85}
-                    className="size-14 shrink-0 rounded-full object-cover ring-1 ring-border"
-                  />
-                  <span className="min-w-0">
-                    <span className="block font-semibold text-foreground">
-                      {item.name}
-                    </span>
-                    {item.role && (
-                      <span className="block text-muted-foreground">{item.role}</span>
+                    width={item.image.width}
+                    height={item.image.height}
+                    quality={88}
+                    sizes="(min-width: 768px) 46vw, 92vw"
+                    className={cn(
+                      "h-auto w-full rounded-lg shadow-xl shadow-black/10 ring-1 ring-black/5",
+                      photoRight && "md:order-2"
                     )}
-                  </span>
-                </figcaption>
-              </figure>
-            </li>
-          ))}
+                  />
+
+                  <figcaption className={cn(photoRight && "md:order-1")}>
+                    <Quote aria-hidden className="size-7 text-brand" />
+                    <blockquote className="mt-4 text-body">
+                      <p className="text-pretty">{item.quote}</p>
+                    </blockquote>
+                    <p className="mt-6 text-subtitle">{item.name}</p>
+                    {item.role && (
+                      <p className="mt-0.5 text-body-sm text-muted-foreground">
+                        {item.role}
+                      </p>
+                    )}
+                  </figcaption>
+                </figure>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </section>
