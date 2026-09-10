@@ -49,14 +49,20 @@
  * Progressive enhancement estricto: el contenido es visible por defecto y
  * SOLO se anima donde el navegador soporta animation-timeline. Si no hay
  * soporte (Safari, Firefox) no pasa nada — nunca queda contenido oculto.
+ *
+ * Se anima el movimiento y NADA de opacidad, a proposito. Una animacion atada
+ * al scroll no tiene estado inicial ni final: se queda en el punto donde esta
+ * el scroll. La seccion que sigue al hero ya asoma en pantalla al cargar, asi
+ * que con opacity de 0 a 1 quedaba parada en 0,34 y su texto se leia gris
+ * clarito sobre blanco (1,95:1 medido) hasta que alguien scrolleara. Con solo
+ * transform el texto esta a opacidad plena en todo momento y la entrada se
+ * sigue notando igual, por el desplazamiento.
  */
 @keyframes reveal-in {
   from {
-    opacity: 0;
     transform: translateY(24px);
   }
   to {
-    opacity: 1;
     transform: none;
   }
 }

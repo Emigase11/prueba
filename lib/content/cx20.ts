@@ -19,17 +19,6 @@ export interface Cx20Content {
    * home es el CX20. Por eso entra como franja debajo del CX20 y no como
    * primer bloque.
    */
-  airX2Teaser: {
-    badge: string;
-    eyebrow: string;
-    name: string;
-    tagline: string;
-    image: ImageAsset;
-    launchPrice: number;
-    msrp: number;
-    priceLabel: string;
-    cta: Cta;
-  };
   hero: {
     headline: string;
     headlineAccent?: string;
@@ -127,6 +116,7 @@ export interface Cx20Content {
 
 export const cx20: Cx20Content = {
   nav: [
+    { label: "Products", href: "#products" },
     { label: "How it works", href: "#how-it-works" },
     { label: "Uses", href: "#uses" },
     { label: "Founder", href: "#founder" },
@@ -134,20 +124,6 @@ export const cx20: Cx20Content = {
     { label: "FAQ", href: "#faq" },
   ],
 
-  airX2Teaser: {
-    badge: "New",
-    eyebrow: "Inflatable AeroCabin",
-    name: "Cmax Air X2",
-    tagline: "A cabin that goes anywhere. Even on water.",
-    image: {
-      src: "/images/montain-cmax-air-x2.png",
-      alt: "A man sits on top of the Cmax Air X2 AeroCabin pitched on a mountain ridge at sunrise, looking out over a valley with a lake and snow-capped peaks",
-    },
-    launchPrice: 1295,
-    msrp: 2590,
-    priceLabel: "Launch price",
-    cta: { label: "See the Air X2", href: "/air-x2" },
-  },
 
   hero: {
     headline: "A shelter that ships flat.",
