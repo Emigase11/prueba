@@ -88,7 +88,12 @@ export interface Cx20Content {
     bio: string;
     image: ImageAsset;
     testimonialsHeading: string;
-    testimonials: { quote: string; name: string; role: string }[];
+    testimonials: {
+      quote: string;
+      name: string;
+      role: string;
+      image: ImageAsset;
+    }[];
   };
   impact: { heading: string; body: string; ratioLabel: string };
   glamp: { heading: string; body: string; cta: Cta; image: ImageAsset };
@@ -337,18 +342,30 @@ export const cx20: Cx20Content = {
           "The Cmax has already been blessed by God. Nicolas, never lose your hope. God fills us with his grace when we pray with perseverance.",
         name: "Pope Francis",
         role: "",
+        image: {
+          src: "/images/cx20/testimonials/pope-francis.jpg",
+          alt: "Pope Francis and Nicolas Garcia Mayor embracing and smiling in St. Peter's Square",
+        },
       },
       {
         quote:
           "We face a humanitarian crisis with the number of displaced people in Jordan, and we can improve the quality of life of millions of refugees with this innovative solution.",
         name: "Princess Haya Bint Al Hussein",
         role: "",
+        image: {
+          src: "/images/cx20/testimonials/princes-haya.jpg",
+          alt: "Princess Haya Bint Al Hussein looking at a folder that Nicolas Garcia Mayor holds open for her at an exhibition stand",
+        },
       },
       {
         quote:
           "It's so easy to assemble and deploy the Cmax shelter in the field. Once you put this great innovation into production, not even the sky is the limit — you can dignify and care for the health of millions of children.",
         name: "Firas Kayal",
         role: "UNHCR",
+        image: {
+          src: "/images/cx20/testimonials/firas-kalas.jpg",
+          alt: "Firas Kayal and Nicolas Garcia Mayor shaking hands in front of the UNHCR logo at a UNHCR office",
+        },
       },
     ],
   },

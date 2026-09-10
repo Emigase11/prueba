@@ -6,9 +6,11 @@ import { cx20 } from "@/lib/content/cx20";
  * Fundador y testimonios. Es la seccion de confianza de la home: quien esta
  * detras y quien lo respalda.
  *
- * Los testimonios van solo con cita y nombre, sin foto: las fotos originales
- * traen un marco circular celeste incrustado que no se puede recortar
- * limpiamente. Las citas son textuales del sitio actual.
+ * Cada testimonio lleva el retrato de quien lo dijo. Las fotos originales
+ * venian con un aro celeste incrustado en el pixel sobre fondo blanco; estan
+ * recortadas al circulo interior con scripts/crop-avatar.mjs, asi que lo que
+ * queda de aro cae en las esquinas del cuadrado y se va con el rounded-full.
+ * Las citas son textuales del sitio actual.
  */
 export function Founder() {
   const { founder } = cx20;
@@ -47,11 +49,23 @@ export function Founder() {
                 <blockquote className="mt-4 flex-1 text-body text-muted-foreground">
                   <p>{item.quote}</p>
                 </blockquote>
-                <figcaption className="mt-5 text-body-sm">
-                  <span className="font-semibold text-foreground">{item.name}</span>
-                  {item.role && (
-                    <span className="text-muted-foreground"> &middot; {item.role}</span>
-                  )}
+                <figcaption className="mt-6 flex items-center gap-3 border-t pt-5 text-body-sm">
+                  <Image
+                    src={item.image.src}
+                    alt={item.image.alt}
+                    width={128}
+                    height={128}
+                    quality={85}
+                    className="size-14 shrink-0 rounded-full object-cover ring-1 ring-border"
+                  />
+                  <span className="min-w-0">
+                    <span className="block font-semibold text-foreground">
+                      {item.name}
+                    </span>
+                    {item.role && (
+                      <span className="block text-muted-foreground">{item.role}</span>
+                    )}
+                  </span>
                 </figcaption>
               </figure>
             </li>
