@@ -159,8 +159,8 @@ export const cx20: Cx20Content = {
       { inches: 37, value: "37 in", label: "Folded for transport" },
     ],
     image: {
-      src: "/images/cx20/cmax-system-2022-nico-garcia-mayor.jpeg",
-      alt: "A CX20 unit fully deployed inside a bright warehouse, seen from the corner: white fabric walls with a triangular window, the orange-framed door and a rigid white end panel with an orange X-brace",
+      src: "/images/cx20/cx20-desert-wide.jpg",
+      alt: "A CX20 unit deployed alone in the desert at dusk, its door open and lit from inside, with the sun setting low over the dunes behind it",
     },
     ctaPrimary: { label: "Pre-order the CX20", href: "#pre-order" },
     ctaSecondary: { label: "See how it works", href: "#how-it-works" },
