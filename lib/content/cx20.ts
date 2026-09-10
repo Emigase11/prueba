@@ -160,7 +160,7 @@ export const cx20: Cx20Content = {
     ],
     image: {
       src: "/images/cx20/cx20-desert-wide.jpg",
-      alt: "A CX20 unit deployed alone in the desert at dusk, its door open and lit from inside, with the sun setting low over the dunes behind it",
+      alt: "A CX20 unit deployed alone on a stony desert plain at sunset, its door open and lit from inside, with the sun low on the horizon behind it",
     },
     ctaPrimary: { label: "Pre-order the CX20", href: "#pre-order" },
     ctaSecondary: { label: "See how it works", href: "#how-it-works" },

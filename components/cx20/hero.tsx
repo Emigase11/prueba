@@ -38,7 +38,7 @@ export function Cx20Hero() {
   return (
     <section id="hero" className="relative bg-foreground text-background">
       {/* --- Portada --- */}
-      <div className="relative flex min-h-[34rem] flex-col overflow-hidden md:min-h-[42rem]">
+      <div className="relative flex min-h-[36rem] flex-col overflow-hidden md:min-h-[44rem]">
         <Image
           src={hero.image.src}
           alt={hero.image.alt}
@@ -46,27 +46,21 @@ export function Cx20Hero() {
           priority
           quality={86}
           sizes="100vw"
-          className="object-cover object-[36%_center] md:object-[62%_center]"
+          className="object-cover object-[38%_38%] md:object-center"
         />
 
-        {/* Velo lateral para el texto + un cierre abajo que empalma con la
-            banda oscura, asi la foto no corta en seco.
-            
-            La foto ya tiene luminancia media 0,211: es oscura de punta a punta.
-            Con 0,3 de velo el texto blanco da 6,7:1, de sobra para el minimo de
-            4,5:1. Subirlo mas no agrega legibilidad y tapa el atardecer, que es
-            lo unico que esta foto tiene para dar. NO subirlo. */}
+        {/* Velo de abajo hacia arriba. El texto va al pie, asi que oscurece
+            justo donde se lee y deja el refugio y el atardecer intactos arriba;
+            de paso empalma con la banda oscura sin un segundo degradado.
+
+            El valor esta medido, no elegido a ojo: la foto tiene luminancia
+            media 0,288 y el minimo para que el texto blanco llegue a 4,5:1 es
+            21% de velo. Abajo hay 85%, sobra. Arriba no hay nada y no debe
+            haberlo: ahi esta la foto, que es lo unico que esta seccion tiene
+            para dar. NO subir el velo de la mitad superior. */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(12,13,16,0.62)_0%,rgba(12,13,16,0.5)_55%,rgba(12,13,16,0.28)_100%)] md:hidden"
-        />
-        <div
-          aria-hidden
-          className="absolute inset-0 hidden bg-[linear-gradient(to_right,rgba(12,13,16,0.5)_0%,rgba(12,13,16,0.3)_32%,rgba(12,13,16,0.1)_60%,rgba(12,13,16,0)_85%)] md:block"
-        />
-        <div
-          aria-hidden
-          className="absolute inset-x-0 bottom-0 h-32 bg-[linear-gradient(to_bottom,transparent,rgb(26,29,35))]"
+          className="absolute inset-0 bg-[linear-gradient(to_top,rgba(12,13,16,0.88)_0%,rgba(12,13,16,0.62)_26%,rgba(12,13,16,0.28)_52%,rgba(12,13,16,0.06)_78%,transparent_100%)]"
         />
 
         <header className="relative z-10">
@@ -77,7 +71,7 @@ export function Cx20Hero() {
           </div>
         </header>
 
-        <div className={`${WRAP} relative z-10 flex flex-1 items-center py-10 md:py-16`}>
+        <div className={`${WRAP} relative z-10 flex flex-1 items-end pb-10 pt-16 md:pb-14 md:pt-24`}>
           <div className="max-w-2xl">
             <h1 className="rise text-balance text-display text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.5)]">
               {hero.headline}
