@@ -1,28 +1,30 @@
 import { Quote } from "lucide-react";
 import { JourneyPhotos } from "@/components/cx20/journey-photos";
 import { cx20 } from "@/lib/content/cx20";
+import { cn } from "@/lib/utils";
 
 /**
  * La ruta: de Nicolas Garcia Mayor a Firas Kayal, una parada por hito.
  *
- * Reemplaza al bloque de fundador mas tres testimonios sueltos. El argumento de
- * esta seccion no es "mira quien lo felicito" sino "mira cuanto camino hubo
- * antes", y para eso los testimonios tienen que ser el final de algo, no una
- * grilla. Por eso son las tres ultimas paradas, y sus nodos van rellenos.
+ * Va a lo ancho y no a lo largo. Apilada verticalmente ocupaba casi tres
+ * pantallas de scroll, que es demasiado peso para una seccion que es respaldo y
+ * no producto. En riel horizontal entra en menos de una, y de paso el recorrido
+ * se lee como recorrido: la vista avanza en la misma direccion que el camino.
  *
- * La linea no es adorno: es el unico elemento que dice "esto llevo años". Se
- * dibuja con un pseudo-elemento por parada en vez de un borde en la lista, asi
- * corta despues del ultimo nodo en lugar de seguir hasta el pie del bloque.
+ * El riel es el mismo patron que usa la seccion de casos de uso en mobile.
+ * Lleva tabIndex y role para que se pueda recorrer con el teclado, que es lo
+ * que suele faltarle a un carrusel horizontal.
  *
- * Las paradas con mas de una foto usan el rotador, que las pasa solas. El
- * detalle de pausa y reduced-motion esta en journey-photos.tsx.
+ * El argumento de la seccion es "mira cuanto camino hubo antes", no "mira quien
+ * lo felicito". Por eso los tres testimonios son las ultimas paradas y sus
+ * nodos van rellenos de naranja: se ve de un vistazo donde termina el camino.
  *
  * No hay fechas: los lugares salen de los nombres de archivo de Cmax y los
- * premios de la bio que ya estaba, pero los años no los tenemos. El orden es
- * narrativo y no afirma una cronologia verificada.
+ * premios de la bio, pero los años no los tenemos y no se inventan.
  */
 export function Founder() {
   const { founder } = cx20;
+  const last = founder.stops.length - 1;
 
   return (
     <section
@@ -35,18 +37,18 @@ export function Founder() {
       />
 
       <div className="container relative">
-        <div className="max-w-3xl">
+        <div className="max-w-2xl">
           <p className="text-body-sm font-semibold uppercase tracking-widest text-brand-light">
             {founder.eyebrow}
           </p>
           <h2 className="mt-3 text-title text-white">{founder.name}</h2>
           <p className="mt-1 text-body text-background/70">{founder.role}</p>
-          <p className="mt-5 text-pretty text-body text-background/80">
+          <p className="mt-4 text-pretty text-body-sm text-background/70">
             {founder.bio}
           </p>
         </div>
 
-        <div className="mt-16 max-w-3xl md:mt-24">
+        <div className="mt-12 max-w-2xl md:mt-16">
           <h3 className="text-balance text-title text-white">
             {founder.journeyHeading}
           </h3>
@@ -55,68 +57,74 @@ export function Founder() {
           </p>
         </div>
 
-        <ol className="mt-12 md:mt-16">
+        {/* El riel sangra hasta el borde del viewport para que la ultima
+            tarjeta no parezca cortada por el container, y vuelve a entrar con
+            el padding. */}
+        <ol
+          tabIndex={0}
+          role="region"
+          aria-label={founder.journeyHeading}
+          className="-mx-4 mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-3 [scrollbar-width:none] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-4 focus-visible:ring-offset-foreground sm:-mx-6 sm:px-6 md:mt-12 lg:-mx-8 lg:px-8 [&::-webkit-scrollbar]:hidden"
+        >
           {founder.stops.map((stop, i) => (
             <li
               key={stop.title}
-              className="relative pb-12 pl-8 last:pb-0 md:pb-16 md:pl-14"
+              className="flex w-[82%] shrink-0 snap-start flex-col sm:w-80"
             >
-              {/* El tramo de linea hasta la parada siguiente. En la ultima no se
-                  dibuja: la ruta termina en el nodo, no en el borde del bloque. */}
-              {i < founder.stops.length - 1 && (
+              {/* La via. El tramo llega hasta el nodo siguiente: se estira un
+                  gap de mas (-right-5) y queda tapado por el nodo, que va
+                  despues en el DOM y tiene fondo solido.
+
+                  Va en naranja y no en blanco al 25%: a un pixel sobre el fondo
+                  oscuro el blanco no se veia, y esta linea es lo unico que
+                  convierte siete tarjetas sueltas en un recorrido. */}
+              <div className="relative mb-5 h-[26px]">
+                {i < last && (
+                  <span
+                    aria-hidden
+                    className="absolute -right-5 left-3 top-[13px] h-px bg-brand/60"
+                  />
+                )}
                 <span
                   aria-hidden
-                  className="absolute left-[7px] top-5 h-full w-px bg-background/20 md:left-[10px]"
+                  className={cn(
+                    "absolute left-0 top-0 size-[26px] rounded-full border-2 border-brand",
+                    stop.quote ? "bg-brand" : "bg-foreground"
+                  )}
                 />
-              )}
-              {/* El nodo. Las paradas con testimonio van rellenas de naranja:
-                  son el final del camino y se distinguen de un vistazo. */}
-              <span
-                aria-hidden
-                className={[
-                  "absolute left-0 top-3 size-4 rounded-full border-2 border-brand md:size-[22px]",
-                  stop.quote ? "bg-brand" : "bg-foreground",
-                ].join(" ")}
-              />
-
-              <div className="grid items-start gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] md:gap-10 lg:gap-14">
-                <div>
-                  <p className="text-body-sm font-semibold uppercase tracking-widest text-brand-light">
-                    {stop.place}
-                  </p>
-                  <h4 className="mt-2 text-balance text-subtitle text-white">
-                    {stop.title}
-                  </h4>
-
-                  {stop.body && (
-                    <p className="mt-3 text-pretty text-body-sm text-background/70">
-                      {stop.body}
-                    </p>
-                  )}
-
-                  {stop.quote && (
-                    <blockquote className="mt-4">
-                      <Quote aria-hidden className="size-6 text-brand-light" />
-                      <p className="mt-3 text-pretty text-body text-background/90">
-                        {stop.quote.text}
-                      </p>
-                      <footer className="mt-4 text-body-sm">
-                        <span className="font-semibold text-white">
-                          {stop.quote.name}
-                        </span>
-                        {stop.quote.role && (
-                          <span className="text-background/60">
-                            {" "}
-                            {stop.quote.role}
-                          </span>
-                        )}
-                      </footer>
-                    </blockquote>
-                  )}
-                </div>
-
-                <JourneyPhotos photos={stop.photos} priority={i === 0} />
               </div>
+
+              <JourneyPhotos photos={stop.photos} />
+
+              <p className="mt-4 text-body-sm font-semibold uppercase tracking-widest text-brand-light">
+                {stop.place}
+              </p>
+              <h4 className="mt-1.5 text-balance text-subtitle text-white">
+                {stop.title}
+              </h4>
+
+              {stop.body && (
+                <p className="mt-2 text-pretty text-body-sm text-background/70">
+                  {stop.body}
+                </p>
+              )}
+
+              {stop.quote && (
+                <blockquote className="mt-3 flex flex-1 flex-col">
+                  <Quote aria-hidden className="size-5 text-brand-light" />
+                  <p className="mt-2 text-pretty text-body-sm text-background/85">
+                    {stop.quote.text}
+                  </p>
+                  <footer className="mt-3 text-body-sm">
+                    <span className="font-semibold text-white">
+                      {stop.quote.name}
+                    </span>
+                    {stop.quote.role && (
+                      <span className="text-background/60"> {stop.quote.role}</span>
+                    )}
+                  </footer>
+                </blockquote>
+              )}
             </li>
           ))}
         </ol>

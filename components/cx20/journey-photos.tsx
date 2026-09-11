@@ -32,11 +32,12 @@ const INTERVAL_MS = 5200;
  */
 export function JourneyPhotos({
   photos,
-  priority = false,
+  sizes = "(min-width: 640px) 20rem, 82vw",
   className,
 }: {
   photos: Photo[];
-  priority?: boolean;
+  /** El ancho real de la tarjeta en el riel, no el del viewport. */
+  sizes?: string;
   className?: string;
 }) {
   const { ui } = content;
@@ -83,8 +84,7 @@ export function JourneyPhotos({
             alt={photo.alt}
             fill
             quality={85}
-            priority={priority && i === 0}
-            sizes="(min-width: 1024px) 46vw, (min-width: 768px) 52vw, 92vw"
+            sizes={sizes}
             aria-hidden={i !== index}
             className={cn(
               "object-cover transition-opacity duration-700 motion-reduce:transition-none",

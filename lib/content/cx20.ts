@@ -374,18 +374,6 @@ export const cx20: Cx20Content = {
         ],
       },
       {
-        place: "Leipzig, Germany",
-        title: "Ten Outstanding Young Persons of the World",
-        body: "JCI names him one of the ten, for his contribution to children, world peace and human rights.",
-        photos: [
-          {
-            src: "/images/cx20/journey/leipzig-toyp.jpg",
-            alt: "Nicolas Garcia Mayor on stage at the JCI World Congress in a tuxedo, holding the Ten Outstanding Young Persons trophy above his head",
-            label: "JCI World Congress, Leipzig",
-          },
-        ],
-      },
-      {
         place: "New York and Washington",
         title: "Taking it to the institutions",
         body: "The United Nations, ECOSOC and the Inter-American Development Bank: the rooms where shelter gets funded and deployed.",
