@@ -53,6 +53,10 @@ export interface UiCopy {
   galleryNext: string;
   galleryOpenHint: string;
   galleryCounter: (current: number, total: number) => string;
+  /** Rotador de fotos de la ruta: las etiquetas de sus controles. */
+  photoPause: string;
+  photoPlay: string;
+  photoShow: (label: string) => string;
   pendingSpecNote: string;
   emailToastTitle: string;
   emailToastDescription: string;
@@ -110,6 +114,9 @@ export const shared: SharedContent = {
     galleryNext: "Next image",
     galleryOpenHint: "View full size",
     galleryCounter: (current, total) => `${current} of ${total}`,
+    photoPause: "Pause the photos",
+    photoPlay: "Play the photos",
+    photoShow: (label) => `Show: ${label}`,
     pendingSpecNote:
       "Awaiting final confirmation from Cmax System. We publish the exact figure here the day it is signed off.",
     emailToastTitle: "You're on the list.",

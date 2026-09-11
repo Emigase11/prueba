@@ -85,12 +85,30 @@ export interface Cx20Content {
     role: string;
     bio: string;
     image: ImageAsset;
-    testimonialsHeading: string;
-    testimonials: {
-      quote: string;
-      name: string;
-      role: string;
-      image: ImageAsset & { width: number; height: number };
+    /**
+     * La ruta: de Nicolas Garcia Mayor a Firas Kayal, un hito por parada.
+     *
+     * No hay fechas a proposito. Los lugares salen de los nombres de archivo
+     * que puso Cmax (Leipzig, Haiti, ECOSOC, BID) y los premios de la bio, que
+     * ya estaban en el sitio. Ninguna parada afirma un año, porque no los
+     * tenemos: el orden es narrativo, no una cronologia verificada. Si Cmax
+     * pasa las fechas, se agregan sin rehacer nada.
+     *
+     * `photos` con mas de una entra en el rotador (journey-photos.tsx), que las
+     * pasa solas. `label` es el pie de cada foto dentro del grupo, para que se
+     * sepa cual es cual.
+     *
+     * `quote` marca las paradas que son un testimonio: son el final del camino
+     * y por eso van al cierre.
+     */
+    journeyHeading: string;
+    journeyBody: string;
+    stops: {
+      place: string;
+      title: string;
+      body?: string;
+      photos: (ImageAsset & { label: string })[];
+      quote?: { text: string; name: string; role: string };
     }[];
   };
   impact: { heading: string; body: string; ratioLabel: string };
@@ -322,47 +340,140 @@ export const cx20: Cx20Content = {
       src: "/images/cx20/nicolas-garcia-mayor-united-nations-Slider-2.jpg",
       alt: "Nicolás García Mayor crouching outdoors beside a white shelter wall, surrounded by a group of smiling children who hug him",
     },
-    testimonialsHeading: "What others have said",
-    testimonials: [
+    journeyHeading: "A long road, and the people who walked part of it",
+    journeyBody:
+      "Cmax did not start as a product. It started as a drawing, and there were years of camps, stages and cargo holds before anyone could buy one.",
+    stops: [
       {
-        quote:
-          "The Cmax has already been blessed by God. Nicolas, never lose your hope. God fills us with his grace when we pray with perseverance.",
-        name: "Pope Francis",
-        role: "",
-        image: {
-          src: "/images/cx20/testimonials/pope-francis.jpg",
-          alt: "Pope Francis and Nicolas Garcia Mayor smiling face to face as they embrace in St. Peter's Square",
-          width: 1000,
-          height: 1000,
+        place: "The studio",
+        title: "It begins on paper",
+        body: "A rigid room that folds flat enough to ship. That was the problem, and it was worked out by hand first.",
+        photos: [
+          {
+            src: "/images/cx20/journey/studio.jpg",
+            alt: "Nicolas Garcia Mayor at his desk drawing shelter forms in pencil, with sheets of sketches of folded and unfolded units spread around him",
+            label: "The studio",
+          },
+        ],
+      },
+      {
+        place: "Haiti",
+        title: "In the field, with the people it is for",
+        body: "Camps are where a design gets corrected. What the shelter does today, it does because of what did not work there.",
+        photos: [
+          {
+            src: "/images/cx20/journey/haiti.jpg",
+            alt: "Nicolas Garcia Mayor holding a small child forehead to forehead in a camp street in Haiti, between rows of white shelter walls",
+            label: "Haiti",
+          },
+          {
+            src: "/images/cx20/nicolas-garcia-mayor-united-nations-Slider-2.jpg",
+            alt: "Nicolas Garcia Mayor crouching outdoors beside a white shelter wall, surrounded by a group of smiling children who hug him",
+            label: "Haiti",
+          },
+        ],
+      },
+      {
+        place: "Leipzig, Germany",
+        title: "Ten Outstanding Young Persons of the World",
+        body: "JCI names him one of the ten, for his contribution to children, world peace and human rights.",
+        photos: [
+          {
+            src: "/images/cx20/journey/leipzig-toyp.jpg",
+            alt: "Nicolas Garcia Mayor on stage at the JCI World Congress in a tuxedo, holding the Ten Outstanding Young Persons trophy above his head",
+            label: "JCI World Congress, Leipzig",
+          },
+        ],
+      },
+      {
+        place: "New York and Washington",
+        title: "Taking it to the institutions",
+        body: "The United Nations, ECOSOC and the Inter-American Development Bank: the rooms where shelter gets funded and deployed.",
+        photos: [
+          {
+            src: "/images/cx20/journey/united-nations.jpg",
+            alt: "Nicolas Garcia Mayor speaking from a rostrum beneath the United Nations emblem, alone in the hall",
+            label: "United Nations",
+          },
+          {
+            src: "/images/cx20/journey/un-ecosoc.jpg",
+            alt: "Nicolas Garcia Mayor speaking at a panel table with his name on the desk display in front of him",
+            label: "United Nations ECOSOC",
+          },
+          {
+            src: "/images/cx20/journey/idb.jpg",
+            alt: "Nicolas Garcia Mayor mid-gesture on stage, a UNHCR slide about refugees projected behind him",
+            label: "Inter-American Development Bank",
+          },
+        ],
+      },
+      {
+        place: "Anywhere",
+        title: "Built to arrive",
+        body: "Folded, the units palletise and fly. Deployed, they lay out as a camp with clinics, stores and streets.",
+        photos: [
+          {
+            src: "/images/cx20/journey/airlift.jpg",
+            alt: "A Cmax staff member in a branded shirt guiding a trailer of orange Cmax crates into the cargo hold of a military transport aircraft",
+            label: "Loading for airlift",
+          },
+          {
+            src: "/images/cx20/journey/camp.jpg",
+            alt: "Render of a large camp of hundreds of orange and white Cmax units laid out on a desert plain, with helicopters lifting crated units in and medical and UN units among them",
+            label: "Camp layout (render)",
+          },
+        ],
+      },
+      {
+        place: "St. Peter's Square",
+        title: "Pope Francis",
+        photos: [
+          {
+            src: "/images/cx20/testimonials/pope-francis.jpg",
+            alt: "Pope Francis and Nicolas Garcia Mayor smiling face to face as they embrace in St. Peter's Square",
+            label: "St. Peter's Square",
+          },
+        ],
+        quote: {
+          text: "The Cmax has already been blessed by God. Nicolas, never lose your hope. God fills us with his grace when we pray with perseverance.",
+          name: "Pope Francis",
+          role: "",
         },
       },
       {
-        quote:
-          "We face a humanitarian crisis with the number of displaced people in Jordan, and we can improve the quality of life of millions of refugees with this innovative solution.",
-        name: "Princess Haya Bint Al Hussein",
-        role: "",
-        image: {
-          src: "/images/cx20/testimonials/princess-haya.jpg",
-          alt: "Nicolas Garcia Mayor presenting the shelter to Princess Haya Bint Al Hussein and her delegation at an exhibition stand",
-          width: 1100,
-          height: 564,
+        place: "Jordan",
+        title: "Princess Haya Bint Al Hussein",
+        photos: [
+          {
+            src: "/images/cx20/testimonials/princess-haya.jpg",
+            alt: "Nicolas Garcia Mayor presenting the shelter to Princess Haya Bint Al Hussein and her delegation at an exhibition stand",
+            label: "Exhibition stand",
+          },
+        ],
+        quote: {
+          text: "We face a humanitarian crisis with the number of displaced people in Jordan, and we can improve the quality of life of millions of refugees with this innovative solution.",
+          name: "Princess Haya Bint Al Hussein",
+          role: "",
         },
       },
       {
-        quote:
-          "It's so easy to assemble and deploy the Cmax shelter in the field. Once you put this great innovation into production, not even the sky is the limit — you can dignify and care for the health of millions of children.",
-        name: "Firas Kayal",
-        role: "UNHCR",
-        image: {
-          src: "/images/cx20/testimonials/firas-kayal.jpg",
-          alt: "Firas Kayal and Nicolas Garcia Mayor shaking hands in front of the UNHCR logo at the UNHCR office",
-          width: 781,
-          height: 564,
+        place: "UNHCR office",
+        title: "Firas Kayal",
+        photos: [
+          {
+            src: "/images/cx20/testimonials/firas-kayal.jpg",
+            alt: "Firas Kayal and Nicolas Garcia Mayor shaking hands in front of the UNHCR logo at the UNHCR office",
+            label: "UNHCR office",
+          },
+        ],
+        quote: {
+          text: "It's so easy to assemble and deploy the Cmax shelter in the field. Once you put this great innovation into production, not even the sky is the limit, you can dignify and care for the health of millions of children.",
+          name: "Firas Kayal",
+          role: "UNHCR",
         },
       },
     ],
   },
-
   impact: {
     heading: "Buy ten, house a family",
     ratioLabel: "1 in 10",
